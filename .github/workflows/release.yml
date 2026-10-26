@@ -19,6 +19,8 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - run: npm ci
+      - name: Prepare Electron runtime
+        run: node release-tools/prepare-electron.mjs
       - run: npm test
       - run: npm run audit:public
       - run: npm run release:build

@@ -1,6 +1,6 @@
 {
   "name": "pingu-desk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "productName": "谷谷bot",
@@ -15,7 +15,8 @@
     "audit:public": "node release-tools/audit-public.mjs",
     "release:build": "node release-tools/build-release.mjs",
     "release:verify": "node release-tools/verify-release.mjs",
-    "version:sync": "node release-tools/version.mjs"
+    "version:sync": "node release-tools/version.mjs",
+    "postinstall": "node release-tools/prepare-electron.mjs"
   },
   "engines": {
     "node": ">=24"
