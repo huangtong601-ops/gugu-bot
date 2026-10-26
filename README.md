@@ -6,10 +6,10 @@
 
 ## 下载使用
 
-1. 打开本仓库 **Releases**，下载 `gugu-bot-v版本号-win32-x64.zip`。
+1. 打开本仓库 [Releases](https://github.com/huangtong601-ops/gugu-bot/releases/latest)，下载 `gugu-bot-v版本号-win32-x64.zip`。
 2. 完整解压，双击文件夹内的 **谷谷bot.exe**。EXE旁边的文件必须一起保留。
 3. 按首次引导配置自己的模型API，选择模型版本。图片识别需要支持图片输入的模型。
-4. 从应用内的官方入口下载 `NapCat.Shell.Windows.Node.zip`，完整解压，在程序中选择它的文件夹，再完成QQ登录与连接。
+4. 前往 [NapCat 官方仓库发布页](https://github.com/NapNeko/NapCatQQ/releases/latest)，下载 [NapCat.Shell.Windows.Node.zip](https://github.com/NapNeko/NapCatQQ/releases/latest)，完整解压，在程序中选择它的文件夹，再完成QQ登录与连接。
 5. 选择需要管理的群，新建期次，识别并核对商品、保存商品，绑定群相册，并确认图片对应的大类。
 
 发布包不含任何账号、登录态、API密钥、群聊、商品建档、订单或排表数据。首次运行从空白工作区开始。NapCat和QQ运行环境由使用者自行下载并登录。
