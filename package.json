@@ -1,0 +1,27 @@
+{
+  "name": "pingu-desk",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "productName": "谷谷bot",
+  "description": "谷谷bot：拼谷应用与内置业务 skill",
+  "main": "desktop.cjs",
+  "scripts": {
+    "test": "node --test test.mjs catalog.test.mjs image-input.test.mjs workflow.test.mjs napcat-login.test.mjs qq-runtime.test.mjs onebot.test.mjs album.test.mjs queue-query.test.mjs qq-commands.test.mjs order-planning.test.mjs album-picker.test.mjs skill-settings.test.mjs setup-guide.test.mjs security.test.mjs proxy-enrollment.test.mjs usage.test.mjs enrollment-view.test.mjs server-connection.test.mjs administrators.test.mjs qq-connection-view.test.mjs maintenance.test.mjs catalog-tools.test.mjs blind-box.test.mjs",
+    "server:init": "node server-entry.mjs init",
+    "server:start": "node server-entry.mjs start",
+    "start": "electron .",
+    "start:isolated": "electron . --user-data-dir=.local-profile",
+    "audit:public": "node release-tools/audit-public.mjs",
+    "release:build": "node release-tools/build-release.mjs",
+    "release:verify": "node release-tools/verify-release.mjs",
+    "version:sync": "node release-tools/version.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "electron": "42.11.16",
+    "resedit": "1.7.2"
+  }
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <mask id="d3cut" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+      <rect width="512" height="512" fill="#ffffff"/>
+      <circle cx="106" cy="292" r="30" fill="#000000"/>
+    </mask>
+  </defs>
+  <circle cx="256" cy="70" r="28" fill="none" stroke="#8d7cc2" stroke-width="14"/>
+  <rect x="250" y="92" width="12" height="32" rx="6" fill="#6655a4"/>
+  <g mask="url(#d3cut)">
+    <circle cx="256" cy="292" r="150" fill="#6655a4" stroke="#f5db83" stroke-width="10"/>
+    <path d="M168 202A128 128 0 0 1 250 160" stroke="#ffffff" stroke-width="14" fill="none" opacity=".16" stroke-linecap="round"/>
+  </g>
+  <circle cx="222" cy="280" r="12" fill="#fbf7ea"/>
+  <circle cx="290" cy="280" r="12" fill="#fbf7ea"/>
+  <path d="M240 320q16 12 32 0" stroke="#fbf7ea" stroke-width="9" fill="none" stroke-linecap="round"/>
+</svg>

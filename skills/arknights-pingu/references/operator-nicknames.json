@@ -1,0 +1,2275 @@
+{
+  "checkedAt": "2026-10-25",
+  "scope": "社区称呼的本地辅助匹配表；来源不代表官方命名或唯一含义。目标为多个角色时保留多义，不收录组合代称为一个角色。",
+  "sources": {
+    "legacy": {
+      "title": "原角色资料快照",
+      "url": "https://github.com/awadwd/ArknightsAuthorization_Series-mirror",
+      "checkedAt": "2026-10-23",
+      "license": "CC BY-NC 4.0；见SOURCES.md"
+    },
+    "meme": {
+      "title": "萌娘百科：明日方舟/梗·干员外号",
+      "url": "https://moegirl.icu/zh/明日方舟/梗"
+    },
+    "nick2023": {
+      "title": "石中火：干员们的昵称",
+      "url": "https://www.taptap.cn/moment/464732177255366709"
+    },
+    "nick2021": {
+      "title": "2033cl：游戏常见术语及解释",
+      "url": "https://www.taptap.cn/moment/201296186496255596"
+    },
+    "nick2020": {
+      "title": "雅致玉泉：整理一下各个干员的外号",
+      "url": "https://www.taptap.cn/moment/26962781244754400"
+    },
+    "nick2025": {
+      "title": "明日方舟吧：明日方舟黑话科普",
+      "url": "https://tieba.baidu.com/p/9703032064"
+    },
+    "session": {
+      "title": "本项目用户确认的既有称呼",
+      "note": "德狗、阿能、异德、洁哥为既有排谷规则"
+    }
+  },
+  "excludedGeneric": [
+    "男人",
+    "老婆",
+    "老公",
+    "大帅哥",
+    "大姐",
+    "小妹",
+    "双狼",
+    "莱茵一家"
+  ],
+  "entries": [
+    {
+      "alias": "174",
+      "targets": [
+        "耀骑士临光"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "2226",
+      "targets": [
+        "塑心"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "42",
+      "targets": [
+        "史尔特尔"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "42姐",
+      "targets": [
+        "史尔特尔"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "52",
+      "targets": [
+        "乌尔比安"
+      ],
+      "sources": [
+        "meme",
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "76",
+      "targets": [
+        "琴柳"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "D32钢",
+      "targets": [
+        "星极"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "ew",
+      "targets": [
+        "维什戴尔"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "ff0",
+      "targets": [
+        "华法琳"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "KKDY",
+      "targets": [
+        "克洛丝"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "kokodayo",
+      "targets": [
+        "克洛丝"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "saki酱",
+      "targets": [
+        "丰川祥子"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "The P",
+      "targets": [
+        "假日威龙陈"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "U酱",
+      "targets": [
+        "U-Official"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "一拳超人",
+      "targets": [
+        "断罪者"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "不能天使",
+      "targets": [
+        "能天使"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "丢人熊",
+      "targets": [
+        "凛冬"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "中指哥",
+      "targets": [
+        "贾维"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "丽兹",
+      "targets": [
+        "夜莺"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "乌拉",
+      "targets": [
+        "荒芜拉普兰德"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "乐乐侠",
+      "targets": [
+        "左乐"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "二队长",
+      "targets": [
+        "歌蕾蒂娅"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "企鹅",
+      "targets": [
+        "麦哲伦"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "傲世狂龙",
+      "targets": [
+        "阿斯卡纶"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "先蒂",
+      "targets": [
+        "斯卡蒂"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "先锋小车",
+      "targets": [
+        "CONFESS-47"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "光头干员",
+      "targets": [
+        "杜林"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "克天使",
+      "targets": [
+        "克洛丝"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "克里斯汀小姐",
+      "targets": [
+        "Miss.Christine"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "兔兔",
+      "targets": [
+        "阿米娅"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "关二爷",
+      "targets": [
+        "波登可"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "内鬼",
+      "targets": [
+        "断罪者",
+        "阿"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "冬将军",
+      "targets": [
+        "凛冬"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "凯太后",
+      "targets": [
+        "凯尔希"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "凯爹",
+      "targets": [
+        "凯尔希"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "出血",
+      "targets": [
+        "初雪"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "刀客塔",
+      "targets": [
+        "博士"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "刻二百",
+      "targets": [
+        "刻俄柏"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "剑圣",
+      "targets": [
+        "玫兰莎",
+        "闪灵"
+      ],
+      "sources": [
+        "nick2023",
+        "nick2021",
+        "meme"
+      ]
+    },
+    {
+      "alias": "力速双A弱女子",
+      "targets": [
+        "温蒂"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "医疗小车",
+      "targets": [
+        "Lancet-2"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "十万大C",
+      "targets": [
+        "玛恩纳"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "卡姐",
+      "targets": [
+        "卡涅利安"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "发电厂厂长",
+      "targets": [
+        "格雷伊"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "叔叔",
+      "targets": [
+        "玛恩纳"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "吉祥物",
+      "targets": [
+        "诗怀雅"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "君君",
+      "targets": [
+        "弑君者"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "呆毛王",
+      "targets": [
+        "推进之王"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "咕噜灵波",
+      "targets": [
+        "泥岩"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "哈吉马路呦",
+      "targets": [
+        "空"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "哥伦布",
+      "targets": [
+        "麦哲伦"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "啊噗噜派",
+      "targets": [
+        "能天使"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "啊能",
+      "targets": [
+        "能天使"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "喵梦",
+      "targets": [
+        "祐天寺若麦"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "嘴臭熊",
+      "targets": [
+        "凛冬"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "四姐",
+      "targets": [
+        "黍"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "四爷",
+      "targets": [
+        "伺夜"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "图图",
+      "targets": [
+        "塑心"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "图图姐",
+      "targets": [
+        "塑心"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "圣女",
+      "targets": [
+        "初雪"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "圣葬",
+      "targets": [
+        "圣约送葬人"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "塔子姐",
+      "targets": [
+        "塔露拉"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "塞爹",
+      "targets": [
+        "塞雷娅"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "夕瓜",
+      "targets": [
+        "夕"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "大哥",
+      "targets": [
+        "重岳"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "大姨",
+      "targets": [
+        "娜仁图亚"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "大尾巴狼",
+      "targets": [
+        "普罗旺斯"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "大爹",
+      "targets": [
+        "爱国者"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "大肥龙",
+      "targets": [
+        "望"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "太后",
+      "targets": [
+        "凯尔希"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "太子爷",
+      "targets": [
+        "12f",
+        "12F"
+      ],
+      "sources": [
+        "legacy",
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "奶羊",
+      "targets": [
+        "纯烬艾雅法拉"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "姑妈",
+      "targets": [
+        "鞭刃"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "娜工",
+      "targets": [
+        "娜斯提"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "孑哥",
+      "targets": [
+        "孑"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "安姐",
+      "targets": [
+        "蕾缪安"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "安茄尔",
+      "targets": [
+        "安比尔"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "富婆",
+      "targets": [
+        "杰西卡",
+        "诗怀雅"
+      ],
+      "sources": [
+        "nick2023",
+        "nick2020",
+        "meme"
+      ]
+    },
+    {
+      "alias": "将军",
+      "targets": [
+        "赫拉格"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "小乐",
+      "targets": [
+        "新约能天使"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "小企鹅",
+      "targets": [
+        "麦哲伦"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "小僧",
+      "targets": [
+        "嵯峨"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "小刻",
+      "targets": [
+        "刻俄柏"
+      ],
+      "sources": [
+        "legacy",
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "小姨",
+      "targets": [
+        "司霆惊蛰"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "小氪",
+      "targets": [
+        "刻俄柏"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "小火龙",
+      "targets": [
+        "伊芙利特"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "小燕子",
+      "targets": [
+        "灰喉"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "小红帽",
+      "targets": [
+        "红"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "小绵羊",
+      "targets": [
+        "艾雅法拉"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "小羊",
+      "targets": [
+        "艾雅法拉"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "小能天使",
+      "targets": [
+        "克洛丝"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "小苹果",
+      "targets": [
+        "桃金娘"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "小莫",
+      "targets": [
+        "莫斯提马"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "小黑",
+      "targets": [
+        "罗小黑"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "尤里卡",
+      "targets": [
+        "U-Official"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "幺弟",
+      "targets": [
+        "余"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "庸医",
+      "targets": [
+        "阿"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "异W",
+      "targets": [
+        "维什戴尔"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "异德",
+      "targets": [
+        "缄默德克萨斯"
+      ],
+      "sources": [
+        "legacy",
+        "meme",
+        "session"
+      ]
+    },
+    {
+      "alias": "异拉",
+      "targets": [
+        "荒芜拉普兰德"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "张飞",
+      "targets": [
+        "缄默德克萨斯"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "归鲨",
+      "targets": [
+        "归溟幽灵鲨"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "影子哥",
+      "targets": [
+        "傀影"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "很傻的狗",
+      "targets": [
+        "刻俄柏"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "德狗",
+      "targets": [
+        "德克萨斯"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023",
+        "session"
+      ]
+    },
+    {
+      "alias": "我们的光",
+      "targets": [
+        "铃兰"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "扣扣打油",
+      "targets": [
+        "克洛丝"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "拉狗",
+      "targets": [
+        "拉普兰德"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "拖拉机手",
+      "targets": [
+        "风笛"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "接头霸王",
+      "targets": [
+        "棘刺"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "推王",
+      "targets": [
+        "推进之王"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "放逐",
+      "targets": [
+        "OUTCAST"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "斥候",
+      "targets": [
+        "SCOUT"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "新熊",
+      "targets": [
+        "斩业星熊"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "新能源",
+      "targets": [
+        "新约能天使"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "星棘",
+      "targets": [
+        "引星棘刺"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "望别",
+      "targets": [
+        "望"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "术髓",
+      "targets": [
+        "PITH"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "机械师",
+      "targets": [
+        "MECHANIST"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "李狗剩",
+      "targets": [
+        "逻各斯"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "杰哥",
+      "targets": [
+        "安洁莉娜",
+        "孑"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023",
+        "meme"
+      ]
+    },
+    {
+      "alias": "林北",
+      "targets": [
+        "孑"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "林雨霞",
+      "targets": [
+        "林"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "桃子",
+      "targets": [
+        "桃金娘"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "梅良梅影",
+      "targets": [
+        "梅尔"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "欢乐喜锯人",
+      "targets": [
+        "煌"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "欢乐水牛",
+      "targets": [
+        "帕拉斯"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "氪二百",
+      "targets": [
+        "刻俄柏"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "水陈",
+      "targets": [
+        "假日威龙陈"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "法国人",
+      "targets": [
+        "桃金娘",
+        "极境"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "法羊",
+      "targets": [
+        "艾雅法拉"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "波司登",
+      "targets": [
+        "波登可"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "洁哥",
+      "targets": [
+        "安洁莉娜",
+        "孑"
+      ],
+      "sources": [
+        "meme",
+        "session"
+      ]
+    },
+    {
+      "alias": "浊帝",
+      "targets": [
+        "浊心斯卡蒂"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "浊蒂",
+      "targets": [
+        "浊心斯卡蒂"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "海猫",
+      "targets": [
+        "安哲拉"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "海蛞蝓",
+      "targets": [
+        "格劳克斯"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "清水",
+      "targets": [
+        "清流"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "火凛",
+      "targets": [
+        "天火"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "火子姐",
+      "targets": [
+        "天火"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "火索米",
+      "targets": [
+        "艾雅法拉"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "焰苇",
+      "targets": [
+        "焰影苇草"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "煌猫猫",
+      "targets": [
+        "煌"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "熊二",
+      "targets": [
+        "星熊"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "熊猫",
+      "targets": [
+        "食铁兽"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "牛牛",
+      "targets": [
+        "帕拉斯"
+      ],
+      "sources": [
+        "legacy",
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "特种小车",
+      "targets": [
+        "THRM-EX"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "特蕾西娅",
+      "targets": [
+        "魔王"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "狐萝卜",
+      "targets": [
+        "铃兰"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "猛男",
+      "targets": [
+        "安赛尔"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "猞猁",
+      "targets": [
+        "凯尔希"
+      ],
+      "sources": [
+        "legacy",
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "猪咪",
+      "targets": [
+        "澄闪"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "猪猪",
+      "targets": [
+        "澄闪"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "猫头鹰",
+      "targets": [
+        "罗小黑"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "猫猫头",
+      "targets": [
+        "杰西卡"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "王之力",
+      "targets": [
+        "断崖"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "王大锤",
+      "targets": [
+        "推进之王"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "王小姐",
+      "targets": [
+        "推进之王"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "王牌",
+      "targets": [
+        "ACE"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "王维娜",
+      "targets": [
+        "推进之王"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "界星熊",
+      "targets": [
+        "斩业星熊"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "白咕咕",
+      "targets": [
+        "白面鸮"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "白毛男妈妈",
+      "targets": [
+        "见行者",
+        "送葬人"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "白送",
+      "targets": [
+        "拜松"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "白金之星",
+      "targets": [
+        "白金"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "百嘉",
+      "targets": [
+        "百炼嘉维尔"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "真女人",
+      "targets": [
+        "幽灵鲨"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "祖宗发射器",
+      "targets": [
+        "维什戴尔"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "祖母奶奶",
+      "targets": [
+        "史尔特尔"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "笛子",
+      "targets": [
+        "风笛"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "粉毛",
+      "targets": [
+        "澄闪"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "红蒂",
+      "targets": [
+        "浊心斯卡蒂"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "缪缪",
+      "targets": [
+        "缪尔赛思"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "罗德岛CEO",
+      "targets": [
+        "阿米娅"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "罗德岛第一盲狙",
+      "targets": [
+        "克洛丝"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "羊奶",
+      "targets": [
+        "纯烬艾雅法拉"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "翼德",
+      "targets": [
+        "缄默德克萨斯"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "老女人",
+      "targets": [
+        "凯尔希"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "老爷子",
+      "targets": [
+        "赫拉格"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "老猫",
+      "targets": [
+        "凯尔希"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "老玛",
+      "targets": [
+        "玛恩纳"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "老陈",
+      "targets": [
+        "陈"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "老鼠",
+      "targets": [
+        "林"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "考哥",
+      "targets": [
+        "异客"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "肘击王",
+      "targets": [
+        "乌尔比安"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "肥鸭",
+      "targets": [
+        "菲亚梅塔"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "胖狐狸",
+      "targets": [
+        "芙兰卡"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "胡萝卜",
+      "targets": [
+        "铃兰"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "脆脆蛙",
+      "targets": [
+        "蓝毒"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "腰子哥",
+      "targets": [
+        "圣约送葬人"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "腿王",
+      "targets": [
+        "推进之王"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "自爆小车",
+      "targets": [
+        "THRM-EX"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "臭棋篓子",
+      "targets": [
+        "望"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "舞铲阶级",
+      "targets": [
+        "斯卡蒂"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "苦难",
+      "targets": [
+        "MISERY"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "茂名守林人",
+      "targets": [
+        "守林人"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "莱茵拳皇",
+      "targets": [
+        "塞雷娅"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "萨卡兹大姑娘",
+      "targets": [
+        "泥岩"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "葬哥",
+      "targets": [
+        "圣约送葬人"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "蒂二世",
+      "targets": [
+        "温蒂"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "蒂蒂",
+      "targets": [
+        "斯卡蒂",
+        "温蒂"
+      ],
+      "sources": [
+        "legacy",
+        "nick2021",
+        "nick2020",
+        "meme"
+      ]
+    },
+    {
+      "alias": "蓝天使",
+      "targets": [
+        "莫斯提马"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "蕾缪乐",
+      "targets": [
+        "新约能天使"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "虎鲸",
+      "targets": [
+        "斯卡蒂"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "触痕",
+      "targets": [
+        "TOUCH"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "轮椅妹",
+      "targets": [
+        "蕾缪安"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "轮椅姐",
+      "targets": [
+        "蕾缪安"
+      ],
+      "sources": [
+        "nick2025"
+      ]
+    },
+    {
+      "alias": "达不溜",
+      "targets": [
+        "W"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "近卫小车",
+      "targets": [
+        "Castle-3"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "远呀",
+      "targets": [
+        "远牙"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "送马人",
+      "targets": [
+        "送葬人"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "郁金香",
+      "targets": [
+        "TULIP"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "酒蒙子",
+      "targets": [
+        "令"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "重装小车",
+      "targets": [
+        "Friston-3"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "金鱼",
+      "targets": [
+        "遥"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "银老板",
+      "targets": [
+        "银灰"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "锋刃",
+      "targets": [
+        "SHARP"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "闪羊羊",
+      "targets": [
+        "闪灵"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "阿尔图罗",
+      "targets": [
+        "塑心"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "阿能",
+      "targets": [
+        "能天使"
+      ],
+      "sources": [
+        "meme",
+        "session"
+      ]
+    },
+    {
+      "alias": "陈sir",
+      "targets": [
+        "陈"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "雷子姐",
+      "targets": [
+        "惊蛰"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "青蛙",
+      "targets": [
+        "蓝毒"
+      ],
+      "sources": [
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "面包人",
+      "targets": [
+        "可颂"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "风暴眼",
+      "targets": [
+        "STORMEYE"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "饼干",
+      "targets": [
+        "乌尔比安"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "香蕉姐",
+      "targets": [
+        "死芒"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "高达",
+      "targets": [
+        "森蚺"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "高阶术士",
+      "targets": [
+        "亚叶"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "鬼姐",
+      "targets": [
+        "星熊"
+      ],
+      "sources": [
+        "legacy",
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "鱼摊小贩",
+      "targets": [
+        "孑"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "鲨鲨",
+      "targets": [
+        "幽灵鲨"
+      ],
+      "sources": [
+        "legacy",
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "鸡精",
+      "targets": [
+        "极境"
+      ],
+      "sources": [
+        "legacy",
+        "nick2021"
+      ]
+    },
+    {
+      "alias": "鸡翅",
+      "targets": [
+        "棘刺"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "鸿太狼",
+      "targets": [
+        "鸿雪"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    },
+    {
+      "alias": "麦乐鸡",
+      "targets": [
+        "麦哲伦"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "麦当劳",
+      "targets": [
+        "麦哲伦"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "麦迪文",
+      "targets": [
+        "麦哲伦"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "黍姐",
+      "targets": [
+        "黍"
+      ],
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "alias": "黑姐姐",
+      "targets": [
+        "黑"
+      ],
+      "sources": [
+        "nick2020"
+      ]
+    },
+    {
+      "alias": "龙门Rapper",
+      "targets": [
+        "阿消"
+      ],
+      "sources": [
+        "meme"
+      ]
+    },
+    {
+      "alias": "龟龟",
+      "targets": [
+        "蛇屠箱"
+      ],
+      "sources": [
+        "nick2023"
+      ]
+    }
+  ]
+}

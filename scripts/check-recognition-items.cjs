@@ -1,0 +1,37 @@
+const {app,BrowserWindow}=require('electron');
+const fs=require('node:fs'),fsp=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),fixture=fs.mkdtempSync(path.join(root,'backups','recognition-ui-'));
+app.setPath('userData',path.join(fixture,'electron'));app.disableHardwareAcceleration();let backend,win;
+const pause=ms=>new Promise(r=>setTimeout(r,ms));
+async function run(){
+ await app.whenReady();const {start}=await import('../server.mjs'),{applyAlbumComments}=await import('../album-sync.mjs');
+ const products=[{id:'a',name:'毛绒延展扣-Miss.Christine A款',type:'单领',price:50},{id:'b',name:'毛绒延展扣-Miss.Christine B款',type:'单领',price:50},...['黍','琳琅诗怀雅','烛煌'].map((role,i)=>({id:'card'+i,name:'藏书票相卡套组-'+role,type:'单领',price:20})),{id:'badge',name:'双闪徽章-烛煌',type:'单领',price:20}];
+ const c={id:'c',botId:'zhougu',groupId:'11111',name:'识别测试',revision:0,categories:[{id:'单领',name:'单领',kind:'single'}],products,records:[]};
+ const binding={groupId:'11111',albumId:'album',campaignId:'c',photoScopes:{photo:{categoryId:'单领'}}};
+ const comment=(commentId,text)=>({id:'event-'+commentId,commentId,qq:'12345',groupId:'11111',albumId:'album',photoIds:['photo'],at:'2026-10-25T01:00:00Z',text});
+ const db={settings:{provider:'openai',baseUrl:'https://api.openai.com/v1',model:''},onboarding:{completedAt:'2026-10-24T00:00:00Z'},qqGroups:[{id:'11111',name:'隔离测试群'}],members:{12345:{cn:'测试甲'}},campaigns:[c],albums:[binding]};
+ applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments:[comment('1','毛绒延展扣1 藏书票相卡套组三款各一'),comment('2','男人1（代排）')]});
+ await fsp.writeFile(path.join(fixture,'workspace.json'),JSON.stringify(db));
+ backend=await start({port:0,dataDir:fixture,credentialStore:{get:async()=>''},upstreamFetch:async()=>{throw Error('No external models allowed');}});
+ win=new BrowserWindow({width:1500,height:1100,show:false,webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true,backgroundThrottling:false,offscreen:true}});
+ const js=code=>win.webContents.executeJavaScript(code,true),until=async code=>{for(let i=0;i<100;i++){if(await js(code))return;await pause(100);}throw Error('Timed out: '+code+' '+await js("document.getElementById('notice')?.textContent"));};
+ await win.loadURL(backend.url);await until("document.querySelector('#campaign option')?.value==='c'");await js("document.querySelector('[data-page=enrollment]').click()");await until("document.querySelectorAll('.pending-card').length===2");
+ assert.equal(await js("document.querySelectorAll('.pending-card:first-child .recognized-menu').length"),4);
+ assert.equal(await js("document.querySelectorAll('.pending-card:last-child .issue-phrase').length"),1);
+ await js("document.querySelector('.pending-card .recognized-menu summary').click()");
+ await js("document.querySelector('.pending-card .recognized-menu').scrollIntoView({block:'center'})");await pause(100);await fsp.writeFile(path.join(root,'backups','recognition-menu.png'),(await win.webContents.capturePage()).toPNG());
+ const layout=await js("(()=>{const row=document.querySelector('.recognized-entry').getBoundingClientRect(),menu=document.querySelector('.recognized-menu summary').getBoundingClientRect();return {right:row.right-menu.right,top:menu.top-row.top,visible:document.querySelector('.recognized-menu').open};})()");assert.ok(layout.visible&&layout.right<12&&layout.top<10);
+ await js("document.querySelector('.pending-card .recognized-delete').click()");await until("document.querySelectorAll('.pending-card:first-child .recognized-menu').length===3");
+ const state=async()=>await(await fetch(backend.url+'/api/state')).json();let snapshot=await state();assert.equal(snapshot.campaigns[0].products.length,6);assert.equal(snapshot.campaigns[0].records.length,0);assert.equal(snapshot.albums[0].pending[0].text,'毛绒延展扣1 藏书票相卡套组三款各一');
+ await js("{const e=document.querySelector('.issue-select');e.value='a';e.dispatchEvent(new Event('change'));}[...document.querySelectorAll('.pending-card:first-child button')].find(b=>b.textContent==='保存并重试').click()");await until("document.querySelectorAll('.pending-card').length===1");snapshot=await state();assert.deepEqual(snapshot.campaigns[0].records.map(r=>r.skuId),['a','card1','card2']);
+ await js("document.querySelector('.pending-card .recognized-menu summary').click();document.querySelector('.pending-card .recognized-delete').click()");await until("document.querySelectorAll('.pending-card').length===0");assert.equal((await state()).campaigns[0].records.length,3);
+ await js("document.querySelector('#memberQQ').closest('details').open=true;document.getElementById('member').value='群外测试';{const scope=document.getElementById('manualProductScope');scope.value=[...scope.options].find(o=>o.textContent==='藏书票相卡套组').value;scope.dispatchEvent(new Event('change'));}document.getElementById('message').value='诗怀雅和煌';document.getElementById('parse').click()");await until("document.querySelectorAll('#manualRecognized .recognized-entry').length===2&&!document.getElementById('confirm').disabled");
+ await js("document.querySelector('#manualRecognized .recognized-menu summary').click();document.querySelector('#manualRecognized .recognized-delete').click()");assert.equal(await js("document.querySelectorAll('#manualRecognized .recognized-entry').length"),1);await js("document.getElementById('confirm').click()");await until("document.getElementById('notice').textContent==='报名已入表。'");snapshot=await state();assert.deepEqual(snapshot.campaigns[0].records.filter(r=>r.sourceType==='manual').map(r=>[r.skuId,r.quantity]),[['card2',1]]);
+ await js("document.getElementById('message').value='煌';document.getElementById('parse').click()");await until("document.querySelectorAll('#manualRecognized .recognized-entry').length===1");await js("document.querySelector('#manualRecognized .recognized-menu summary').click();document.querySelector('#manualRecognized .recognized-delete').click()");assert.equal(await js("document.getElementById('confirm').disabled"),true);
+ await js("{const scope=document.getElementById('manualProductScope');scope.value='';scope.dispatchEvent(new Event('change'));}document.getElementById('message').value='毛绒延展扣A1 男人1（代排）';document.getElementById('parse').click()");await until("document.querySelectorAll('#manualRecognized .recognized-entry').length===2");assert.equal(await js("document.getElementById('confirm').disabled"),true);
+ await js("document.querySelector('#manualRecognized .recognized-entry:last-child summary').click();document.querySelector('#manualRecognized .recognized-entry:last-child .recognized-delete').click()");assert.equal(await js("document.getElementById('confirm').disabled"),false);
+ await js("document.querySelector('#manualRecognized').scrollIntoView({block:'center'})");await pause(100);await fsp.writeFile(path.join(root,'backups','recognition-items.png'),(await win.webContents.capturePage()).toPNG());
+ console.log('Recognition UI passed: per-entry menus, preview/issue removal, scoped manual role aliases, atomic retry and no catalog deletion.');
+}
+run().then(()=>finish(0)).catch(e=>{console.error(e.stack);finish(1,e.stack);});
+async function finish(code,error=''){try{fs.writeFileSync(path.join(root,'backups','recognition-ui-result.json'),JSON.stringify({passed:code===0,error}));win?.destroy();if(backend)await new Promise(r=>backend.server.close(r));await fsp.rm(fixture,{recursive:true,force:true});}finally{app.exit(code);}}

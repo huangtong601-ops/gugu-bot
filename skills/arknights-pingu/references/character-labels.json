@@ -1,0 +1,4534 @@
+{
+  "characters": [
+    {
+      "name": "Lancet-2",
+      "appellation": "Lancet-2"
+    },
+    {
+      "name": "Castle-3",
+      "appellation": "Castle-3"
+    },
+    {
+      "name": "虎狼丸",
+      "appellation": "Koromaru"
+    },
+    {
+      "name": "THRM-EX",
+      "appellation": "Thermal-EX"
+    },
+    {
+      "name": "正义骑士号",
+      "appellation": "\"Justice Knight\""
+    },
+    {
+      "name": "泰拉大陆调查团",
+      "appellation": "Terra Research Commission"
+    },
+    {
+      "name": "U-Official",
+      "appellation": "U-Official"
+    },
+    {
+      "name": "Friston-3",
+      "appellation": "Friston-3"
+    },
+    {
+      "name": "PhonoR-0",
+      "appellation": "PhonoR-0"
+    },
+    {
+      "name": "CONFESS-47",
+      "appellation": "CONFESS-47"
+    },
+    {
+      "name": "GALLUS²",
+      "appellation": "GALLUS²"
+    },
+    {
+      "name": "罗德岛隐秘队",
+      "appellation": "Rhodes Island Recon"
+    },
+    {
+      "name": "夜刀",
+      "appellation": "Yato"
+    },
+    {
+      "name": "黑角",
+      "appellation": "Noir Corne"
+    },
+    {
+      "name": "巡林者",
+      "appellation": "Rangers"
+    },
+    {
+      "name": "杜林",
+      "appellation": "Durin"
+    },
+    {
+      "name": "12F",
+      "appellation": "12F"
+    },
+    {
+      "name": "芬",
+      "appellation": "Fang"
+    },
+    {
+      "name": "香草",
+      "appellation": "Vanilla"
+    },
+    {
+      "name": "预备干员-近战",
+      "appellation": "Reserve (Melee)"
+    },
+    {
+      "name": "翎羽",
+      "appellation": "Plume"
+    },
+    {
+      "name": "玫兰莎",
+      "appellation": "Melantha"
+    },
+    {
+      "name": "泡普卡",
+      "appellation": "Popukar"
+    },
+    {
+      "name": "卡缇",
+      "appellation": "Cardigan"
+    },
+    {
+      "name": "米格鲁",
+      "appellation": "Beagle"
+    },
+    {
+      "name": "预备干员-重装",
+      "appellation": "Reserve (Defender)"
+    },
+    {
+      "name": "斑点",
+      "appellation": "Spot"
+    },
+    {
+      "name": "克洛丝",
+      "appellation": "Kroos"
+    },
+    {
+      "name": "安德切尔",
+      "appellation": "Adnachiel"
+    },
+    {
+      "name": "预备干员-狙击",
+      "appellation": "Reserve (Sniper)"
+    },
+    {
+      "name": "炎熔",
+      "appellation": "Lava"
+    },
+    {
+      "name": "芙蓉",
+      "appellation": "Hibiscus"
+    },
+    {
+      "name": "安赛尔",
+      "appellation": "Ansel"
+    },
+    {
+      "name": "预备干员-后勤",
+      "appellation": "Reserve (Logistic)"
+    },
+    {
+      "name": "史都华德",
+      "appellation": "Steward"
+    },
+    {
+      "name": "预备干员-术师",
+      "appellation": "Reserve (Caster)"
+    },
+    {
+      "name": "梓兰",
+      "appellation": "Orchid"
+    },
+    {
+      "name": "夜烟",
+      "appellation": "Haze"
+    },
+    {
+      "name": "预备干员-术师",
+      "appellation": "Reserve Operator - Caster"
+    },
+    {
+      "name": "远山",
+      "appellation": "Gitano"
+    },
+    {
+      "name": "格雷伊",
+      "appellation": "Greyy"
+    },
+    {
+      "name": "协律",
+      "appellation": "Akkord"
+    },
+    {
+      "name": "卡达",
+      "appellation": "Click"
+    },
+    {
+      "name": "深靛",
+      "appellation": "Indigo"
+    },
+    {
+      "name": "布丁",
+      "appellation": "Pudding"
+    },
+    {
+      "name": "杰西卡",
+      "appellation": "Jessica"
+    },
+    {
+      "name": "流星",
+      "appellation": "Meteor"
+    },
+    {
+      "name": "红云",
+      "appellation": "Vermeil"
+    },
+    {
+      "name": "梅",
+      "appellation": "May"
+    },
+    {
+      "name": "预备干员-狙击",
+      "appellation": "Reserve Operator - Sniper"
+    },
+    {
+      "name": "白雪",
+      "appellation": "ShiraYuki"
+    },
+    {
+      "name": "松果",
+      "appellation": "Pinecone"
+    },
+    {
+      "name": "安比尔",
+      "appellation": "Ambriel"
+    },
+    {
+      "name": "酸糖",
+      "appellation": "Aciddrop"
+    },
+    {
+      "name": "铅踝",
+      "appellation": "Totter"
+    },
+    {
+      "name": "跃跃",
+      "appellation": "Caper"
+    },
+    {
+      "name": "讯使",
+      "appellation": "Courier"
+    },
+    {
+      "name": "清道夫",
+      "appellation": "Scavenger"
+    },
+    {
+      "name": "预备干员-先锋",
+      "appellation": "Reserve Operator - Vanguard"
+    },
+    {
+      "name": "红豆",
+      "appellation": "Vigna"
+    },
+    {
+      "name": "桃金娘",
+      "appellation": "Myrtle"
+    },
+    {
+      "name": "豆苗",
+      "appellation": "Beanstalk"
+    },
+    {
+      "name": "冬时",
+      "appellation": "Снегурочка"
+    },
+    {
+      "name": "杜宾",
+      "appellation": "Dobermann"
+    },
+    {
+      "name": "缠丸",
+      "appellation": "Matoimaru"
+    },
+    {
+      "name": "断罪者",
+      "appellation": "Conviction"
+    },
+    {
+      "name": "预备干员-近卫",
+      "appellation": "Reserve Operator - Guard"
+    },
+    {
+      "name": "霜叶",
+      "appellation": "Frostleaf"
+    },
+    {
+      "name": "艾丝黛尔",
+      "appellation": "Estelle"
+    },
+    {
+      "name": "慕斯",
+      "appellation": "Mousse"
+    },
+    {
+      "name": "刻刀",
+      "appellation": "Cutter"
+    },
+    {
+      "name": "宴",
+      "appellation": "Utage"
+    },
+    {
+      "name": "芳汀",
+      "appellation": "Arene"
+    },
+    {
+      "name": "罗小黑",
+      "appellation": "Luo Xiaohei"
+    },
+    {
+      "name": "石英",
+      "appellation": "Quartz"
+    },
+    {
+      "name": "休谟斯",
+      "appellation": "Humus"
+    },
+    {
+      "name": "骋风",
+      "appellation": "Windscoot"
+    },
+    {
+      "name": "砾",
+      "appellation": "Gravel"
+    },
+    {
+      "name": "预备干员-特种",
+      "appellation": "Reserve Operator - Specialist"
+    },
+    {
+      "name": "孑",
+      "appellation": "Jaye"
+    },
+    {
+      "name": "暗索",
+      "appellation": "Rope"
+    },
+    {
+      "name": "末药",
+      "appellation": "Myrrh"
+    },
+    {
+      "name": "嘉维尔",
+      "appellation": "Gavial"
+    },
+    {
+      "name": "苏苏洛",
+      "appellation": "Sussurro"
+    },
+    {
+      "name": "预备干员-医疗",
+      "appellation": "Reserve Operator - Medic"
+    },
+    {
+      "name": "调香师",
+      "appellation": "Perfumer"
+    },
+    {
+      "name": "清流",
+      "appellation": "Purestream"
+    },
+    {
+      "name": "褐果",
+      "appellation": "Chestnut"
+    },
+    {
+      "name": "角峰",
+      "appellation": "Matterhorn"
+    },
+    {
+      "name": "蛇屠箱",
+      "appellation": "Cuora"
+    },
+    {
+      "name": "泡泡",
+      "appellation": "Bubble"
+    },
+    {
+      "name": "预备干员-重装",
+      "appellation": "Reserve Operator - Defender"
+    },
+    {
+      "name": "露托",
+      "appellation": "Lutonada"
+    },
+    {
+      "name": "古米",
+      "appellation": "Гум"
+    },
+    {
+      "name": "坚雷",
+      "appellation": "Dur-nar"
+    },
+    {
+      "name": "深海色",
+      "appellation": "Deepcolor"
+    },
+    {
+      "name": "地灵",
+      "appellation": "Earthspirit"
+    },
+    {
+      "name": "波登可",
+      "appellation": "Podenco"
+    },
+    {
+      "name": "预备干员-辅助",
+      "appellation": "Reserve Operator - Supporter"
+    },
+    {
+      "name": "罗比菈塔",
+      "appellation": "Roberta"
+    },
+    {
+      "name": "盟约·辅助干员",
+      "appellation": "Alliance/Supportive Opertator"
+    },
+    {
+      "name": "伊桑",
+      "appellation": "Ethan"
+    },
+    {
+      "name": "阿消",
+      "appellation": "Shaw"
+    },
+    {
+      "name": "维荻",
+      "appellation": "Verdant"
+    },
+    {
+      "name": "云迹",
+      "appellation": "Contrail"
+    },
+    {
+      "name": "白面鸮",
+      "appellation": "Ptilopsis"
+    },
+    {
+      "name": "微风",
+      "appellation": "Breeze"
+    },
+    {
+      "name": "瑰盐",
+      "appellation": "Rose Salt"
+    },
+    {
+      "name": "凛冬",
+      "appellation": "Зима"
+    },
+    {
+      "name": "德克萨斯",
+      "appellation": "Texas"
+    },
+    {
+      "name": "贾维",
+      "appellation": "Chiave"
+    },
+    {
+      "name": "青枳",
+      "appellation": "Poncirus"
+    },
+    {
+      "name": "郁金香",
+      "appellation": "Tulip"
+    },
+    {
+      "name": "红隼",
+      "appellation": "Kestrel"
+    },
+    {
+      "name": "松桐",
+      "appellation": "Matsukiri"
+    },
+    {
+      "name": "苇草",
+      "appellation": "Reed"
+    },
+    {
+      "name": "野鬃",
+      "appellation": "Wild Mane"
+    },
+    {
+      "name": "历阵锐枪芬",
+      "appellation": "Fang the Fire-sharpened"
+    },
+    {
+      "name": "极境",
+      "appellation": "Elysium"
+    },
+    {
+      "name": "万顷",
+      "appellation": "Wanqing"
+    },
+    {
+      "name": "嘉辛塔",
+      "appellation": "Jacinta"
+    },
+    {
+      "name": "夜半",
+      "appellation": "Blacknight"
+    },
+    {
+      "name": "渡桥",
+      "appellation": "Mitm"
+    },
+    {
+      "name": "晓歌",
+      "appellation": "Cantabile"
+    },
+    {
+      "name": "谜图",
+      "appellation": "Puzzle"
+    },
+    {
+      "name": "齐尔查克",
+      "appellation": "Chilchuck"
+    },
+    {
+      "name": "寻澜",
+      "appellation": "Surfer"
+    },
+    {
+      "name": "诗怀雅",
+      "appellation": "Swire"
+    },
+    {
+      "name": "鞭刃",
+      "appellation": "Whislash"
+    },
+    {
+      "name": "苍苔",
+      "appellation": "Bryophyta"
+    },
+    {
+      "name": "医生",
+      "appellation": "Doc"
+    },
+    {
+      "name": "芙兰卡",
+      "appellation": "Franka"
+    },
+    {
+      "name": "炎客",
+      "appellation": "Flamebringer"
+    },
+    {
+      "name": "摩根",
+      "appellation": "Morgan"
+    },
+    {
+      "name": "Sharp",
+      "appellation": "Sharp"
+    },
+    {
+      "name": "莱欧斯",
+      "appellation": "Laios"
+    },
+    {
+      "name": "因陀罗",
+      "appellation": "Indra"
+    },
+    {
+      "name": "燧石",
+      "appellation": "Flint"
+    },
+    {
+      "name": "达格达",
+      "appellation": "Dagda"
+    },
+    {
+      "name": "拉普兰德",
+      "appellation": "Lappland"
+    },
+    {
+      "name": "断崖",
+      "appellation": "Ayerscarpe"
+    },
+    {
+      "name": "烈夏",
+      "appellation": "Лето"
+    },
+    {
+      "name": "铎铃",
+      "appellation": "Wind Chimes"
+    },
+    {
+      "name": "柏喙",
+      "appellation": "Bibeak"
+    },
+    {
+      "name": "战车",
+      "appellation": "Tachanka"
+    },
+    {
+      "name": "幽灵鲨",
+      "appellation": "Specter"
+    },
+    {
+      "name": "布洛卡",
+      "appellation": "Broca"
+    },
+    {
+      "name": "导火索",
+      "appellation": "Fuze"
+    },
+    {
+      "name": "摆渡人",
+      "appellation": "Varkáris"
+    },
+    {
+      "name": "星极",
+      "appellation": "Astesia"
+    },
+    {
+      "name": "铸铁",
+      "appellation": "Sideroca"
+    },
+    {
+      "name": "赤冬",
+      "appellation": "Akafuyu"
+    },
+    {
+      "name": "火龙S黑角",
+      "appellation": "Rathalos S Noir Corne"
+    },
+    {
+      "name": "羽毛笔",
+      "appellation": "La Pluma"
+    },
+    {
+      "name": "海沫",
+      "appellation": "Highmore"
+    },
+    {
+      "name": "龙舌兰",
+      "appellation": "Tequila"
+    },
+    {
+      "name": "奥达",
+      "appellation": "Odda"
+    },
+    {
+      "name": "聆音",
+      "appellation": "Gracebearer"
+    },
+    {
+      "name": "祐天寺若麦",
+      "appellation": "Yūtenji Nyamu"
+    },
+    {
+      "name": "哈蒂娅",
+      "appellation": "Hadiya"
+    },
+    {
+      "name": "雷狼龙S空爆",
+      "appellation": "Zinogre S Catapult"
+    },
+    {
+      "name": "蓝毒",
+      "appellation": "Blue Poison"
+    },
+    {
+      "name": "白金",
+      "appellation": "Platinum"
+    },
+    {
+      "name": "灰喉",
+      "appellation": "GreyThroat"
+    },
+    {
+      "name": "Stormeye",
+      "appellation": "Stormeye"
+    },
+    {
+      "name": "四月",
+      "appellation": "April"
+    },
+    {
+      "name": "寒芒克洛丝",
+      "appellation": "Kroos the Keen Glint"
+    },
+    {
+      "name": "隐现",
+      "appellation": "Insider"
+    },
+    {
+      "name": "陨星",
+      "appellation": "Meteorite"
+    },
+    {
+      "name": "慑砂",
+      "appellation": "Sesa"
+    },
+    {
+      "name": "截云",
+      "appellation": "Jieyun"
+    },
+    {
+      "name": "送葬人",
+      "appellation": "Executor"
+    },
+    {
+      "name": "奥斯塔",
+      "appellation": "Aosta"
+    },
+    {
+      "name": "吉星",
+      "appellation": "Kichisei"
+    },
+    {
+      "name": "天空盒",
+      "appellation": "Skybox"
+    },
+    {
+      "name": "埃癸斯",
+      "appellation": "Aegis"
+    },
+    {
+      "name": "阿米娅",
+      "appellation": "Amiya"
+    },
+    {
+      "name": "苦艾",
+      "appellation": "Absinthe"
+    },
+    {
+      "name": "特米米",
+      "appellation": "Tomimi"
+    },
+    {
+      "name": "雪绒",
+      "appellation": "Qanipalaat"
+    },
+    {
+      "name": "天火",
+      "appellation": "Skyfire"
+    },
+    {
+      "name": "Pith",
+      "appellation": "Pith"
+    },
+    {
+      "name": "惊蛰",
+      "appellation": "Leizi"
+    },
+    {
+      "name": "星源",
+      "appellation": "Astgenne"
+    },
+    {
+      "name": "蜜蜡",
+      "appellation": "Beeswax"
+    },
+    {
+      "name": "莱恩哈特",
+      "appellation": "Leonhardt"
+    },
+    {
+      "name": "寒檀",
+      "appellation": "Santalla"
+    },
+    {
+      "name": "复奏",
+      "appellation": "Ripresa"
+    },
+    {
+      "name": "薄绿",
+      "appellation": "Mint"
+    },
+    {
+      "name": "爱丽丝",
+      "appellation": "Iris"
+    },
+    {
+      "name": "和弦",
+      "appellation": "Harmonie"
+    },
+    {
+      "name": "戴菲恩",
+      "appellation": "Delphine"
+    },
+    {
+      "name": "炎狱炎熔",
+      "appellation": "Lava the Purgatory"
+    },
+    {
+      "name": "蚀清",
+      "appellation": "Corroserum"
+    },
+    {
+      "name": "阿罗玛",
+      "appellation": "Aroma"
+    },
+    {
+      "name": "耶拉",
+      "appellation": "Kjera"
+    },
+    {
+      "name": "洛洛",
+      "appellation": "Rockrock"
+    },
+    {
+      "name": "至简",
+      "appellation": "Minimalist"
+    },
+    {
+      "name": "时隙",
+      "appellation": "Timeslot"
+    },
+    {
+      "name": "折光",
+      "appellation": "Diamante"
+    },
+    {
+      "name": "温米",
+      "appellation": "Warmy"
+    },
+    {
+      "name": "Miss.Christine",
+      "appellation": "Miss.Christine"
+    },
+    {
+      "name": "特克诺",
+      "appellation": "Tecno"
+    },
+    {
+      "name": "梅尔",
+      "appellation": "Mayer"
+    },
+    {
+      "name": "稀音",
+      "appellation": "Scene"
+    },
+    {
+      "name": "衡沙",
+      "appellation": "Sand Reckoner"
+    },
+    {
+      "name": "赫默",
+      "appellation": "Silence"
+    },
+    {
+      "name": "华法琳",
+      "appellation": "Warfarin"
+    },
+    {
+      "name": "亚叶",
+      "appellation": "Folinic"
+    },
+    {
+      "name": "Touch",
+      "appellation": "Touch"
+    },
+    {
+      "name": "录武官",
+      "appellation": "Record Keeper"
+    },
+    {
+      "name": "锡兰",
+      "appellation": "Ceylon"
+    },
+    {
+      "name": "絮雨",
+      "appellation": "Whisperain"
+    },
+    {
+      "name": "诺威尔",
+      "appellation": "Nowell"
+    },
+    {
+      "name": "图耶",
+      "appellation": "Tuye"
+    },
+    {
+      "name": "桑葚",
+      "appellation": "Mulberry"
+    },
+    {
+      "name": "蜜莓",
+      "appellation": "Honeyberry"
+    },
+    {
+      "name": "哈洛德",
+      "appellation": "Harold"
+    },
+    {
+      "name": "濯尘芙蓉",
+      "appellation": "Hibiscus the Purifier"
+    },
+    {
+      "name": "刺玫",
+      "appellation": "Vendela"
+    },
+    {
+      "name": "明椒",
+      "appellation": "Paprika"
+    },
+    {
+      "name": "莎草",
+      "appellation": "Papyrus"
+    },
+    {
+      "name": "乌啾",
+      "appellation": "Укусик"
+    },
+    {
+      "name": "风絮",
+      "appellation": "Taraxacum"
+    },
+    {
+      "name": "临光",
+      "appellation": "Nearl"
+    },
+    {
+      "name": "吽",
+      "appellation": "Hung"
+    },
+    {
+      "name": "深律",
+      "appellation": "Bassline"
+    },
+    {
+      "name": "森西",
+      "appellation": "Senshi"
+    },
+    {
+      "name": "红",
+      "appellation": "Projekt Red"
+    },
+    {
+      "name": "槐琥",
+      "appellation": "Waai Fu"
+    },
+    {
+      "name": "卡夫卡",
+      "appellation": "Kafka"
+    },
+    {
+      "name": "乌有",
+      "appellation": "Mr.Nothing"
+    },
+    {
+      "name": "裁度",
+      "appellation": "Figurino"
+    },
+    {
+      "name": "雷蛇",
+      "appellation": "Liskarm"
+    },
+    {
+      "name": "深巡",
+      "appellation": "Underflow"
+    },
+    {
+      "name": "可颂",
+      "appellation": "Croissant"
+    },
+    {
+      "name": "拜松",
+      "appellation": "Bison"
+    },
+    {
+      "name": "火神",
+      "appellation": "Vulcan"
+    },
+    {
+      "name": "折桠",
+      "appellation": "Веточки"
+    },
+    {
+      "name": "石棉",
+      "appellation": "Asbestos"
+    },
+    {
+      "name": "暮落",
+      "appellation": "Shalem"
+    },
+    {
+      "name": "暮落",
+      "appellation": "Shalem"
+    },
+    {
+      "name": "车尔尼",
+      "appellation": "Czerny"
+    },
+    {
+      "name": "闪击",
+      "appellation": "Blitz"
+    },
+    {
+      "name": "暴雨",
+      "appellation": "Heavyrain"
+    },
+    {
+      "name": "灰毫",
+      "appellation": "Ashlock"
+    },
+    {
+      "name": "火哨",
+      "appellation": "Firewhistle"
+    },
+    {
+      "name": "极光",
+      "appellation": "Aurora"
+    },
+    {
+      "name": "洋灰",
+      "appellation": "Cement"
+    },
+    {
+      "name": "菲莱",
+      "appellation": "Philae"
+    },
+    {
+      "name": "裂响",
+      "appellation": "Crackborne"
+    },
+    {
+      "name": "普罗旺斯",
+      "appellation": "Provence"
+    },
+    {
+      "name": "玫拉",
+      "appellation": "Melanite"
+    },
+    {
+      "name": "守林人",
+      "appellation": "Firewatch"
+    },
+    {
+      "name": "安哲拉",
+      "appellation": "Andreana"
+    },
+    {
+      "name": "子月",
+      "appellation": "Lunacub"
+    },
+    {
+      "name": "熔泉",
+      "appellation": "Toddifons"
+    },
+    {
+      "name": "埃拉托",
+      "appellation": "Erato"
+    },
+    {
+      "name": "矩",
+      "appellation": "Ju"
+    },
+    {
+      "name": "承曦格雷伊",
+      "appellation": "Greyy the Lightningbearer"
+    },
+    {
+      "name": "冰酿",
+      "appellation": "Coldshot"
+    },
+    {
+      "name": "雪猎",
+      "appellation": "Snow Hunter"
+    },
+    {
+      "name": "水灯心",
+      "appellation": "Brigid"
+    },
+    {
+      "name": "空构",
+      "appellation": "Spuria"
+    },
+    {
+      "name": "崖心",
+      "appellation": "Cliffheart"
+    },
+    {
+      "name": "雪雉",
+      "appellation": "Snowsant"
+    },
+    {
+      "name": "杏仁",
+      "appellation": "Almond"
+    },
+    {
+      "name": "初雪",
+      "appellation": "Pramanix"
+    },
+    {
+      "name": "巫恋",
+      "appellation": "Shamare"
+    },
+    {
+      "name": "海霓",
+      "appellation": "Lucilla"
+    },
+    {
+      "name": "德·托莱多",
+      "appellation": "de Toledo"
+    },
+    {
+      "name": "真理",
+      "appellation": "Истина"
+    },
+    {
+      "name": "格劳克斯",
+      "appellation": "Glaucus"
+    },
+    {
+      "name": "但书",
+      "appellation": "Proviso"
+    },
+    {
+      "name": "小满",
+      "appellation": "Grain Buds"
+    },
+    {
+      "name": "掠风",
+      "appellation": "Windflit"
+    },
+    {
+      "name": "凯瑟琳",
+      "appellation": "Catherine"
+    },
+    {
+      "name": "阿兰娜",
+      "appellation": "Alanna"
+    },
+    {
+      "name": "空",
+      "appellation": "Sora"
+    },
+    {
+      "name": "海蒂",
+      "appellation": "Heidi"
+    },
+    {
+      "name": "三角初华",
+      "appellation": "Misumi Uika"
+    },
+    {
+      "name": "月禾",
+      "appellation": "Tsukinogi"
+    },
+    {
+      "name": "九色鹿",
+      "appellation": "Nine-Colored Deer"
+    },
+    {
+      "name": "夏栎",
+      "appellation": "Quercus"
+    },
+    {
+      "name": "行箸",
+      "appellation": "Xingzhu"
+    },
+    {
+      "name": "撷英调香师",
+      "appellation": "Perfumer the Distilled"
+    },
+    {
+      "name": "凛视",
+      "appellation": "Valarqvin"
+    },
+    {
+      "name": "波卜",
+      "appellation": "Bobbing"
+    },
+    {
+      "name": "伯塔尼",
+      "appellation": "Ботани"
+    },
+    {
+      "name": "岳羽由加莉",
+      "appellation": "Yukari Takeba"
+    },
+    {
+      "name": "佩德洛",
+      "appellation": "Pedro"
+    },
+    {
+      "name": "狮蝎",
+      "appellation": "Manticore"
+    },
+    {
+      "name": "绮良",
+      "appellation": "Kirara"
+    },
+    {
+      "name": "八幡海铃",
+      "appellation": "Yahata Umiri"
+    },
+    {
+      "name": "食铁兽",
+      "appellation": "FEater"
+    },
+    {
+      "name": "见行者",
+      "appellation": "Enforcer"
+    },
+    {
+      "name": "罗宾",
+      "appellation": "Robin"
+    },
+    {
+      "name": "霜华",
+      "appellation": "Frost"
+    },
+    {
+      "name": "钼铅",
+      "appellation": "Wulfenite"
+    },
+    {
+      "name": "贝娜",
+      "appellation": "Bena"
+    },
+    {
+      "name": "风丸",
+      "appellation": "Kazemaru"
+    },
+    {
+      "name": "双月",
+      "appellation": "Iana"
+    },
+    {
+      "name": "若叶睦",
+      "appellation": "Wakaba Mutsumi"
+    },
+    {
+      "name": "锡人",
+      "appellation": "Tin Man"
+    },
+    {
+      "name": "旅骨",
+      "appellation": "Homebound"
+    },
+    {
+      "name": "蒂比",
+      "appellation": "Tippi"
+    },
+    {
+      "name": "能天使",
+      "appellation": "Exusiai"
+    },
+    {
+      "name": "空弦",
+      "appellation": "Archetto"
+    },
+    {
+      "name": "灰烬",
+      "appellation": "Ash"
+    },
+    {
+      "name": "Stormeye",
+      "appellation": "Stormeye"
+    },
+    {
+      "name": "黑",
+      "appellation": "Schwarz"
+    },
+    {
+      "name": "鸿雪",
+      "appellation": "Позёмка"
+    },
+    {
+      "name": "焰狐龙梓兰",
+      "appellation": "Violet Mizutsune Orchid"
+    },
+    {
+      "name": "远牙",
+      "appellation": "Fartooth"
+    },
+    {
+      "name": "蕾缪安",
+      "appellation": "Lemuen"
+    },
+    {
+      "name": "W",
+      "appellation": "W"
+    },
+    {
+      "name": "菲亚梅塔",
+      "appellation": "Fiammetta"
+    },
+    {
+      "name": "早露",
+      "appellation": "Роса"
+    },
+    {
+      "name": "提丰",
+      "appellation": "Typhon"
+    },
+    {
+      "name": "迷迭香",
+      "appellation": "Rosmontis"
+    },
+    {
+      "name": "维什戴尔",
+      "appellation": "Wiš'adel"
+    },
+    {
+      "name": "假日威龙陈",
+      "appellation": "Ch'en the Holungday"
+    },
+    {
+      "name": "莱伊",
+      "appellation": "Ray"
+    },
+    {
+      "name": "娜仁图亚",
+      "appellation": "Narantuya"
+    },
+    {
+      "name": "推进之王",
+      "appellation": "Siege"
+    },
+    {
+      "name": "风笛",
+      "appellation": "Bagpipe"
+    },
+    {
+      "name": "嵯峨",
+      "appellation": "Saga"
+    },
+    {
+      "name": "忍冬",
+      "appellation": "Vulpisfoglia"
+    },
+    {
+      "name": "琴柳",
+      "appellation": "Saileach"
+    },
+    {
+      "name": "焰尾",
+      "appellation": "Flametail"
+    },
+    {
+      "name": "郁金香",
+      "appellation": "Tulip"
+    },
+    {
+      "name": "伺夜",
+      "appellation": "Vigil"
+    },
+    {
+      "name": "缪尔赛思",
+      "appellation": "Muelsyse"
+    },
+    {
+      "name": "可露希尔",
+      "appellation": "Closure"
+    },
+    {
+      "name": "凛御银灰",
+      "appellation": "SilverAsh the Reignfrost"
+    },
+    {
+      "name": "伊内丝",
+      "appellation": "Ines"
+    },
+    {
+      "name": "伊芙利特",
+      "appellation": "Ifrit"
+    },
+    {
+      "name": "谬因",
+      "appellation": "Aphrissa"
+    },
+    {
+      "name": "莫斯提马",
+      "appellation": "Mostima"
+    },
+    {
+      "name": "艾雅法拉",
+      "appellation": "Eyjafjalla"
+    },
+    {
+      "name": "刻俄柏",
+      "appellation": "Ceobe"
+    },
+    {
+      "name": "霍尔海雅",
+      "appellation": "Ho'olheyak"
+    },
+    {
+      "name": "逻各斯",
+      "appellation": "Logos"
+    },
+    {
+      "name": "夕",
+      "appellation": "Dusk"
+    },
+    {
+      "name": "玛露西尔",
+      "appellation": "Marcille"
+    },
+    {
+      "name": "Pith",
+      "appellation": "Pith"
+    },
+    {
+      "name": "异客",
+      "appellation": "Passenger"
+    },
+    {
+      "name": "卡涅利安",
+      "appellation": "Carnelian"
+    },
+    {
+      "name": "林",
+      "appellation": "Lin"
+    },
+    {
+      "name": "圣聆初雪",
+      "appellation": "Pramanix the Prerita"
+    },
+    {
+      "name": "澄闪",
+      "appellation": "Goldenglow"
+    },
+    {
+      "name": "荒芜拉普兰德",
+      "appellation": "Lappland the Decadenza"
+    },
+    {
+      "name": "黑键",
+      "appellation": "Ebenholz"
+    },
+    {
+      "name": "维伊",
+      "appellation": "Вий"
+    },
+    {
+      "name": "妮芙",
+      "appellation": "Nymph"
+    },
+    {
+      "name": "烛煌",
+      "appellation": "Blaze the Igniting Spark"
+    },
+    {
+      "name": "真言",
+      "appellation": "Mantra"
+    },
+    {
+      "name": "死芒",
+      "appellation": "Necrass"
+    },
+    {
+      "name": "灵知",
+      "appellation": "Gnosis"
+    },
+    {
+      "name": "安洁莉娜",
+      "appellation": "Angelina"
+    },
+    {
+      "name": "铃兰",
+      "appellation": "Suzuran"
+    },
+    {
+      "name": "Raidian",
+      "appellation": "Raidian"
+    },
+    {
+      "name": "溯光星源",
+      "appellation": "Astgenne the Lightchaser"
+    },
+    {
+      "name": "麦哲伦",
+      "appellation": "Magallan"
+    },
+    {
+      "name": "电弧",
+      "appellation": "Raidian"
+    },
+    {
+      "name": "浊心斯卡蒂",
+      "appellation": "Skadi the Corrupting Heart"
+    },
+    {
+      "name": "魔王",
+      "appellation": "Civilight Eterna"
+    },
+    {
+      "name": "淬羽赫默",
+      "appellation": "Silence the Paradigmatic"
+    },
+    {
+      "name": "遥",
+      "appellation": "Haruka"
+    },
+    {
+      "name": "令",
+      "appellation": "Ling"
+    },
+    {
+      "name": "白铁",
+      "appellation": "Stainless"
+    },
+    {
+      "name": "娜斯提",
+      "appellation": "Nasti"
+    },
+    {
+      "name": "塑心",
+      "appellation": "Virtuosa"
+    },
+    {
+      "name": "酒神",
+      "appellation": "Tragodia"
+    },
+    {
+      "name": "傀影",
+      "appellation": "Phantom"
+    },
+    {
+      "name": "缄默德克萨斯",
+      "appellation": "Texas the Omertosa"
+    },
+    {
+      "name": "麒麟R夜刀",
+      "appellation": "Kirin R Yato"
+    },
+    {
+      "name": "弑君者",
+      "appellation": "Crownslayer"
+    },
+    {
+      "name": "Misery",
+      "appellation": "Misery"
+    },
+    {
+      "name": "老鲤",
+      "appellation": "Lee"
+    },
+    {
+      "name": "琳琅诗怀雅",
+      "appellation": "Swire the Elegant Wit"
+    },
+    {
+      "name": "温蒂",
+      "appellation": "Weedy"
+    },
+    {
+      "name": "阿",
+      "appellation": "Aak"
+    },
+    {
+      "name": "新约能天使",
+      "appellation": "Exusiai the New Covenant"
+    },
+    {
+      "name": "歌蕾蒂娅",
+      "appellation": "Gladiia"
+    },
+    {
+      "name": "水月",
+      "appellation": "Mizuki"
+    },
+    {
+      "name": "阿斯卡纶",
+      "appellation": "Ascalon"
+    },
+    {
+      "name": "归溟幽灵鲨",
+      "appellation": "Specter the Unchained"
+    },
+    {
+      "name": "结城理",
+      "appellation": "Makoto Yuki"
+    },
+    {
+      "name": "多萝西",
+      "appellation": "Dorothy"
+    },
+    {
+      "name": "艾拉",
+      "appellation": "Ela"
+    },
+    {
+      "name": "望",
+      "appellation": "Wang"
+    },
+    {
+      "name": "引星棘刺",
+      "appellation": "Thorns the Lodestar"
+    },
+    {
+      "name": "予愿安洁莉娜",
+      "appellation": "Angelina the Mellow Wish"
+    },
+    {
+      "name": "闪灵",
+      "appellation": "Shining"
+    },
+    {
+      "name": "Touch",
+      "appellation": "Touch"
+    },
+    {
+      "name": "夜莺",
+      "appellation": "Nightingale"
+    },
+    {
+      "name": "凯尔希",
+      "appellation": "Kal'tsit"
+    },
+    {
+      "name": "流明",
+      "appellation": "Lumen"
+    },
+    {
+      "name": "纯烬艾雅法拉",
+      "appellation": "Eyjafjalla the Hvít Aska"
+    },
+    {
+      "name": "焰影苇草",
+      "appellation": "Reed The Flame Shadow"
+    },
+    {
+      "name": "缇缇",
+      "appellation": "Titi"
+    },
+    {
+      "name": "Mon3tr",
+      "appellation": "Mon3tr"
+    },
+    {
+      "name": "凯尔希·思衡托",
+      "appellation": "Kal'tsit·Esperanta"
+    },
+    {
+      "name": "星熊",
+      "appellation": "Hoshiguma"
+    },
+    {
+      "name": "Mechanist",
+      "appellation": "Mechanist"
+    },
+    {
+      "name": "塞雷娅",
+      "appellation": "Saria"
+    },
+    {
+      "name": "瑕光",
+      "appellation": "Blemishine"
+    },
+    {
+      "name": "黍",
+      "appellation": "Shu"
+    },
+    {
+      "name": "年",
+      "appellation": "Nian"
+    },
+    {
+      "name": "泥岩",
+      "appellation": "Mudrock"
+    },
+    {
+      "name": "斥罪",
+      "appellation": "Penance"
+    },
+    {
+      "name": "森蚺",
+      "appellation": "Eunectes"
+    },
+    {
+      "name": "号角",
+      "appellation": "Horn"
+    },
+    {
+      "name": "涤火杰西卡",
+      "appellation": "Jessica the Liberated"
+    },
+    {
+      "name": "信仰搅拌机",
+      "appellation": "Sankta Miksaparato"
+    },
+    {
+      "name": "机械师",
+      "appellation": "Mechanist"
+    },
+    {
+      "name": "余",
+      "appellation": "Yu"
+    },
+    {
+      "name": "珊比",
+      "appellation": "Thumpy"
+    },
+    {
+      "name": "斩业星熊",
+      "appellation": "Hoshiguma the Breacher"
+    },
+    {
+      "name": "山",
+      "appellation": "Mountain"
+    },
+    {
+      "name": "重岳",
+      "appellation": "Chongyue"
+    },
+    {
+      "name": "贝洛内",
+      "appellation": "Bellone"
+    },
+    {
+      "name": "银灰",
+      "appellation": "SilverAsh"
+    },
+    {
+      "name": "棘刺",
+      "appellation": "Thorns"
+    },
+    {
+      "name": "仇白",
+      "appellation": "Qiubai"
+    },
+    {
+      "name": "丰川祥子",
+      "appellation": "Togawa Sakiko"
+    },
+    {
+      "name": "领主·Sharp",
+      "appellation": "Lord/Sharp"
+    },
+    {
+      "name": "赫德雷",
+      "appellation": "Hoederer"
+    },
+    {
+      "name": "乌尔比安",
+      "appellation": "Ulpianus"
+    },
+    {
+      "name": "佩佩",
+      "appellation": "Pepe"
+    },
+    {
+      "name": "怒潮凛冬",
+      "appellation": "Zima the Raging Tide"
+    },
+    {
+      "name": "陈",
+      "appellation": "Ch'en"
+    },
+    {
+      "name": "艾丽妮",
+      "appellation": "Irene"
+    },
+    {
+      "name": "锏",
+      "appellation": "Degenbrecher"
+    },
+    {
+      "name": "煌",
+      "appellation": "Blaze"
+    },
+    {
+      "name": "百炼嘉维尔",
+      "appellation": "Gavial the Invincible"
+    },
+    {
+      "name": "史尔特尔",
+      "appellation": "Surtr"
+    },
+    {
+      "name": "薇薇安娜",
+      "appellation": "Viviana"
+    },
+    {
+      "name": "维娜·维多利亚",
+      "appellation": "Vina Victoria"
+    },
+    {
+      "name": "赤刃明霄陈",
+      "appellation": "Ch'en the Dawnstreak"
+    },
+    {
+      "name": "赫拉格",
+      "appellation": "Hellagur"
+    },
+    {
+      "name": "左乐",
+      "appellation": "Zuo Le"
+    },
+    {
+      "name": "帕拉斯",
+      "appellation": "Pallas"
+    },
+    {
+      "name": "耀骑士临光",
+      "appellation": "Nearl the Radiant Knight"
+    },
+    {
+      "name": "止颂",
+      "appellation": "Lessing"
+    },
+    {
+      "name": "Sharp",
+      "appellation": "Sharp"
+    },
+    {
+      "name": "圣约送葬人",
+      "appellation": "Executor the Ex Foedere"
+    },
+    {
+      "name": "隐德来希",
+      "appellation": "Entelechia"
+    },
+    {
+      "name": "玛恩纳",
+      "appellation": "Młynar"
+    },
+    {
+      "name": "司霆惊蛰",
+      "appellation": "Leizi the Thunderbringer"
+    },
+    {
+      "name": "克莱门莎",
+      "appellation": "Clementia"
+    },
+    {
+      "name": "响石",
+      "appellation": "Cairn"
+    },
+    {
+      "name": "医疗探机",
+      "appellation": "Medical Drone"
+    },
+    {
+      "name": "触手",
+      "appellation": "Tentacle"
+    },
+    {
+      "name": "Mon3tr",
+      "appellation": "Mon3tr"
+    },
+    {
+      "name": "幻影",
+      "appellation": "Cage"
+    },
+    {
+      "name": "机械水獭",
+      "appellation": "Mibo"
+    },
+    {
+      "name": "龙腾.F",
+      "appellation": "DDF Type-F"
+    },
+    {
+      "name": "龙腾.L",
+      "appellation": "DDF Type-L"
+    },
+    {
+      "name": "龙腾.A",
+      "appellation": "DDF Type-A"
+    },
+    {
+      "name": "诅咒娃娃",
+      "appellation": "Curse Doll"
+    },
+    {
+      "name": "镜中虚影",
+      "appellation": "The Mirror"
+    },
+    {
+      "name": "此面向敌",
+      "appellation": "F.T.E"
+    },
+    {
+      "name": "工程蓄水炮",
+      "appellation": "Cannon"
+    },
+    {
+      "name": "移动摄影器",
+      "appellation": "M.P.M"
+    },
+    {
+      "name": "沙之碑",
+      "appellation": "Desert Obelisk"
+    },
+    {
+      "name": "迷迭香的战术装备",
+      "appellation": "Rosmontis-gear"
+    },
+    {
+      "name": "“夹子”",
+      "appellation": "\"Clip\" Charge"
+    },
+    {
+      "name": "磐蟹护卫队",
+      "appellation": "M.C.G"
+    },
+    {
+      "name": "“小自在”",
+      "appellation": "Little Instinct"
+    },
+    {
+      "name": "迎宾踏垫",
+      "appellation": "Welcome Mat"
+    },
+    {
+      "name": "斯卡蒂的海嗣",
+      "appellation": "Skadi's seaborn"
+    },
+    {
+      "name": "全自动造型仪",
+      "appellation": "Making-up Machine"
+    },
+    {
+      "name": "“耀阳”",
+      "appellation": "Blazing Sun"
+    },
+    {
+      "name": "“清平”",
+      "appellation": "Tranquility"
+    },
+    {
+      "name": "“逍遥”",
+      "appellation": "Peripateticism"
+    },
+    {
+      "name": "“弦惊”",
+      "appellation": "Thunderer"
+    },
+    {
+      "name": "戴乌",
+      "appellation": "dive"
+    },
+    {
+      "name": "赛柯",
+      "appellation": "cycle"
+    },
+    {
+      "name": "桑特拉",
+      "appellation": "centre"
+    },
+    {
+      "name": "眠兽",
+      "appellation": "Hypnos"
+    },
+    {
+      "name": "纸偶",
+      "appellation": "Kaminingyo"
+    },
+    {
+      "name": "可靠电池",
+      "appellation": "Reliable Battery"
+    },
+    {
+      "name": "爬行号·防护单元",
+      "appellation": "Crawler Protection Unit"
+    },
+    {
+      "name": "小螺帽",
+      "appellation": "Nutlet"
+    },
+    {
+      "name": "旧日残影",
+      "appellation": "Old Day Remnants"
+    },
+    {
+      "name": "共振装置",
+      "appellation": "Resonator"
+    },
+    {
+      "name": "“打字机”",
+      "appellation": "Typewriters"
+    },
+    {
+      "name": "白铁™多功能平台",
+      "appellation": "Stainless™ Multifunctional platform"
+    },
+    {
+      "name": "白铁™多功能平台",
+      "appellation": "Stainless™ Multifunctional platform"
+    },
+    {
+      "name": "铁钳号·原型机",
+      "appellation": "Prototype of Feist's Metal Crab"
+    },
+    {
+      "name": "狼群",
+      "appellation": "Vigil"
+    },
+    {
+      "name": "夜灯",
+      "appellation": "Night Banisher"
+    },
+    {
+      "name": "流形",
+      "appellation": "Flowing Shape"
+    },
+    {
+      "name": "香槟炸弹",
+      "appellation": "Champagne Bomb"
+    },
+    {
+      "name": "机动盾牌",
+      "appellation": "Mobile personnel shield"
+    },
+    {
+      "name": "沙地兽",
+      "appellation": "Sandbeast"
+    },
+    {
+      "name": "雷鸣地雷",
+      "appellation": "GRZMOT Mine"
+    },
+    {
+      "name": "魂灵之影",
+      "appellation": "Shadow of Revenant"
+    },
+    {
+      "name": "从不混淆的方向",
+      "appellation": "Undeviating Course"
+    },
+    {
+      "name": "樱桃三号",
+      "appellation": "Cherry-3"
+    },
+    {
+      "name": "发条羽兽",
+      "appellation": "Clockwork Fowlbeast"
+    },
+    {
+      "name": "黄金盟誓",
+      "appellation": "Golden Vow"
+    },
+    {
+      "name": "木偶舞者",
+      "appellation": "Puppet Dancer"
+    },
+    {
+      "name": "悲叹的仆役",
+      "appellation": "The Servant of Lament"
+    },
+    {
+      "name": "矿石“杀手”",
+      "appellation": "Rocky Chomper"
+    },
+    {
+      "name": "重构体",
+      "appellation": "Reconstruct"
+    },
+    {
+      "name": "投递坐标",
+      "appellation": "Delivery coordinates"
+    },
+    {
+      "name": "本能的召唤",
+      "appellation": "Blood's whisper"
+    },
+    {
+      "name": "迷狂牢笼",
+      "appellation": "Cage of chaos"
+    },
+    {
+      "name": "风雪之眼",
+      "appellation": "Eye of the Snowstorm"
+    },
+    {
+      "name": "风雪之眼",
+      "appellation": "Eye of the Snowstorm"
+    },
+    {
+      "name": "风雪之眼",
+      "appellation": "Eye of the Snowstorm"
+    },
+    {
+      "name": "保护目标（冻结状态）",
+      "appellation": "Protection Objective – Frozen"
+    },
+    {
+      "name": "“质检专员”",
+      "appellation": "Quality Inspector"
+    },
+    {
+      "name": "“监工专员”",
+      "appellation": "Site Supervisor"
+    },
+    {
+      "name": "“应急承重小组”",
+      "appellation": "Emergency Support Team"
+    },
+    {
+      "name": "棋子",
+      "appellation": "stones"
+    },
+    {
+      "name": "牵绊",
+      "appellation": "Bond"
+    },
+    {
+      "name": "战术锚点",
+      "appellation": "Tactical Anchor"
+    },
+    {
+      "name": "指挥中心",
+      "appellation": "Command Center"
+    },
+    {
+      "name": "征服者传说",
+      "appellation": "Legend of the Conquerors"
+    },
+    {
+      "name": "牙猎犬",
+      "appellation": " Palamute"
+    },
+    {
+      "name": "结构性原理",
+      "appellation": "Structural Principle"
+    },
+    {
+      "name": "中继器",
+      "appellation": "Repeater"
+    },
+    {
+      "name": "“一会儿见！”",
+      "appellation": "\"See you soon!\""
+    },
+    {
+      "name": "障碍物",
+      "appellation": "Crate"
+    },
+    {
+      "name": "震撼装置",
+      "appellation": "EMP"
+    },
+    {
+      "name": "闸门",
+      "appellation": "闸门"
+    },
+    {
+      "name": "侦测器",
+      "appellation": "Detector"
+    },
+    {
+      "name": "干扰装置",
+      "appellation": "Anti-Drone"
+    },
+    {
+      "name": "弩炮",
+      "appellation": "Ballista"
+    },
+    {
+      "name": "指挥终端",
+      "appellation": "CT-01"
+    },
+    {
+      "name": "便携式补给站",
+      "appellation": "Portable Supply"
+    },
+    {
+      "name": "源石冰晶",
+      "appellation": "Originium ICrystal"
+    },
+    {
+      "name": "源石祭坛",
+      "appellation": "Originium Shrine"
+    },
+    {
+      "name": "干扰地雷",
+      "appellation": "Interferential Mine"
+    },
+    {
+      "name": "源石流发生装置",
+      "appellation": "F.O.O"
+    },
+    {
+      "name": "L-44\"留声机\"",
+      "appellation": "Gramophone"
+    },
+    {
+      "name": "巨蕈",
+      "appellation": "Huge Fungus"
+    },
+    {
+      "name": "罗德岛临时雇员",
+      "appellation": "Temporary Employer"
+    },
+    {
+      "name": "轰隆隆先生",
+      "appellation": "Mr.Rumble"
+    },
+    {
+      "name": "梅什科线圈",
+      "appellation": "Mieszko coil"
+    },
+    {
+      "name": "道路障碍物",
+      "appellation": "Roads Obstacles"
+    },
+    {
+      "name": "能量聚合体",
+      "appellation": "Energy Crystal"
+    },
+    {
+      "name": "霜星的源石冰晶",
+      "appellation": "Yelena-Crystal"
+    },
+    {
+      "name": "爱国者的源石祭坛",
+      "appellation": "Patriot-Shrine"
+    },
+    {
+      "name": "盾卫",
+      "appellation": "Shield Guard"
+    },
+    {
+      "name": "禁锢装置",
+      "appellation": "Prison Device"
+    },
+    {
+      "name": "改良型二踢脚",
+      "appellation": "D.B.F2.1ver "
+    },
+    {
+      "name": "碎石",
+      "appellation": "Rubble"
+    },
+    {
+      "name": "脉冲防御模组",
+      "appellation": "Pulse Former"
+    },
+    {
+      "name": "催泪瓦斯控制阀",
+      "appellation": "lachrymator Control Valve"
+    },
+    {
+      "name": "无人机工厂",
+      "appellation": "Drone Factory"
+    },
+    {
+      "name": "雪雉的安全起重机",
+      "appellation": "Safety Harness"
+    },
+    {
+      "name": "土石结构",
+      "appellation": "Rockfill Construct"
+    },
+    {
+      "name": "高能源石炸弹",
+      "appellation": "Originium Demo-charge"
+    },
+    {
+      "name": "加固装置",
+      "appellation": "Reinforcing Materials"
+    },
+    {
+      "name": "大帝",
+      "appellation": "Emperor"
+    },
+    {
+      "name": "沙尘暴",
+      "appellation": "Sand Storm"
+    },
+    {
+      "name": "可移动战术机库",
+      "appellation": "Maneuver Drone Hangar"
+    },
+    {
+      "name": "应急救治设施",
+      "appellation": "Emergency Aid Building"
+    },
+    {
+      "name": "子代",
+      "appellation": "Seaborn's Filial Generation"
+    },
+    {
+      "name": "特制水上平台",
+      "appellation": "TinyBoat"
+    },
+    {
+      "name": "风筝",
+      "appellation": "Kite"
+    },
+    {
+      "name": "涨潮控制",
+      "appellation": "Tide Controller"
+    },
+    {
+      "name": "破碎支柱",
+      "appellation": "Tattered Pillar"
+    },
+    {
+      "name": "战场废墟",
+      "appellation": "Battlefield Ruins"
+    },
+    {
+      "name": "爆破装置",
+      "appellation": "Demolition Device"
+    },
+    {
+      "name": "防水蚀镀膜装置",
+      "appellation": "Erosionproof Coating Device"
+    },
+    {
+      "name": "城市霓虹",
+      "appellation": "City Neon "
+    },
+    {
+      "name": "骑士之徽",
+      "appellation": "Knight Trophy"
+    },
+    {
+      "name": "暴风雪",
+      "appellation": "Blizzard"
+    },
+    {
+      "name": "无主的财富",
+      "appellation": "Unowned Treasure"
+    },
+    {
+      "name": "失修舞台雾机",
+      "appellation": "Broken Fog Machine"
+    },
+    {
+      "name": "便携气罐",
+      "appellation": "Gas Tank P."
+    },
+    {
+      "name": "“报幕助手”",
+      "appellation": "“Host's Assistant”"
+    },
+    {
+      "name": "封印的地面",
+      "appellation": "Sealed Floor"
+    },
+    {
+      "name": "丹田",
+      "appellation": "Sealed Floor"
+    },
+    {
+      "name": "“冰淇淋机”",
+      "appellation": "\"Gelato Stop\""
+    },
+    {
+      "name": "伦蒂尼姆城防副炮",
+      "appellation": " Citadel Artillery of Londinium"
+    },
+    {
+      "name": "断罪者",
+      "appellation": "Conviction"
+    },
+    {
+      "name": "圣徒之手",
+      "appellation": "Hand of Saint"
+    },
+    {
+      "name": "溟痕",
+      "appellation": "Sealed Floor"
+    },
+    {
+      "name": "“低音号”",
+      "appellation": "\"Tuba\""
+    },
+    {
+      "name": "L-7 “回音壁”",
+      "appellation": "L-7 \"Whisperer\""
+    },
+    {
+      "name": "“谐振器”",
+      "appellation": "\"Resonator\""
+    },
+    {
+      "name": "战备激活阀",
+      "appellation": "Equipment Activation Valve"
+    },
+    {
+      "name": "预备区发讯器",
+      "appellation": "Preparation Area Transmitter"
+    },
+    {
+      "name": "紧急召回情报箱",
+      "appellation": "Emergency Recall Box"
+    },
+    {
+      "name": "休整区发讯器",
+      "appellation": "Recuperation Area Transmitter"
+    },
+    {
+      "name": "污染晶石",
+      "appellation": "Contaminated Mineral"
+    },
+    {
+      "name": "聚热晶簇",
+      "appellation": "Heat Cluster"
+    },
+    {
+      "name": "改派发讯器",
+      "appellation": "Reassignment Transmitter"
+    },
+    {
+      "name": "R-31重型动力装甲",
+      "appellation": "R-31 powered heavy armor"
+    },
+    {
+      "name": "R-31a重型动力装甲",
+      "appellation": "R-31a powered heavy armor"
+    },
+    {
+      "name": "R-11突击动力装甲",
+      "appellation": "R-11 power armor"
+    },
+    {
+      "name": "R-11a突击动力装甲",
+      "appellation": "R-11a power armor"
+    },
+    {
+      "name": "自走车出发点",
+      "appellation": "Starting Point"
+    },
+    {
+      "name": "自走车单行道",
+      "appellation": "One-way Traffic"
+    },
+    {
+      "name": "荧光孢子",
+      "appellation": "Fluorescent Spores"
+    },
+    {
+      "name": "实体程式",
+      "appellation": "Entitative Program"
+    },
+    {
+      "name": "实体程式控制",
+      "appellation": "Brctrl"
+    },
+    {
+      "name": "暴行",
+      "appellation": "Savage"
+    },
+    {
+      "name": "空爆",
+      "appellation": "Catapult"
+    },
+    {
+      "name": "月见夜",
+      "appellation": "Midnight"
+    },
+    {
+      "name": "猎蜂",
+      "appellation": "Beehunter"
+    },
+    {
+      "name": "杰克",
+      "appellation": "Jackie"
+    },
+    {
+      "name": "夜魔",
+      "appellation": "Nightmare"
+    },
+    {
+      "name": "格拉尼",
+      "appellation": "Grani"
+    },
+    {
+      "name": "斯卡蒂",
+      "appellation": "Skadi"
+    },
+    {
+      "name": "宝箱",
+      "appellation": "Treasure Chest"
+    },
+    {
+      "name": "尖刺宝箱",
+      "appellation": "Spike Treasure Chest"
+    },
+    {
+      "name": "箱形恐鱼",
+      "appellation": "Chest Seaborn"
+    },
+    {
+      "name": "掩体",
+      "appellation": "Barrier"
+    },
+    {
+      "name": "急救包",
+      "appellation": "First-aid Kit"
+    },
+    {
+      "name": "猎潮的骑士",
+      "appellation": "The Tide-hunt Knight"
+    },
+    {
+      "name": "骰子",
+      "appellation": "Dice"
+    },
+    {
+      "name": "8面骰子",
+      "appellation": "Eight-sided Dice"
+    },
+    {
+      "name": "12面骰子",
+      "appellation": "Twelve-sided Dice"
+    },
+    {
+      "name": "钳兽壳粉",
+      "appellation": "Gloompincer Shell Meal"
+    },
+    {
+      "name": "高效泡打粉",
+      "appellation": "Efficient Baking Powder"
+    },
+    {
+      "name": "芳香精油",
+      "appellation": "Fragrant Essential Oil"
+    },
+    {
+      "name": "“汲营枯枝” ",
+      "appellation": "\"Twigs that crave\""
+    },
+    {
+      "name": "阿勒黛的卫护",
+      "appellation": "Allerdale bewards"
+    },
+    {
+      "name": "复仇黑手",
+      "appellation": "Vendetta"
+    },
+    {
+      "name": "沼泽控制",
+      "appellation": "Mire Controller"
+    },
+    {
+      "name": "山海密语仪",
+      "appellation": "Cryptographic Transmitter"
+    },
+    {
+      "name": "城防路障",
+      "appellation": "Defence Roadblock"
+    },
+    {
+      "name": "地形增伤控制",
+      "appellation": "Mire Controller"
+    },
+    {
+      "name": "眩光手雷",
+      "appellation": "Flash Grenade"
+    },
+    {
+      "name": "高能源石爆桶",
+      "appellation": "Originium Barrel Bomb"
+    },
+    {
+      "name": "高压脉冲诡雷",
+      "appellation": "High-voltage Shock Trap"
+    },
+    {
+      "name": "滞空牵引无人机",
+      "appellation": "Wiredrone"
+    },
+    {
+      "name": "滞空牵引无人机",
+      "appellation": "Wiredrone"
+    },
+    {
+      "name": "改性植物激素",
+      "appellation": "Modified Phytohormone"
+    },
+    {
+      "name": "积雪银凇 ",
+      "appellation": "Silvernwhite Bulwark"
+    },
+    {
+      "name": "空间稳定设施",
+      "appellation": "Dimensional Anchoring Pylon"
+    },
+    {
+      "name": "宝箱",
+      "appellation": "Treasure Chest"
+    },
+    {
+      "name": "尖刺宝箱",
+      "appellation": "Spike Treasure Chest"
+    },
+    {
+      "name": "巨壳藤蔓",
+      "appellation": "Testaceous Vinecreeps"
+    },
+    {
+      "name": "阿戈尔示波器",
+      "appellation": "Ægirian Oscilloscope"
+    },
+    {
+      "name": "阿戈尔示波器",
+      "appellation": "Ægirian Oscilloscope"
+    },
+    {
+      "name": "阿戈尔示波器",
+      "appellation": "Ægirian Oscilloscope"
+    },
+    {
+      "name": "自适应补给元件",
+      "appellation": "Multi-purpose Supply Device"
+    },
+    {
+      "name": "自适应补给元件",
+      "appellation": "Multi-purpose Supply Device"
+    },
+    {
+      "name": "自适应补给元件",
+      "appellation": "Multi-purpose Supply Device"
+    },
+    {
+      "name": "镀膜装置导能阀",
+      "appellation": "Coating Device Conducting Valve"
+    },
+    {
+      "name": "重整导能组件",
+      "appellation": "Redeployment Conducting Component"
+    },
+    {
+      "name": "镀膜装置导能阀",
+      "appellation": "Coating Device Conducting Valve"
+    },
+    {
+      "name": "丛林用示踪信标",
+      "appellation": "Eunectes' Beacon"
+    },
+    {
+      "name": "阻断波长",
+      "appellation": "Intercepting Wavelength"
+    },
+    {
+      "name": "干扰波长",
+      "appellation": "Interfering Wavelength"
+    },
+    {
+      "name": "超重绝缘水泥",
+      "appellation": "Overweight Insulating Cement"
+    },
+    {
+      "name": "劣质闪光弹",
+      "appellation": "Defective Stun Grenade"
+    },
+    {
+      "name": "便携式种植槽",
+      "appellation": "Portable Planting Trough"
+    },
+    {
+      "name": "坚固筑台",
+      "appellation": "Firm Platform"
+    },
+    {
+      "name": "都市风壁障",
+      "appellation": "Urban Style Barrier"
+    },
+    {
+      "name": "监控塔",
+      "appellation": "Monitoring Tower"
+    },
+    {
+      "name": "基地",
+      "appellation": "Base"
+    },
+    {
+      "name": "杂木林",
+      "appellation": "Thicket"
+    },
+    {
+      "name": "巨大岩石",
+      "appellation": "Monolith"
+    },
+    {
+      "name": "奇异矿脉",
+      "appellation": "Strange Ore Vein"
+    },
+    {
+      "name": "移动战塔",
+      "appellation": "Mobile Battle Tower"
+    },
+    {
+      "name": "遗迹残骸",
+      "appellation": "Historical Remains"
+    },
+    {
+      "name": "灌木丛",
+      "appellation": "Bush"
+    },
+    {
+      "name": "埋没金属箱",
+      "appellation": "Buried Metal Chest"
+    },
+    {
+      "name": "宝刺金属箱",
+      "appellation": "Thorned Treasure Chest"
+    },
+    {
+      "name": "缚网发射台",
+      "appellation": "Trap Net Launcher"
+    },
+    {
+      "name": "喷拒器",
+      "appellation": "Gas Jet Thrower"
+    },
+    {
+      "name": "防御工事",
+      "appellation": "Fortification"
+    },
+    {
+      "name": "模块演算设施",
+      "appellation": "Modular Computing Station"
+    },
+    {
+      "name": "资源规划站",
+      "appellation": "Resource Planning Station"
+    },
+    {
+      "name": "备勤激活站",
+      "appellation": "Combat Readiness Station"
+    },
+    {
+      "name": "跨地块通讯站",
+      "appellation": "Transregional Communication Station"
+    },
+    {
+      "name": "逃脱点",
+      "appellation": "Escape Route"
+    },
+    {
+      "name": "冶铸台",
+      "appellation": "Mint"
+    },
+    {
+      "name": "木材采集站",
+      "appellation": "Basic Harvester Hub"
+    },
+    {
+      "name": "石材采集站",
+      "appellation": "Premium Harvester Hub"
+    },
+    {
+      "name": "铁矿采集站",
+      "appellation": "Executive Harvester Hub"
+    },
+    {
+      "name": "蟹蟹抽水泵",
+      "appellation": "Crabbie Pumpie"
+    },
+    {
+      "name": "护盾遥控器",
+      "appellation": "Remote Shield Controller"
+    },
+    {
+      "name": "安眠迷香",
+      "appellation": "Hypnotic Censer"
+    },
+    {
+      "name": "醒神秘药",
+      "appellation": "Refreshing Potion"
+    },
+    {
+      "name": "反侦察藏匿机",
+      "appellation": "Anti-Recon Camouflage Device"
+    },
+    {
+      "name": "应急修理车",
+      "appellation": "Emergency Repair Vehicle"
+    },
+    {
+      "name": "联络员",
+      "appellation": "The Liaison"
+    },
+    {
+      "name": "老伊辛",
+      "appellation": "Old Isin"
+    },
+    {
+      "name": "“沙卒”",
+      "appellation": "“Sand Soldier”"
+    },
+    {
+      "name": "曼提柯杀手",
+      "appellation": "Manticore Killer"
+    },
+    {
+      "name": "寻宝人",
+      "appellation": "Treasure Hunter"
+    },
+    {
+      "name": "老练猎手",
+      "appellation": "Seasoned Hunter"
+    },
+    {
+      "name": "“过去的我”",
+      "appellation": "\"My Past Self\""
+    },
+    {
+      "name": "圣像",
+      "appellation": "Holy Statue"
+    },
+    {
+      "name": "塌落的墙垣",
+      "appellation": "Failing Masonry"
+    },
+    {
+      "name": "备用木材",
+      "appellation": "Spare Timber"
+    },
+    {
+      "name": "破旧的木篱",
+      "appellation": "Shabby Fence"
+    },
+    {
+      "name": "街头应急储备",
+      "appellation": "Street Emergency Supplies"
+    },
+    {
+      "name": "解雇者清债程序",
+      "appellation": "Liability Clearing Procedures for Discharged Personnel"
+    },
+    {
+      "name": "全自动划账器",
+      "appellation": "Automatic Account Transfer Device"
+    },
+    {
+      "name": "爆裂毒气罐",
+      "appellation": "Burst Poison Gas Tank"
+    },
+    {
+      "name": "毒雾塔控制",
+      "appellation": "Gas Controller"
+    },
+    {
+      "name": "重力",
+      "appellation": "Gravity"
+    },
+    {
+      "name": "能量扰动放大器",
+      "appellation": "Energy Perturbation Amplifier"
+    },
+    {
+      "name": "能量扰动放大器",
+      "appellation": "Energy Perturbation Amplifier"
+    },
+    {
+      "name": "能量扰动放大器",
+      "appellation": "Energy Perturbation Amplifier"
+    },
+    {
+      "name": "战术装备整理箱",
+      "appellation": "Tactical Equipment Sortbox"
+    },
+    {
+      "name": "战术装备整理箱",
+      "appellation": "Tactical Equipment Sortbox"
+    },
+    {
+      "name": "战术装备整理箱",
+      "appellation": "Tactical Equipment Sortbox"
+    },
+    {
+      "name": "便携式医疗设备",
+      "appellation": "Portable Medical Equipment"
+    },
+    {
+      "name": "便携式医疗设备",
+      "appellation": "Portable Medical Equipment"
+    },
+    {
+      "name": "便携式医疗设备",
+      "appellation": "Portable Medical Equipment"
+    },
+    {
+      "name": "溢能回收转化器",
+      "appellation": "Overflow Recovery Converter"
+    },
+    {
+      "name": "溢能回收转化器",
+      "appellation": "Hyperclock Converter Module"
+    },
+    {
+      "name": "溢能回收转化器",
+      "appellation": "Concentrator Recoverer Module"
+    },
+    {
+      "name": "战地援护无人机",
+      "appellation": "Field Supporting Drone"
+    },
+    {
+      "name": "战地援护无人机",
+      "appellation": "Targeted Renewal Agent"
+    },
+    {
+      "name": "战地援护无人机",
+      "appellation": "Receptor Stimulating Agent"
+    },
+    {
+      "name": "竞技记录分析仪",
+      "appellation": "Tournamental Analyzer"
+    },
+    {
+      "name": "竞技记录分析仪",
+      "appellation": "Complex Arithmetic Component"
+    },
+    {
+      "name": "竞技记录分析仪",
+      "appellation": "Data Allocating Component"
+    },
+    {
+      "name": "“甜蜜狂搅”",
+      "appellation": "\"Supersweetie™ Superblend\""
+    },
+    {
+      "name": "汲取体",
+      "appellation": "Absorber Limb"
+    },
+    {
+      "name": "神经再生",
+      "appellation": "Neuronal Revival"
+    },
+    {
+      "name": "景观喷泉",
+      "appellation": "Scenery Geyser"
+    },
+    {
+      "name": "水汽汽水瓶",
+      "appellation": "Vapor Case"
+    },
+    {
+      "name": "废热喷口",
+      "appellation": "Waste Heat Spout"
+    },
+    {
+      "name": "唤血祭坛",
+      "appellation": "Bloodconvoker Altar"
+    },
+    {
+      "name": "炸弹载荷点",
+      "appellation": "Explosives Loading Point"
+    },
+    {
+      "name": "沥血王座",
+      "appellation": "Sanguine Throne"
+    },
+    {
+      "name": "祭坛式雷达",
+      "appellation": "Altar-type Radar"
+    },
+    {
+      "name": "R-45便携式“留声机”",
+      "appellation": "R-45 Portable \"Gramophone\""
+    },
+    {
+      "name": "景观巨蕈",
+      "appellation": "Ornamental Giant Mushroom"
+    },
+    {
+      "name": "战场装置LUD-99X",
+      "appellation": "Field Device LUD-99X"
+    },
+    {
+      "name": "“二踢脚”型数据收集装置",
+      "appellation": "Two-step Firecracker and Data-collector"
+    },
+    {
+      "name": "勘察用自走车",
+      "appellation": "Recon Self-Driving Cart"
+    },
+    {
+      "name": "调谐节点",
+      "appellation": "Sigil of Concord"
+    },
+    {
+      "name": "湮灭之相",
+      "appellation": "Locus of Annihilation"
+    },
+    {
+      "name": "创生之相",
+      "appellation": "Locus of Genesis"
+    },
+    {
+      "name": "紧急供暖器",
+      "appellation": "Emergency Brazier"
+    },
+    {
+      "name": "点火石",
+      "appellation": "Chert"
+    },
+    {
+      "name": "可充能督战音响",
+      "appellation": "Chargeable Supervisory Speaker"
+    },
+    {
+      "name": "可充能督战音响",
+      "appellation": "Chargeable Supervisory Speaker"
+    },
+    {
+      "name": "可充能督战音响",
+      "appellation": "Chargeable Supervisory Speaker"
+    },
+    {
+      "name": "智能空域控制机",
+      "appellation": "Smart Airspace Controller"
+    },
+    {
+      "name": "智能空域控制机",
+      "appellation": "Smart Airspace Controller"
+    },
+    {
+      "name": "智能空域控制机",
+      "appellation": "Smart Airspace Controller"
+    },
+    {
+      "name": "速冷喷雾发射台",
+      "appellation": "Quick-freezing Sprayer Platform"
+    },
+    {
+      "name": "速冷喷雾发射台",
+      "appellation": "Quick-freezing Sprayer Platform"
+    },
+    {
+      "name": "速冷喷雾发射台",
+      "appellation": "Quick-freezing Sprayer Platform"
+    },
+    {
+      "name": "尖端研究成果共享终端",
+      "appellation": "State-of-the-art Findings Distribution Terminal"
+    },
+    {
+      "name": "尖端研究成果共享终端",
+      "appellation": "State-of-the-art Findings Distribution Terminal"
+    },
+    {
+      "name": "尖端研究成果共享终端",
+      "appellation": "State-of-the-art Findings Distribution Terminal"
+    },
+    {
+      "name": "声波记录扩音器",
+      "appellation": "Sound Recording Amplifier"
+    },
+    {
+      "name": "声波记录扩音器",
+      "appellation": "Sound Recording Amplifier"
+    },
+    {
+      "name": "声波记录扩音器",
+      "appellation": "Sound Recording Amplifier"
+    },
+    {
+      "name": "法术调和能量场",
+      "appellation": "Arts Resonant Energy Field"
+    },
+    {
+      "name": "法术调和能量场",
+      "appellation": "Arts Resonant Energy Field"
+    },
+    {
+      "name": "法术调和能量场",
+      "appellation": "Arts Resonant Energy Field"
+    },
+    {
+      "name": "啸叫音响",
+      "appellation": "Squeaking Sound"
+    },
+    {
+      "name": "“黏黏的赠品”",
+      "appellation": "\"Sticky Giveaways\""
+    },
+    {
+      "name": "“蜜酿万岁！”",
+      "appellation": "\"Mead! Need more mead!\""
+    },
+    {
+      "name": "阻流阀",
+      "appellation": "Throttle Valve"
+    },
+    {
+      "name": "泵站",
+      "appellation": "Pump Station"
+    },
+    {
+      "name": "天桩",
+      "appellation": "Sky Pole"
+    },
+    {
+      "name": "简易弩台",
+      "appellation": "Simple Crossbow"
+    },
+    {
+      "name": "喙中奇物",
+      "appellation": "Fowlbeast's Return"
+    },
+    {
+      "name": "流沙黯坑",
+      "appellation": "Quicksand"
+    },
+    {
+      "name": "作战中心",
+      "appellation": "Command Center"
+    },
+    {
+      "name": "“纪念”",
+      "appellation": "Lootmark"
+    },
+    {
+      "name": "兽栏",
+      "appellation": "Corral"
+    },
+    {
+      "name": "风沙营垒",
+      "appellation": "Headquarter of sandbank"
+    },
+    {
+      "name": "旷野房车\n",
+      "appellation": "Construction Caravan"
+    },
+    {
+      "name": "污浊泥沼",
+      "appellation": "Mire"
+    },
+    {
+      "name": "烟雾发射台",
+      "appellation": "Smoke Launcher"
+    },
+    {
+      "name": "澄亮采集站",
+      "appellation": "Extracting Harvester Hub"
+    },
+    {
+      "name": "荧光棒",
+      "appellation": "Glow Stick"
+    },
+    {
+      "name": "捕猎笼",
+      "appellation": "Beast Trap"
+    },
+    {
+      "name": "寻宝仪",
+      "appellation": "Prospector"
+    },
+    {
+      "name": "激励剂",
+      "appellation": "Restanding Potion"
+    },
+    {
+      "name": "冰爆罐",
+      "appellation": "Ice Bomb"
+    },
+    {
+      "name": "种植箱集群\n",
+      "appellation": "Planting Box Group"
+    },
+    {
+      "name": "高台工事",
+      "appellation": "Battlement"
+    },
+    {
+      "name": "反应壁障",
+      "appellation": "Reactive Barrier"
+    },
+    {
+      "name": "监视哨站",
+      "appellation": "Scout Tower"
+    },
+    {
+      "name": "澄亮矿脉",
+      "appellation": "Lighting Ore Vein"
+    },
+    {
+      "name": "机关石门",
+      "appellation": "Olden Keystone"
+    },
+    {
+      "name": "灵动清泉",
+      "appellation": "Fountain"
+    },
+    {
+      "name": "静谧盆栽",
+      "appellation": "Potting"
+    },
+    {
+      "name": "休闲长椅",
+      "appellation": "Bench"
+    },
+    {
+      "name": "森蚺",
+      "appellation": "Eunectes"
+    },
+    {
+      "name": "图耶",
+      "appellation": "Tuye"
+    },
+    {
+      "name": "大祭司",
+      "appellation": "High Priest"
+    },
+    {
+      "name": "异客",
+      "appellation": "Passenger"
+    },
+    {
+      "name": "狮蝎",
+      "appellation": "Manticore"
+    },
+    {
+      "name": "佩佩",
+      "appellation": "Pepe"
+    },
+    {
+      "name": "红隼",
+      "appellation": "Kestrel"
+    },
+    {
+      "name": "罗德岛工作人员",
+      "appellation": "Medic"
+    },
+    {
+      "name": "信使邮筒",
+      "appellation": "Mail Box"
+    },
+    {
+      "name": "猎获笼",
+      "appellation": "Prey Cage"
+    },
+    {
+      "name": "讯息匣",
+      "appellation": "Message Casket"
+    },
+    {
+      "name": "失衡异香",
+      "appellation": "Overspeed Spice"
+    },
+    {
+      "name": "特制水上平台",
+      "appellation": "TinyBoat"
+    },
+    {
+      "name": "告示牌",
+      "appellation": "Billboard"
+    },
+    {
+      "name": "道路障碍物",
+      "appellation": "Roads Obstacles"
+    },
+    {
+      "name": "埋没金属箱",
+      "appellation": "Buried Metal Chest"
+    },
+    {
+      "name": "源石虫引诱器",
+      "appellation": "Originium Slug Trap"
+    },
+    {
+      "name": "“源石虫之心”",
+      "appellation": "\"Heart of Originium Slug\""
+    },
+    {
+      "name": "检查点",
+      "appellation": "Check Point"
+    },
+    {
+      "name": "随机道具盒",
+      "appellation": "Random Item Box"
+    },
+    {
+      "name": "加速块",
+      "appellation": "Speed Up Tile"
+    },
+    {
+      "name": "封阻物",
+      "appellation": "Barricade"
+    },
+    {
+      "name": "源石爆炸物",
+      "appellation": "Originium Explosive"
+    },
+    {
+      "name": "封阻加固装置",
+      "appellation": "Barricade Reinforcer"
+    },
+    {
+      "name": "临时掩护装置",
+      "appellation": "Temporary Fortification"
+    },
+    {
+      "name": "诡雷布设装置",
+      "appellation": "Trap Mine Thrower"
+    },
+    {
+      "name": "障碍物",
+      "appellation": "Crate"
+    },
+    {
+      "name": "巫术弩炮",
+      "appellation": "Hex Ballista"
+    },
+    {
+      "name": "幽影门扉",
+      "appellation": "Spectral Gate"
+    },
+    {
+      "name": "足球",
+      "appellation": "football"
+    },
+    {
+      "name": "设施建筑工",
+      "appellation": "foldable facility maintainer"
+    },
+    {
+      "name": "折叠式维护车",
+      "appellation": "infield groomer"
+    },
+    {
+      "name": "折叠式后勤站",
+      "appellation": "supply station"
+    },
+    {
+      "name": "航道信标",
+      "appellation": "Beacon"
+    },
+    {
+      "name": "赘生甲壳",
+      "appellation": "Neoplastic Shell"
+    },
+    {
+      "name": "小帮手",
+      "appellation": "\"Little Handy\""
+    },
+    {
+      "name": "宝箱",
+      "appellation": "Treasure Chest"
+    },
+    {
+      "name": "停滞巧械",
+      "appellation": "Idle Exquisicart"
+    },
+    {
+      "name": "垂死羽兽",
+      "appellation": "Dying Fowlbeast"
+    },
+    {
+      "name": "年代之刺",
+      "appellation": "Spines of Age"
+    },
+    {
+      "name": "尊主的残影",
+      "appellation": "Master's Shade"
+    },
+    {
+      "name": "特蕾西娅，黑冠圣贤",
+      "appellation": "Theresa, Black-crowned Loremistress"
+    },
+    {
+      "name": "圣卫坚盾",
+      "appellation": "Scutum"
+    },
+    {
+      "name": "驮兽旅行家",
+      "appellation": "Burden Tourist"
+    },
+    {
+      "name": "无可置疑的罪证",
+      "appellation": "Indisputable Crime Evidence"
+    },
+    {
+      "name": "狭路相逢",
+      "appellation": "Face Off"
+    },
+    {
+      "name": "狭路相逢",
+      "appellation": "Face Off"
+    },
+    {
+      "name": "结晶消除桩",
+      "appellation": "Decrystaling Pile"
+    },
+    {
+      "name": "纯净结晶",
+      "appellation": "Purecrystal"
+    },
+    {
+      "name": "作战专用掩体",
+      "appellation": "Combat Special Barricade"
+    },
+    {
+      "name": "保全人才合作协议",
+      "appellation": "Security Forces Cooperation Agreement"
+    },
+    {
+      "name": "加急许可条款",
+      "appellation": "Expedited Licensing Terms"
+    },
+    {
+      "name": "临时任命条款",
+      "appellation": "Interim Appointment Terms"
+    },
+    {
+      "name": "皇家科学院望远镜",
+      "appellation": "Royal Academy Telescope"
+    },
+    {
+      "name": "专业显示模块",
+      "appellation": "Professional Display Module"
+    },
+    {
+      "name": "灵活架设模块",
+      "appellation": "Agile Installation Module"
+    },
+    {
+      "name": "攀云机",
+      "appellation": "Cloud Ladder"
+    },
+    {
+      "name": "加固扩存改装",
+      "appellation": "Reinforcement Expansion Modification"
+    },
+    {
+      "name": "长距增运改装",
+      "appellation": "Long-range Expansion Modification"
+    },
+    {
+      "name": "追猎发射台",
+      "appellation": "Hunting Net Launcher"
+    },
+    {
+      "name": "拟南盏",
+      "appellation": "Thale Calyx"
+    },
+    {
+      "name": "稀有·拟南盏",
+      "appellation": "Thale Calyx"
+    },
+    {
+      "name": "草香粉",
+      "appellation": "Spicy Pollen"
+    },
+    {
+      "name": "稀有·草香粉",
+      "appellation": "Spicy Pollen"
+    },
+    {
+      "name": "岩锤",
+      "appellation": "Rock Stratum Hammer"
+    },
+    {
+      "name": "稀有·岩锤",
+      "appellation": "Rock Stratum Hammer"
+    },
+    {
+      "name": "全自动切木站",
+      "appellation": "Automatic Sawing Hub"
+    },
+    {
+      "name": "全自动掘石站",
+      "appellation": "Automatic Quarrying Hub"
+    },
+    {
+      "name": "全自动采铁站",
+      "appellation": "Automatic Mining Hub"
+    },
+    {
+      "name": "大型兽栏",
+      "appellation": "Large Corral"
+    },
+    {
+      "name": "虚影壁障",
+      "appellation": " Phantomic Barrier"
+    },
+    {
+      "name": "狩闻匣",
+      "appellation": "Hunting News Casket"
+    },
+    {
+      "name": "行动套装",
+      "appellation": "Set of Operation"
+    },
+    {
+      "name": "荧光棒弹射装置",
+      "appellation": "Glow Sticks Launcher"
+    },
+    {
+      "name": "外骨骼",
+      "appellation": "Powered Suit"
+    },
+    {
+      "name": "冰瀑喷射罐",
+      "appellation": "Ultimate Ice Bomb"
+    },
+    {
+      "name": "凋亡发射器",
+      "appellation": "Necrosis Matter"
+    },
+    {
+      "name": "桶装液香",
+      "appellation": "Barreled Perfume"
+    },
+    {
+      "name": "庇护制造器",
+      "appellation": "Coating Generator"
+    },
+    {
+      "name": "驯兽口粮",
+      "appellation": "Hunting Rations"
+    },
+    {
+      "name": "感知链接器",
+      "appellation": "Neural Chain"
+    },
+    {
+      "name": "木材采集站·采购",
+      "appellation": "Sawing Harvester Hub"
+    },
+    {
+      "name": "石材采集站·采购",
+      "appellation": "Quarrying Harvester Hub"
+    },
+    {
+      "name": "铁矿采集站·采购",
+      "appellation": "Mining Harvester Hub"
+    },
+    {
+      "name": "蟹蟹抽水泵·采购",
+      "appellation": "Crabbie Pumpie"
+    },
+    {
+      "name": "很大的锅",
+      "appellation": "Really Big Pot"
+    },
+    {
+      "name": "“宝箱”",
+      "appellation": "Chest？"
+    },
+    {
+      "name": "闪亮果实",
+      "appellation": "Gleaming Berry"
+    },
+    {
+      "name": "奇异黑光果实",
+      "appellation": "Glooming Berry"
+    },
+    {
+      "name": "香甜烤果子",
+      "appellation": "Roast Berry"
+    },
+    {
+      "name": "缤纷果酒",
+      "appellation": "Gleaming Brew"
+    },
+    {
+      "name": "宝箱的肉？",
+      "appellation": "Chest Limb？"
+    },
+    {
+      "name": "“宝箱”",
+      "appellation": "Chest？"
+    },
+    {
+      "name": "军工厂指令平台",
+      "appellation": "Factory Production Terminal"
+    },
+    {
+      "name": "黄金回响",
+      "appellation": "Golden Echo"
+    },
+    {
+      "name": "尼卢火",
+      "appellation": "Aggini of Nila"
+    },
+    {
+      "name": "烟花发射器",
+      "appellation": "Firework Launcher"
+    },
+    {
+      "name": "“留声机”底座",
+      "appellation": "Gramophone Base"
+    },
+    {
+      "name": "L-44\"留声机\"",
+      "appellation": "Gramophone"
+    },
+    {
+      "name": "扭蛋机",
+      "appellation": "Gashapon Machine"
+    },
+    {
+      "name": "街边电话亭",
+      "appellation": "Public Phone Booth"
+    },
+    {
+      "name": "军营电话亭",
+      "appellation": "Military Phone Booth"
+    },
+    {
+      "name": "超时空电话亭",
+      "appellation": "Hyperdimensional Phone Booth"
+    },
+    {
+      "name": "菜单电话机",
+      "appellation": "Coordination Hotline"
+    },
+    {
+      "name": "勾爪",
+      "appellation": "Grappling Hook"
+    },
+    {
+      "name": "大战记分站",
+      "appellation": "Battle Score Station"
+    },
+    {
+      "name": "口渴乐乐",
+      "appellation": "Thirsty-Lala"
+    },
+    {
+      "name": "大力拳套",
+      "appellation": "Powerful Boxing Gloves"
+    },
+    {
+      "name": "盐坨子炮",
+      "appellation": "Bombard"
+    },
+    {
+      "name": "护具分发员",
+      "appellation": "Advanced Facility Builder"
+    },
+    {
+      "name": "混乱烟花箱",
+      "appellation": "Piles of Clutter"
+    },
+    {
+      "name": "猛兽能量饮料",
+      "appellation": "Meowster Energy Drink"
+    },
+    {
+      "name": "喷射汽水机",
+      "appellation": "Broken Vending Machine"
+    },
+    {
+      "name": "赛场啦啦队",
+      "appellation": "Sportsfield Cheerleader"
+    },
+    {
+      "name": "高级设施建筑工",
+      "appellation": "Advanced Facility Builder"
+    },
+    {
+      "name": "坍塌的杂物堆",
+      "appellation": "Piles of Clutter"
+    },
+    {
+      "name": "建筑工具间",
+      "appellation": "Construction Toolroom"
+    },
+    {
+      "name": "临时休息舱",
+      "appellation": "Nap Pod"
+    },
+    {
+      "name": "液压式高台 ",
+      "appellation": "Lifting Platform"
+    },
+    {
+      "name": "混凝土路障 ",
+      "appellation": "Concrete Roadblock"
+    },
+    {
+      "name": "便携健身架",
+      "appellation": "Workout Station"
+    },
+    {
+      "name": "两栖码头",
+      "appellation": "Amphibious Dock"
+    },
+    {
+      "name": "树丛",
+      "appellation": "bushes"
+    },
+    {
+      "name": "盾与墙",
+      "appellation": "Shield and Wall"
+    },
+    {
+      "name": "旧日之火",
+      "appellation": "Flame of Old"
+    },
+    {
+      "name": "空壳",
+      "appellation": "shell"
+    },
+    {
+      "name": "弱化节点",
+      "appellation": "Attenuation Node"
+    },
+    {
+      "name": "特雷西斯",
+      "appellation": "Theresis"
+    },
+    {
+      "name": "天工夜行套装",
+      "appellation": "Masterful Shadow Gear"
+    },
+    {
+      "name": "夜行斗篷模块",
+      "appellation": "Night Cloak Module"
+    },
+    {
+      "name": "夜行钩爪模块",
+      "appellation": "Shadow Hook Module"
+    },
+    {
+      "name": "源石祭坛",
+      "appellation": "Originium Shrine"
+    },
+    {
+      "name": "弩炮",
+      "appellation": "Ballista"
+    },
+    {
+      "name": "解雇者清债程序",
+      "appellation": "Liability Clearing Procedures for Discharged Personnel"
+    },
+    {
+      "name": "梅什科线圈",
+      "appellation": "Mieszko coil"
+    },
+    {
+      "name": "圣徒像扮演者",
+      "appellation": "Holy Statue Cosplayer"
+    },
+    {
+      "name": "圣堂射手扮演者",
+      "appellation": "Shrine Sniper Cosplayer"
+    },
+    {
+      "name": "圣堂保育员扮演者",
+      "appellation": "Nursery Nurse Cosplayer"
+    },
+    {
+      "name": "寻根圣事",
+      "appellation": "hlctrl"
+    },
+    {
+      "name": "摄影机",
+      "appellation": "Film Camera"
+    },
+    {
+      "name": "打光道具",
+      "appellation": "Lighting Equipment"
+    },
+    {
+      "name": "“月影之茧”",
+      "appellation": "\"Moonlight Cocoon\""
+    },
+    {
+      "name": "反制装甲套组",
+      "appellation": "Reactive Armor Set"
+    },
+    {
+      "name": "微型尖刺配件",
+      "appellation": "Miniature Spike Kit"
+    },
+    {
+      "name": "维生监测配件",
+      "appellation": "Vital Signs Monitoring Kit"
+    },
+    {
+      "name": "“绝对助手”",
+      "appellation": "\"Handy-For-Sure\""
+    },
+    {
+      "name": "草丛",
+      "appellation": "Shrub"
+    },
+    {
+      "name": "花丛",
+      "appellation": "Flowering Shrub"
+    },
+    {
+      "name": "岩石",
+      "appellation": "Rock"
+    },
+    {
+      "name": "山脉",
+      "appellation": "Mountain"
+    },
+    {
+      "name": "林地",
+      "appellation": "Woodland"
+    },
+    {
+      "name": "密林",
+      "appellation": "Jungle"
+    },
+    {
+      "name": "河流",
+      "appellation": "Stream"
+    },
+    {
+      "name": "富集矿区",
+      "appellation": "Unexploited Mine"
+    },
+    {
+      "name": "源石矿场",
+      "appellation": "Mine"
+    },
+    {
+      "name": "勘探器",
+      "appellation": "Mineral Detector"
+    },
+    {
+      "name": "源石晶簇",
+      "appellation": "Originium Crystal Cluster"
+    },
+    {
+      "name": "晶簇稳定器",
+      "appellation": "Cluster Stabilizer"
+    },
+    {
+      "name": "源石回收炉",
+      "appellation": "Originium Recycling Furnace"
+    },
+    {
+      "name": "冶铸车",
+      "appellation": "Smelting Workshop"
+    },
+    {
+      "name": "田地",
+      "appellation": "Cropland"
+    },
+    {
+      "name": "被污染的回收炉",
+      "appellation": "Polluted Furnace"
+    },
+    {
+      "name": "供能基站",
+      "appellation": "Energy Supply Station"
+    },
+    {
+      "name": "藏书馆",
+      "appellation": "Archive"
+    },
+    {
+      "name": "改良巫术祭坛",
+      "appellation": "Modified Witchcraft Altar"
+    },
+    {
+      "name": "巫术村落",
+      "appellation": "Landmark: Witchcraft Village"
+    },
+    {
+      "name": "大图书馆",
+      "appellation": "Library"
+    },
+    {
+      "name": "术法岗哨",
+      "appellation": "Arts Post"
+    },
+    {
+      "name": "先遣侦测器",
+      "appellation": "Advance Detector"
+    },
+    {
+      "name": "侦测中心",
+      "appellation": "Detection Center"
+    },
+    {
+      "name": "装卸机",
+      "appellation": "Container Crane"
+    },
+    {
+      "name": "水产村落",
+      "appellation": "Landmark: Aquatic Village"
+    },
+    {
+      "name": "冲突围栏",
+      "appellation": "Barrenland Arena"
+    },
+    {
+      "name": "警戒岗哨",
+      "appellation": "Sentry Post"
+    },
+    {
+      "name": "废墟",
+      "appellation": "Ruin"
+    },
+    {
+      "name": "岗哨",
+      "appellation": "Post"
+    },
+    {
+      "name": "荒野村落",
+      "appellation": "Landmark: Barrenland Village"
+    },
+    {
+      "name": "猎户村落",
+      "appellation": "Landmark: Hunting Village"
+    },
+    {
+      "name": "山地村落",
+      "appellation": "Landmark: Mountain Village"
+    },
+    {
+      "name": "牧场村落",
+      "appellation": "Landmark: Ranching Village"
+    },
+    {
+      "name": "插件补给点",
+      "appellation": "Plugins Supply Station"
+    },
+    {
+      "name": "插件强化点",
+      "appellation": "Plugins Upgrade Station"
+    },
+    {
+      "name": "噬血诅地",
+      "appellation": "Cursed Badland"
+    },
+    {
+      "name": "信号基站",
+      "appellation": "Telecom Station"
+    },
+    {
+      "name": "血裔胞体",
+      "appellation": "Bloodborn Embryo"
+    },
+    {
+      "name": "精怪实验室",
+      "appellation": "Fae Incubator"
+    },
+    {
+      "name": "温室拱棚",
+      "appellation": "Greenhouse"
+    },
+    {
+      "name": "“双眼皮”",
+      "appellation": "\"Double Lids\""
+    },
+    {
+      "name": "阻隔工事",
+      "appellation": "barricade"
+    },
+    {
+      "name": "射击台",
+      "appellation": "Ranged Tile"
+    },
+    {
+      "name": "封印的地面",
+      "appellation": "Sealed Floor"
+    },
+    {
+      "name": "“神秘顾客”",
+      "appellation": "Mystery Customer"
+    },
+    {
+      "name": "画卷",
+      "appellation": "Dusk's Scroll"
+    },
+    {
+      "name": "教鞭",
+      "appellation": "Pointing Stick"
+    },
+    {
+      "name": "迷幻反射镜",
+      "appellation": "Illusory Mirror"
+    },
+    {
+      "name": "全手动推进器",
+      "appellation": "Full Manual Thruster"
+    },
+    {
+      "name": "基础浮板",
+      "appellation": "Basic Deck"
+    },
+    {
+      "name": "引力浮板",
+      "appellation": "Gravitional Deck"
+    },
+    {
+      "name": "物资浮板",
+      "appellation": "Supply Deck"
+    },
+    {
+      "name": "防水物资箱",
+      "appellation": "Waterproof Supply Box"
+    },
+    {
+      "name": "喷泉水池",
+      "appellation": "Fountain Pool"
+    },
+    {
+      "name": "城市霓虹",
+      "appellation": "City Neon "
+    },
+    {
+      "name": "原型之手",
+      "appellation": "Prototype Hand"
+    },
+    {
+      "name": "泄漏标记",
+      "appellation": "Leak Site"
+    },
+    {
+      "name": "罗德岛采集基站",
+      "appellation": "Material collection base station"
+    },
+    {
+      "name": "临时采集基站",
+      "appellation": "Temporary material collection base station"
+    },
+    {
+      "name": "杂木林",
+      "appellation": "Thicket"
+    },
+    {
+      "name": "杂木林",
+      "appellation": "Thicket"
+    },
+    {
+      "name": "巨大岩石",
+      "appellation": "Monolith"
+    },
+    {
+      "name": "奇异矿脉",
+      "appellation": "Strange Ore Vein"
+    },
+    {
+      "name": "澄亮矿脉",
+      "appellation": "Lighting Ore Vein"
+    },
+    {
+      "name": "补给车出发站台",
+      "appellation": "Starting point"
+    },
+    {
+      "name": "补给车中转站台",
+      "appellation": "Hub"
+    },
+    {
+      "name": "补给车终点站台",
+      "appellation": "Terminal"
+    },
+    {
+      "name": "补给车转角轨道",
+      "appellation": "Track-B"
+    },
+    {
+      "name": "补给车直行轨道",
+      "appellation": "Track-A"
+    },
+    {
+      "name": "埋没金属箱",
+      "appellation": "Buried Metal Chest"
+    },
+    {
+      "name": "宝刺金属箱",
+      "appellation": "Thorned Treasure Chest"
+    },
+    {
+      "name": "灌木丛",
+      "appellation": "Bush"
+    },
+    {
+      "name": "通讯基站",
+      "appellation": "Communication base station"
+    },
+    {
+      "name": "建材加工台",
+      "appellation": "Workbench-A"
+    },
+    {
+      "name": "毛线加工台",
+      "appellation": "Workbench-B"
+    },
+    {
+      "name": "干亚麻加工台",
+      "appellation": "Workbench-C"
+    },
+    {
+      "name": "稻谷加工台",
+      "appellation": "Workbench-D"
+    },
+    {
+      "name": "羽兽蛋加工台",
+      "appellation": "Workbench-E"
+    },
+    {
+      "name": "皮毛加工台",
+      "appellation": "Workbench-F"
+    },
+    {
+      "name": "杂木林再生站",
+      "appellation": "Resource recycling station-A"
+    },
+    {
+      "name": "巨大岩石再生站",
+      "appellation": "Resource recycling station-B"
+    },
+    {
+      "name": "奇异矿脉再生站",
+      "appellation": "Resource recycling station-C"
+    },
+    {
+      "name": "稻谷种植槽",
+      "appellation": "Rice planting trough"
+    },
+    {
+      "name": "亚麻种植槽",
+      "appellation": "Flax planting trough"
+    },
+    {
+      "name": "稻谷幼苗",
+      "appellation": "Rice planting trough"
+    },
+    {
+      "name": "亚麻幼苗",
+      "appellation": "Flax planting trough"
+    },
+    {
+      "name": "营养液喷洒器",
+      "appellation": "Nutrient solution sprayer"
+    },
+    {
+      "name": "动力补给站",
+      "appellation": "Energy Replenishment Station"
+    },
+    {
+      "name": "引雷针",
+      "appellation": "Lightning rod"
+    },
+    {
+      "name": "小型兽栏",
+      "appellation": "Small corra"
+    },
+    {
+      "name": "大型兽栏",
+      "appellation": "Large corra"
+    },
+    {
+      "name": "蟹蟹抽水泵",
+      "appellation": "Crabbie Pumpie"
+    },
+    {
+      "name": "蟹笼",
+      "appellation": "Crab trap"
+    },
+    {
+      "name": "野生动物引诱装置",
+      "appellation": "Wildlife lure device"
+    },
+    {
+      "name": "澄澈清泉",
+      "appellation": "Clear spring"
+    },
+    {
+      "name": "清幽盆栽",
+      "appellation": "Potted plant"
+    },
+    {
+      "name": "简约长椅",
+      "appellation": "Bench"
+    },
+    {
+      "name": "蟹壳加工台",
+      "appellation": "Workbench-G"
+    },
+    {
+      "name": "食品加工厂",
+      "appellation": "Processing plant-A"
+    },
+    {
+      "name": "制备加工厂",
+      "appellation": "Processing plant-B"
+    },
+    {
+      "name": "金属加工厂",
+      "appellation": "Processing plant-C"
+    },
+    {
+      "name": "石料加工厂",
+      "appellation": "Processing plant-D"
+    },
+    {
+      "name": "木料加工厂",
+      "appellation": "Processing plant-E"
+    },
+    {
+      "name": "器械加工厂",
+      "appellation": "Processing plant-F"
+    },
+    {
+      "name": "后勤加工厂",
+      "appellation": "Processing plant-G"
+    },
+    {
+      "name": "外勤加工厂",
+      "appellation": "Processing plant-H"
+    },
+    {
+      "name": "纺织加工厂",
+      "appellation": "Processing plant-I"
+    },
+    {
+      "name": "酿造加工厂",
+      "appellation": "Processing plant-J"
+    },
+    {
+      "name": "饮品供给站",
+      "appellation": "Supply station-A"
+    },
+    {
+      "name": "食品供给站",
+      "appellation": "Supply station-B"
+    },
+    {
+      "name": "药品供给站",
+      "appellation": "Supply station-C"
+    },
+    {
+      "name": "工具供给站",
+      "appellation": "Supply station-D"
+    },
+    {
+      "name": "装备供给站",
+      "appellation": "Supply station-E"
+    },
+    {
+      "name": "迎风招展",
+      "appellation": "Flag"
+    },
+    {
+      "name": "道路",
+      "appellation": "Road"
+    },
+    {
+      "name": "渠道",
+      "appellation": "Canal"
+    },
+    {
+      "name": "观赏植物",
+      "appellation": "Ornamental plant-A"
+    },
+    {
+      "name": "观赏植物",
+      "appellation": "Ornamental plant-B"
+    },
+    {
+      "name": "观赏植物",
+      "appellation": "Ornamental plant-C"
+    },
+    {
+      "name": "基地建筑",
+      "appellation": "Base building"
+    },
+    {
+      "name": "基地设施",
+      "appellation": "Base installation"
+    },
+    {
+      "name": "基地通道",
+      "appellation": "Base channel"
+    },
+    {
+      "name": "待清理地块",
+      "appellation": "Land parcel to be cleared"
+    },
+    {
+      "name": "“基建能手”",
+      "appellation": "Good"
+    },
+    {
+      "name": "“矢力同心”",
+      "appellation": "Better"
+    },
+    {
+      "name": "“再度起航”",
+      "appellation": "Best"
+    },
+    {
+      "name": "基地通道中转枢纽",
+      "appellation": "Transfer station"
+    },
+    {
+      "name": "捕猎笼",
+      "appellation": "Beast Trap"
+    },
+    {
+      "name": "亚麻种植槽",
+      "appellation": "Flax planting trough"
+    },
+    {
+      "name": "稻谷种植槽",
+      "appellation": "Rice planting trough"
+    },
+    {
+      "name": "稻谷幼苗",
+      "appellation": "Rice planting trough"
+    },
+    {
+      "name": "亚麻幼苗",
+      "appellation": "Flax planting trough"
+    },
+    {
+      "name": "小型兽栏",
+      "appellation": "Small corra"
+    },
+    {
+      "name": "大型兽栏",
+      "appellation": "Large corra"
+    },
+    {
+      "name": "木材能源转化装置",
+      "appellation": "Wood energy conversion device"
+    },
+    {
+      "name": "石材能源转化装置",
+      "appellation": "Stone nergy conversion device"
+    },
+    {
+      "name": "铁矿石能源转化装置",
+      "appellation": "Iron ore nergy conversion device"
+    },
+    {
+      "name": "木石能源转化装置",
+      "appellation": "Wood-stone energy conversion device"
+    },
+    {
+      "name": "石铁能源转化装置",
+      "appellation": "Stone-iron energy conversion device"
+    },
+    {
+      "name": "营养液喷洒器",
+      "appellation": "Nutrient solution sprayer"
+    },
+    {
+      "name": "饮品供给站",
+      "appellation": "Supply station-A"
+    },
+    {
+      "name": "能源增幅装置",
+      "appellation": "Energy Amplification Device"
+    },
+    {
+      "name": "高效能源增幅装置",
+      "appellation": "High-efficiency energy amplification device"
+    },
+    {
+      "name": "澄澈清泉",
+      "appellation": "Clear spring"
+    },
+    {
+      "name": "清幽盆栽",
+      "appellation": "Potted plant"
+    },
+    {
+      "name": "简约长椅",
+      "appellation": "Bench"
+    },
+    {
+      "name": "迎风招展",
+      "appellation": "Flag"
+    },
+    {
+      "name": "引雷针",
+      "appellation": "Lightning rod"
+    },
+    {
+      "name": "补给车出发站台",
+      "appellation": "Starting point"
+    },
+    {
+      "name": "补给车中转站台",
+      "appellation": "Hub"
+    },
+    {
+      "name": "补给车终点站台",
+      "appellation": "Terminal"
+    },
+    {
+      "name": "食品供给站",
+      "appellation": "Supply station-B"
+    },
+    {
+      "name": "药品供给站",
+      "appellation": "Supply station-C"
+    },
+    {
+      "name": "工具供给站",
+      "appellation": "Supply station-D"
+    },
+    {
+      "name": "荧光棒",
+      "appellation": "Glow Stick"
+    },
+    {
+      "name": "清杂机械羽兽",
+      "appellation": "Cleaner"
+    },
+    {
+      "name": "埋没金属箱",
+      "appellation": "Buried Metal Chest"
+    },
+    {
+      "name": "高台工事",
+      "appellation": "Battlement"
+    },
+    {
+      "name": "简易弩台",
+      "appellation": "Simple Crossbow"
+    },
+    {
+      "name": "装备供给站",
+      "appellation": "Supply station-E"
+    },
+    {
+      "name": "补给车直行轨道",
+      "appellation": "Track-A"
+    },
+    {
+      "name": "补给车转角轨道",
+      "appellation": "Track-B"
+    },
+    {
+      "name": "木材处理中心",
+      "appellation": "Wood processing center"
+    },
+    {
+      "name": "石材处理中心",
+      "appellation": "Stone processing center"
+    },
+    {
+      "name": "铁矿石处理中心",
+      "appellation": "Iron ore processing center"
+    },
+    {
+      "name": "核心能源基站",
+      "appellation": "Core energy base station"
+    },
+    {
+      "name": "高效能源转化装置",
+      "appellation": "High-efficiency energy conversion device"
+    },
+    {
+      "name": "猎获笼",
+      "appellation": "Prey Cage"
+    },
+    {
+      "name": "不完全充能反击",
+      "appellation": "Counter Partial Performance"
+    },
+    {
+      "name": "泡影流大冲击",
+      "appellation": "Houei Impact Crater"
+    },
+    {
+      "name": "翔虫闪击",
+      "appellation": "Silkbind Blitz"
+    },
+    {
+      "name": "束缚铁虫丝",
+      "appellation": "Silkbind Snare"
+    },
+    {
+      "name": "御龙：反壳龟",
+      "appellation": "Wyvern Riding:Volvertuga"
+    },
+    {
+      "name": "御龙：影丝蛛",
+      "appellation": "Wyvern Riding:Phantosilk"
+    },
+    {
+      "name": "御龙：岩甲兽",
+      "appellation": "Wyvern Riding:Bulwark"
+    },
+    {
+      "name": "御龙：雷狼龙",
+      "appellation": "Wyvern Riding:Jinouga"
+    },
+    {
+      "name": "智能裁判官",
+      "appellation": "Intelligent Refree"
+    },
+    {
+      "name": "丰饶树冢",
+      "appellation": "Verdant Barrow"
+    },
+    {
+      "name": "恶笼草",
+      "appellation": "Cageweed"
+    },
+    {
+      "name": "畸变恶笼草",
+      "appellation": "Aberrant Cageweed"
+    },
+    {
+      "name": "箱型恶笼草",
+      "appellation": "Boxform Cageweed"
+    },
+    {
+      "name": "源阶方模块",
+      "appellation": "Origin Lattice Module"
+    },
+    {
+      "name": "“危朽”",
+      "appellation": "Perilous Decay"
+    },
+    {
+      "name": "“崩解”",
+      "appellation": "Disintegration"
+    },
+    {
+      "name": "坎诺特保险柜",
+      "appellation": "Cannot Vault"
+    },
+    {
+      "name": "“再度绽放”",
+      "appellation": "“Re-blossom”"
+    },
+    {
+      "name": "基质合成台",
+      "appellation": "Matrix Crafter"
+    },
+    {
+      "name": "不甘的火",
+      "appellation": "Unquenchable Fire"
+    },
+    {
+      "name": "能量束发生台",
+      "appellation": "Beam Generator"
+    },
+    {
+      "name": "祭台",
+      "appellation": "Cuauhxicalli"
+    },
+    {
+      "name": "探险者",
+      "appellation": "The Seeker"
+    },
+    {
+      "name": "沉沦的探险者",
+      "appellation": "The Drowning Seeker"
+    },
+    {
+      "name": "探险者",
+      "appellation": "The Seeker"
+    },
+    {
+      "name": "沉沦的探险者",
+      "appellation": "The Drowning Seeker"
+    }
+  ],
+  "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/master/zh_CN/gamedata/excel/character_table.json",
+  "checkedAt": "2026-10-23"
+}

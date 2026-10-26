@@ -1,0 +1,3114 @@
+{
+  "checkedAt": "2026-10-23",
+  "source": "https://github.com/awadwd/ArknightsAuthorization_Series-mirror",
+  "revision": "0611d6d26aa3630e79b03b9c1d21af2aafa17a6a",
+  "license": "CC BY-NC 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "scope": "社区资料快照，常规编号至55.0；不包含预测盒，不宣称官方完整名录。",
+  "boxes": [
+    {
+      "id": "1.0",
+      "series": "regular",
+      "releaseDate": "2020/05/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/12ae542377c8edc8d52d76180d481db9f1a0390d.jpg",
+      "characters": [
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "W",
+          "portraitUrl": "https://media.prts.wiki/d/d6/%E5%A4%B4%E5%83%8F_W.png"
+        },
+        {
+          "name": "温蒂",
+          "portraitUrl": "https://media.prts.wiki/9/93/%E5%A4%B4%E5%83%8F_%E6%B8%A9%E8%92%82.png"
+        },
+        {
+          "name": "巫恋",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E5%B7%AB%E6%81%8B.png"
+        },
+        {
+          "name": "铸铁",
+          "portraitUrl": "https://media.prts.wiki/8/84/%E5%A4%B4%E5%83%8F_%E9%93%B8%E9%93%81.png"
+        },
+        {
+          "name": "苏苏洛",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E8%8B%8F%E8%8B%8F%E6%B4%9B.png"
+        },
+        {
+          "name": "香草",
+          "portraitUrl": "https://media.prts.wiki/c/c8/%E5%A4%B4%E5%83%8F_%E9%A6%99%E8%8D%89.png"
+        },
+        {
+          "name": "翎羽",
+          "portraitUrl": "https://media.prts.wiki/1/1f/%E5%A4%B4%E5%83%8F_%E7%BF%8E%E7%BE%BD.png"
+        }
+      ]
+    },
+    {
+      "id": "2.0",
+      "series": "regular",
+      "releaseDate": "2020/05/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/12ae542377c8edc8d52d76180d481db9f1a0390d.jpg",
+      "characters": [
+        {
+          "name": "傀影",
+          "portraitUrl": "https://media.prts.wiki/8/83/%E5%A4%B4%E5%83%8F_%E5%82%80%E5%BD%B1.png"
+        },
+        {
+          "name": "伊桑",
+          "portraitUrl": "https://media.prts.wiki/c/c1/%E5%A4%B4%E5%83%8F_%E4%BC%8A%E6%A1%91.png"
+        },
+        {
+          "name": "炎客",
+          "portraitUrl": "https://media.prts.wiki/d/d6/%E5%A4%B4%E5%83%8F_%E7%82%8E%E5%AE%A2.png"
+        },
+        {
+          "name": "送葬人",
+          "portraitUrl": "https://media.prts.wiki/7/7e/%E5%A4%B4%E5%83%8F_%E5%9C%A3%E7%BA%A6%E9%80%81%E8%91%AC%E4%BA%BA.png"
+        },
+        {
+          "name": "极境",
+          "portraitUrl": "https://media.prts.wiki/9/97/%E5%A4%B4%E5%83%8F_%E6%9E%81%E5%A2%83.png"
+        },
+        {
+          "name": "巡林者",
+          "portraitUrl": "https://media.prts.wiki/9/93/%E5%A4%B4%E5%83%8F_%E5%B7%A1%E6%9E%97%E8%80%85.png"
+        },
+        {
+          "name": "黑角",
+          "portraitUrl": "https://media.prts.wiki/f/f1/%E5%A4%B4%E5%83%8F_%E9%BB%91%E8%A7%92.png"
+        },
+        {
+          "name": "12f",
+          "portraitUrl": "https://media.prts.wiki/b/b7/%E5%A4%B4%E5%83%8F_12F.png"
+        },
+        {
+          "name": "THRM-EX",
+          "portraitUrl": "https://media.prts.wiki/d/d8/%E5%A4%B4%E5%83%8F_THRM-EX.png"
+        }
+      ]
+    },
+    {
+      "id": "3.0",
+      "series": "regular",
+      "releaseDate": "2020/06/16",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/9a450d8ca9d850282073b4ad9f43d7ae8155f7a8.jpg",
+      "characters": [
+        {
+          "name": "早露",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E6%97%A9%E9%9C%B2.png"
+        },
+        {
+          "name": "白金",
+          "portraitUrl": "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E7%99%BD%E9%87%91.png"
+        },
+        {
+          "name": "真理",
+          "portraitUrl": "https://media.prts.wiki/e/e6/%E5%A4%B4%E5%83%8F_%E7%9C%9F%E7%90%86.png"
+        },
+        {
+          "name": "艾雅法拉",
+          "portraitUrl": "https://media.prts.wiki/c/cc/%E5%A4%B4%E5%83%8F_%E8%89%BE%E9%9B%85%E6%B3%95%E6%8B%89.png"
+        },
+        {
+          "name": "古米",
+          "portraitUrl": "https://media.prts.wiki/0/07/%E5%A4%B4%E5%83%8F_%E5%8F%A4%E7%B1%B3.png"
+        },
+        {
+          "name": "凛冬",
+          "portraitUrl": "https://media.prts.wiki/c/cd/%E5%A4%B4%E5%83%8F_%E5%87%9B%E5%86%AC.png"
+        },
+        {
+          "name": "苦艾",
+          "portraitUrl": "https://media.prts.wiki/e/e9/%E5%A4%B4%E5%83%8F_%E8%8B%A6%E8%89%BE.png"
+        }
+      ]
+    },
+    {
+      "id": "4.0",
+      "series": "regular",
+      "releaseDate": "2020/09/03",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/5dc9ba88e2fc1f50c3676964a43181645641ab24.jpg",
+      "characters": [
+        {
+          "name": "森蚺",
+          "portraitUrl": "https://media.prts.wiki/7/74/%E5%A4%B4%E5%83%8F_%E6%A3%AE%E8%9A%BA.png"
+        },
+        {
+          "name": "燧石",
+          "portraitUrl": "https://media.prts.wiki/a/ac/%E5%A4%B4%E5%83%8F_%E7%87%A7%E7%9F%B3.png"
+        },
+        {
+          "name": "赫拉格",
+          "portraitUrl": "https://media.prts.wiki/c/cd/%E5%A4%B4%E5%83%8F_%E8%B5%AB%E6%8B%89%E6%A0%BC.png"
+        },
+        {
+          "name": "黑",
+          "portraitUrl": "https://media.prts.wiki/d/d4/%E5%A4%B4%E5%83%8F_%E9%BB%91.png"
+        },
+        {
+          "name": "锡兰",
+          "portraitUrl": "https://media.prts.wiki/3/39/%E5%A4%B4%E5%83%8F_%E9%94%A1%E5%85%B0.png"
+        },
+        {
+          "name": "特米米",
+          "portraitUrl": "https://media.prts.wiki/b/b9/%E5%A4%B4%E5%83%8F_%E7%89%B9%E7%B1%B3%E7%B1%B3.png"
+        },
+        {
+          "name": "酸糖",
+          "portraitUrl": "https://media.prts.wiki/e/e9/%E5%A4%B4%E5%83%8F_%E9%85%B8%E7%B3%96.png"
+        }
+      ]
+    },
+    {
+      "id": "5.0",
+      "series": "regular",
+      "releaseDate": "2020/11/11",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/25ef33f26c15053656d02f34071e61da1ef13a4b.jpg",
+      "characters": [
+        {
+          "name": "迷迭香",
+          "portraitUrl": "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E8%BF%B7%E8%BF%AD%E9%A6%99.png"
+        },
+        {
+          "name": "泥岩",
+          "portraitUrl": "https://media.prts.wiki/0/06/%E5%A4%B4%E5%83%8F_%E6%B3%A5%E5%B2%A9.png"
+        },
+        {
+          "name": "絮雨",
+          "portraitUrl": "https://media.prts.wiki/3/34/%E5%A4%B4%E5%83%8F_%E7%B5%AE%E9%9B%A8.png"
+        },
+        {
+          "name": "芙兰卡",
+          "portraitUrl": "https://media.prts.wiki/2/2b/%E5%A4%B4%E5%83%8F_%E8%8A%99%E5%85%B0%E5%8D%A1.png"
+        },
+        {
+          "name": "雷蛇",
+          "portraitUrl": "https://media.prts.wiki/f/f5/%E5%A4%B4%E5%83%8F_%E9%9B%B7%E8%9B%87.png"
+        },
+        {
+          "name": "断罪者",
+          "portraitUrl": "https://media.prts.wiki/f/f2/%E5%A4%B4%E5%83%8F_%E6%96%AD%E7%BD%AA%E8%80%85.png"
+        },
+        {
+          "name": "杰克",
+          "portraitUrl": "https://media.prts.wiki/d/d8/%E5%A4%B4%E5%83%8F_%E6%9D%B0%E5%85%8B.png"
+        }
+      ]
+    },
+    {
+      "id": "6.0",
+      "series": "regular",
+      "releaseDate": "2020/11/11",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/25ef33f26c15053656d02f34071e61da1ef13a4b.jpg@1182w_2324h.avif",
+      "characters": [
+        {
+          "name": "莱恩哈特",
+          "portraitUrl": "https://media.prts.wiki/0/03/%E5%A4%B4%E5%83%8F_%E8%8E%B1%E6%81%A9%E5%93%88%E7%89%B9.png"
+        },
+        {
+          "name": "贾维",
+          "portraitUrl": "https://media.prts.wiki/2/2a/%E5%A4%B4%E5%83%8F_%E8%B4%BE%E7%BB%B4.png"
+        },
+        {
+          "name": "布洛卡",
+          "portraitUrl": "https://media.prts.wiki/0/04/%E5%A4%B4%E5%83%8F_%E5%B8%83%E6%B4%9B%E5%8D%A1.png"
+        },
+        {
+          "name": "奥斯塔",
+          "portraitUrl": "https://media.prts.wiki/4/49/%E5%A4%B4%E5%83%8F_%E5%A5%A5%E6%96%AF%E5%A1%94.png"
+        },
+        {
+          "name": "慑砂",
+          "portraitUrl": "https://media.prts.wiki/e/e7/%E5%A4%B4%E5%83%8F_%E6%85%91%E7%A0%82.png"
+        },
+        {
+          "name": "断崖",
+          "portraitUrl": "https://media.prts.wiki/e/ea/%E5%A4%B4%E5%83%8F_%E6%96%AD%E5%B4%96.png"
+        },
+        {
+          "name": "斑点",
+          "portraitUrl": "https://media.prts.wiki/3/30/%E5%A4%B4%E5%83%8F_%E6%96%91%E7%82%B9.png"
+        },
+        {
+          "name": "月见夜",
+          "portraitUrl": "https://media.prts.wiki/b/b7/%E5%A4%B4%E5%83%8F_%E6%9C%88%E8%A7%81%E5%A4%9C.png"
+        }
+      ]
+    },
+    {
+      "id": "7.0",
+      "series": "regular",
+      "releaseDate": "2021/03/26",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/21b9d51a3a33fdced8525b6021d2cf8472b4eae3.jpg",
+      "characters": [
+        {
+          "name": "银灰",
+          "portraitUrl": "https://media.prts.wiki/2/27/%E5%A4%B4%E5%83%8F_%E9%93%B6%E7%81%B0.png"
+        },
+        {
+          "name": "初雪",
+          "portraitUrl": "https://media.prts.wiki/d/d7/%E5%A4%B4%E5%83%8F_%E5%88%9D%E9%9B%AA.png"
+        },
+        {
+          "name": "崖心",
+          "portraitUrl": "https://media.prts.wiki/7/7d/%E5%A4%B4%E5%83%8F_%E5%B4%96%E5%BF%83.png"
+        },
+        {
+          "name": "角峰",
+          "portraitUrl": "https://media.prts.wiki/e/e4/%E5%A4%B4%E5%83%8F_%E8%A7%92%E5%B3%B0.png"
+        },
+        {
+          "name": "空爆",
+          "portraitUrl": "https://media.prts.wiki/c/cd/%E5%A4%B4%E5%83%8F_%E7%A9%BA%E7%88%86.png"
+        },
+        {
+          "name": "Lancet-2",
+          "portraitUrl": "https://media.prts.wiki/b/b6/%E5%A4%B4%E5%83%8F_Lancet-2.png"
+        },
+        {
+          "name": "讯使",
+          "portraitUrl": "https://media.prts.wiki/2/27/%E5%A4%B4%E5%83%8F_%E8%AE%AF%E4%BD%BF.png"
+        },
+        {
+          "name": "泡普卡",
+          "portraitUrl": "https://media.prts.wiki/1/16/%E5%A4%B4%E5%83%8F_%E6%B3%A1%E6%99%AE%E5%8D%A1.png"
+        },
+        {
+          "name": "梓兰",
+          "portraitUrl": "https://media.prts.wiki/8/83/%E5%A4%B4%E5%83%8F_%E6%A2%93%E5%85%B0.png"
+        }
+      ]
+    },
+    {
+      "id": "8.0",
+      "series": "regular",
+      "releaseDate": "2021/09/25",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/472693bbeedcecb7b5bb493597567fd61e856b16.jpg",
+      "characters": [
+        {
+          "name": "推进之王",
+          "portraitUrl": "https://media.prts.wiki/b/ba/%E5%A4%B4%E5%83%8F_%E6%8E%A8%E8%BF%9B%E4%B9%8B%E7%8E%8B.png"
+        },
+        {
+          "name": "琴柳",
+          "portraitUrl": "https://media.prts.wiki/9/96/%E5%A4%B4%E5%83%8F_%E7%90%B4%E6%9F%B3.png"
+        },
+        {
+          "name": "风笛",
+          "portraitUrl": "https://media.prts.wiki/d/de/%E5%A4%B4%E5%83%8F_%E9%A3%8E%E7%AC%9B.png"
+        },
+        {
+          "name": "桑葚",
+          "portraitUrl": "https://media.prts.wiki/0/0f/%E5%A4%B4%E5%83%8F_%E6%A1%91%E8%91%9A.png"
+        },
+        {
+          "name": "罗比菈塔",
+          "portraitUrl": "https://media.prts.wiki/5/52/%E5%A4%B4%E5%83%8F_%E7%BD%97%E6%AF%94%E8%8F%88%E5%A1%94.png"
+        },
+        {
+          "name": "苇草",
+          "portraitUrl": "https://media.prts.wiki/7/7a/%E5%A4%B4%E5%83%8F_%E8%8B%87%E8%8D%89.png"
+        },
+        {
+          "name": "芙蓉",
+          "portraitUrl": "https://media.prts.wiki/d/d3/%E5%A4%B4%E5%83%8F_%E8%8A%99%E8%93%89.png"
+        },
+        {
+          "name": "炎熔",
+          "portraitUrl": "https://media.prts.wiki/f/fb/%E5%A4%B4%E5%83%8F_%E7%82%8E%E7%86%94.png"
+        }
+      ]
+    },
+    {
+      "id": "9.0",
+      "series": "regular",
+      "releaseDate": "2021/09/25",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/472693bbeedcecb7b5bb493597567fd61e856b16.jpg",
+      "characters": [
+        {
+          "name": "瑕光",
+          "portraitUrl": "https://media.prts.wiki/f/f7/%E5%A4%B4%E5%83%8F_%E7%91%95%E5%85%89.png"
+        },
+        {
+          "name": "鞭刃",
+          "portraitUrl": "https://media.prts.wiki/f/f8/%E5%A4%B4%E5%83%8F_%E9%9E%AD%E5%88%83.png"
+        },
+        {
+          "name": "临光",
+          "portraitUrl": "https://media.prts.wiki/1/1a/%E5%A4%B4%E5%83%8F_%E4%B8%B4%E5%85%89.png"
+        },
+        {
+          "name": "星极",
+          "portraitUrl": "https://media.prts.wiki/e/ee/%E5%A4%B4%E5%83%8F_%E6%98%9F%E6%9E%81.png"
+        },
+        {
+          "name": "泡泡",
+          "portraitUrl": "https://media.prts.wiki/2/28/%E5%A4%B4%E5%83%8F_%E6%B3%A1%E6%B3%A1.png"
+        },
+        {
+          "name": "芬",
+          "portraitUrl": "https://media.prts.wiki/4/41/%E5%A4%B4%E5%83%8F_%E8%8A%AC.png"
+        },
+        {
+          "name": "克洛丝",
+          "portraitUrl": "https://media.prts.wiki/b/b9/%E5%A4%B4%E5%83%8F_%E5%85%8B%E6%B4%9B%E4%B8%9D.png"
+        },
+        {
+          "name": "米格鲁",
+          "portraitUrl": "https://media.prts.wiki/3/32/%E5%A4%B4%E5%83%8F_%E7%B1%B3%E6%A0%BC%E9%B2%81.png"
+        },
+        {
+          "name": "Castle-3",
+          "portraitUrl": "https://media.prts.wiki/8/82/%E5%A4%B4%E5%83%8F_Castle-3.png"
+        }
+      ]
+    },
+    {
+      "id": "10.0",
+      "series": "regular",
+      "releaseDate": "2022/04/03",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/670fad1b1a605a88837042f89295be84a1a8e9c3.jpg",
+      "characters": [
+        {
+          "name": "菲亚梅塔",
+          "portraitUrl": "https://media.prts.wiki/b/b8/%E5%A4%B4%E5%83%8F_%E8%8F%B2%E4%BA%9A%E6%A2%85%E5%A1%94.png"
+        },
+        {
+          "name": "异客",
+          "portraitUrl": "https://media.prts.wiki/d/d2/%E5%A4%B4%E5%83%8F_%E5%BC%82%E5%AE%A2.png"
+        },
+        {
+          "name": "见行者",
+          "portraitUrl": "https://media.prts.wiki/d/d2/%E5%A4%B4%E5%83%8F_%E8%A7%81%E8%A1%8C%E8%80%85.png"
+        },
+        {
+          "name": "熔泉",
+          "portraitUrl": "https://media.prts.wiki/3/34/%E5%A4%B4%E5%83%8F_%E7%86%94%E6%B3%89.png"
+        },
+        {
+          "name": "风丸",
+          "portraitUrl": "https://media.prts.wiki/1/12/%E5%A4%B4%E5%83%8F_%E9%A3%8E%E4%B8%B8.png"
+        },
+        {
+          "name": "安比尔",
+          "portraitUrl": "https://media.prts.wiki/f/ff/%E5%A4%B4%E5%83%8F_%E5%AE%89%E6%AF%94%E5%B0%94.png"
+        },
+        {
+          "name": "安德切尔",
+          "portraitUrl": "https://media.prts.wiki/f/f6/%E5%A4%B4%E5%83%8F_%E5%AE%89%E5%BE%B7%E5%88%87%E5%B0%94.png"
+        },
+        {
+          "name": "史都华德",
+          "portraitUrl": "https://media.prts.wiki/b/b3/%E5%A4%B4%E5%83%8F_%E5%8F%B2%E9%83%BD%E5%8D%8E%E5%BE%B7.png"
+        }
+      ]
+    },
+    {
+      "id": "11.0",
+      "series": "regular",
+      "releaseDate": "2022/04/03",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/670fad1b1a605a88837042f89295be84a1a8e9c3.jpg",
+      "characters": [
+        {
+          "name": "能天使",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E8%83%BD%E5%A4%A9%E4%BD%BF.png"
+        },
+        {
+          "name": "莫斯提马",
+          "portraitUrl": "https://media.prts.wiki/0/0b/%E5%A4%B4%E5%83%8F_%E8%8E%AB%E6%96%AF%E6%8F%90%E9%A9%AC.png"
+        },
+        {
+          "name": "德克萨斯",
+          "portraitUrl": "https://media.prts.wiki/5/57/%E5%A4%B4%E5%83%8F_%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF.png"
+        },
+        {
+          "name": "空",
+          "portraitUrl": "https://media.prts.wiki/5/58/%E5%A4%B4%E5%83%8F_%E7%A9%BA.png"
+        },
+        {
+          "name": "可颂",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E5%8F%AF%E9%A2%82.png"
+        },
+        {
+          "name": "拜松",
+          "portraitUrl": "https://media.prts.wiki/b/b2/%E5%A4%B4%E5%83%8F_%E6%8B%9C%E6%9D%BE.png"
+        },
+        {
+          "name": "暴雨",
+          "portraitUrl": "https://media.prts.wiki/f/f8/%E5%A4%B4%E5%83%8F_%E6%9A%B4%E9%9B%A8.png"
+        }
+      ]
+    },
+    {
+      "id": "12.0",
+      "series": "regular",
+      "releaseDate": "2022/05/02",
+      "imageUrl": "https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01N2A0gd1R8HPRAKVAr_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "斯卡蒂",
+          "portraitUrl": "https://media.prts.wiki/5/53/%E5%A4%B4%E5%83%8F_%E6%96%AF%E5%8D%A1%E8%92%82.png"
+        },
+        {
+          "name": "歌蕾蒂娅",
+          "portraitUrl": "https://media.prts.wiki/0/0d/%E5%A4%B4%E5%83%8F_%E6%AD%8C%E8%95%BE%E8%92%82%E5%A8%85.png"
+        },
+        {
+          "name": "幽灵鲨",
+          "portraitUrl": "https://media.prts.wiki/2/28/%E5%A4%B4%E5%83%8F_%E5%B9%BD%E7%81%B5%E9%B2%A8.png"
+        },
+        {
+          "name": "格拉尼",
+          "portraitUrl": "https://media.prts.wiki/2/29/%E5%A4%B4%E5%83%8F_%E6%A0%BC%E6%8B%89%E5%B0%BC.png"
+        },
+        {
+          "name": "深海色",
+          "portraitUrl": "https://media.prts.wiki/d/d1/%E5%A4%B4%E5%83%8F_%E6%B7%B1%E6%B5%B7%E8%89%B2.png"
+        },
+        {
+          "name": "格雷伊",
+          "portraitUrl": "https://media.prts.wiki/f/fe/%E5%A4%B4%E5%83%8F_%E6%A0%BC%E9%9B%B7%E4%BC%8A.png"
+        },
+        {
+          "name": "猎蜂",
+          "portraitUrl": "https://media.prts.wiki/c/c2/%E5%A4%B4%E5%83%8F_%E7%8C%8E%E8%9C%82.png"
+        }
+      ]
+    },
+    {
+      "id": "13.0",
+      "series": "regular",
+      "releaseDate": "2022/06/15",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/66f701e62088f503c3c211301b42e2f7f4841331.jpg",
+      "characters": [
+        {
+          "name": "黑键",
+          "portraitUrl": "https://media.prts.wiki/1/1e/%E5%A4%B4%E5%83%8F_%E9%BB%91%E9%94%AE.png"
+        },
+        {
+          "name": "澄闪",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E6%BE%84%E9%97%AA.png"
+        },
+        {
+          "name": "濯尘芙蓉",
+          "portraitUrl": "https://media.prts.wiki/8/8d/%E5%A4%B4%E5%83%8F_%E6%BF%AF%E5%B0%98%E8%8A%99%E8%93%89.png"
+        },
+        {
+          "name": "车尔尼",
+          "portraitUrl": "https://media.prts.wiki/1/1c/%E5%A4%B4%E5%83%8F_%E8%BD%A6%E5%B0%94%E5%B0%BC.png"
+        },
+        {
+          "name": "埃拉托",
+          "portraitUrl": "https://media.prts.wiki/3/34/%E5%A4%B4%E5%83%8F_%E5%9F%83%E6%8B%89%E6%89%98.png"
+        },
+        {
+          "name": "地灵",
+          "portraitUrl": "https://media.prts.wiki/5/57/%E5%A4%B4%E5%83%8F_%E5%9C%B0%E7%81%B5.png"
+        },
+        {
+          "name": "夏栎",
+          "portraitUrl": "https://media.prts.wiki/0/08/%E5%A4%B4%E5%83%8F_%E5%A4%8F%E6%A0%8E.png"
+        }
+      ]
+    },
+    {
+      "id": "14.0",
+      "series": "regular",
+      "releaseDate": "2022/07/12",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01w2zdvl1R8HPmfLbw9_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "塞雷娅",
+          "portraitUrl": "https://media.prts.wiki/e/ee/%E5%A4%B4%E5%83%8F_%E5%A1%9E%E9%9B%B7%E5%A8%85.png"
+        },
+        {
+          "name": "伊芙利特",
+          "portraitUrl": "https://media.prts.wiki/e/ed/%E5%A4%B4%E5%83%8F_%E4%BC%8A%E8%8A%99%E5%88%A9%E7%89%B9.png"
+        },
+        {
+          "name": "麦哲伦",
+          "portraitUrl": "https://media.prts.wiki/4/4d/%E5%A4%B4%E5%83%8F_%E9%BA%A6%E5%93%B2%E4%BC%A6.png"
+        },
+        {
+          "name": "赫默",
+          "portraitUrl": "https://media.prts.wiki/3/39/%E5%A4%B4%E5%83%8F_%E8%B5%AB%E9%BB%98.png"
+        },
+        {
+          "name": "白面鸮",
+          "portraitUrl": "https://media.prts.wiki/8/83/%E5%A4%B4%E5%83%8F_%E7%99%BD%E9%9D%A2%E9%B8%AE.png"
+        },
+        {
+          "name": "梅尔",
+          "portraitUrl": "https://media.prts.wiki/0/07/%E5%A4%B4%E5%83%8F_%E6%A2%85%E5%B0%94.png"
+        },
+        {
+          "name": "末药",
+          "portraitUrl": "https://media.prts.wiki/d/d9/%E5%A4%B4%E5%83%8F_%E6%9C%AB%E8%8D%AF.png"
+        }
+      ]
+    },
+    {
+      "id": "15.0",
+      "series": "regular",
+      "releaseDate": "2022/07/12",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01sRwyje1R8HPmfUTBL_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "多萝西",
+          "portraitUrl": "https://media.prts.wiki/4/4f/%E5%A4%B4%E5%83%8F_%E5%A4%9A%E8%90%9D%E8%A5%BF.png"
+        },
+        {
+          "name": "山",
+          "portraitUrl": "https://media.prts.wiki/e/ec/%E5%A4%B4%E5%83%8F_%E5%B1%B1.png"
+        },
+        {
+          "name": "承曦格雷伊",
+          "portraitUrl": "https://media.prts.wiki/e/e2/%E5%A4%B4%E5%83%8F_%E6%89%BF%E6%9B%A6%E6%A0%BC%E9%9B%B7%E4%BC%8A.png"
+        },
+        {
+          "name": "星源",
+          "portraitUrl": "https://media.prts.wiki/4/48/%E5%A4%B4%E5%83%8F_%E6%98%9F%E6%BA%90.png"
+        },
+        {
+          "name": "卡夫卡",
+          "portraitUrl": "https://media.prts.wiki/8/8d/%E5%A4%B4%E5%83%8F_%E5%8D%A1%E5%A4%AB%E5%8D%A1.png"
+        },
+        {
+          "name": "罗宾",
+          "portraitUrl": "https://media.prts.wiki/1/1f/%E5%A4%B4%E5%83%8F_%E7%BD%97%E5%AE%BE.png"
+        },
+        {
+          "name": "松果",
+          "portraitUrl": "https://media.prts.wiki/5/5e/%E5%A4%B4%E5%83%8F_%E6%9D%BE%E6%9E%9C.png"
+        }
+      ]
+    },
+    {
+      "id": "16.0",
+      "series": "regular",
+      "releaseDate": "2022/08/19",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/b8675ca26f97f05d7c1099e4dc1bfd1bd91161dd.jpg",
+      "characters": [
+        {
+          "name": "百炼嘉维尔",
+          "portraitUrl": "https://media.prts.wiki/1/1b/%E5%A4%B4%E5%83%8F_%E7%99%BE%E7%82%BC%E5%98%89%E7%BB%B4%E5%B0%94.png"
+        },
+        {
+          "name": "鸿雪",
+          "portraitUrl": "https://media.prts.wiki/1/1b/%E5%A4%B4%E5%83%8F_%E9%B8%BF%E9%9B%AA.png"
+        },
+        {
+          "name": "卡涅利安",
+          "portraitUrl": "https://media.prts.wiki/d/dd/%E5%A4%B4%E5%83%8F_%E5%8D%A1%E6%B6%85%E5%88%A9%E5%AE%89.png"
+        },
+        {
+          "name": "晓歌",
+          "portraitUrl": "https://media.prts.wiki/1/15/%E5%A4%B4%E5%83%8F_%E6%99%93%E6%AD%8C.png"
+        },
+        {
+          "name": "至简",
+          "portraitUrl": "https://media.prts.wiki/9/98/%E5%A4%B4%E5%83%8F_%E8%87%B3%E7%AE%80.png"
+        },
+        {
+          "name": "陨星",
+          "portraitUrl": "https://media.prts.wiki/e/ea/%E5%A4%B4%E5%83%8F_%E9%99%A8%E6%98%9F.png"
+        },
+        {
+          "name": "天火",
+          "portraitUrl": "https://media.prts.wiki/f/fa/%E5%A4%B4%E5%83%8F_%E5%A4%A9%E7%81%AB.png"
+        }
+      ]
+    },
+    {
+      "id": "17.0",
+      "series": "regular",
+      "releaseDate": "2022/09/23",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01GqvRdn1R8HPQqgTC9_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "玛恩纳",
+          "portraitUrl": "https://media.prts.wiki/0/08/%E5%A4%B4%E5%83%8F_%E7%8E%9B%E6%81%A9%E7%BA%B3.png"
+        },
+        {
+          "name": "棘刺",
+          "portraitUrl": "https://media.prts.wiki/2/2a/%E5%A4%B4%E5%83%8F_%E6%A3%98%E5%88%BA.png"
+        },
+        {
+          "name": "但书",
+          "portraitUrl": "https://media.prts.wiki/b/b0/%E5%A4%B4%E5%83%8F_%E4%BD%86%E4%B9%A6.png"
+        },
+        {
+          "name": "蛇屠箱",
+          "portraitUrl": "https://media.prts.wiki/0/02/%E5%A4%B4%E5%83%8F_%E8%9B%87%E5%B1%A0%E7%AE%B1.png"
+        },
+        {
+          "name": "狮蝎",
+          "portraitUrl": "https://media.prts.wiki/c/c5/%E5%A4%B4%E5%83%8F_%E7%8B%AE%E8%9D%8E.png"
+        },
+        {
+          "name": "砾",
+          "portraitUrl": "https://media.prts.wiki/c/ce/%E5%A4%B4%E5%83%8F_%E7%A0%BE.png"
+        },
+        {
+          "name": "夜烟",
+          "portraitUrl": "https://media.prts.wiki/5/55/%E5%A4%B4%E5%83%8F_%E5%A4%9C%E7%83%9F.png"
+        }
+      ]
+    },
+    {
+      "id": "18.0",
+      "series": "regular",
+      "releaseDate": "2022/11/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/f5b90afea519693fba1bf40809dfe58ae55575e6.jpg",
+      "characters": [
+        {
+          "name": "白铁",
+          "portraitUrl": "https://media.prts.wiki/2/2e/%E5%A4%B4%E5%83%8F_%E7%99%BD%E9%93%81.png"
+        },
+        {
+          "name": "号角",
+          "portraitUrl": "https://media.prts.wiki/3/3f/%E5%A4%B4%E5%83%8F_%E5%8F%B7%E8%A7%92.png"
+        },
+        {
+          "name": "明椒",
+          "portraitUrl": "https://media.prts.wiki/3/3f/%E5%A4%B4%E5%83%8F_%E6%98%8E%E6%A4%92.png"
+        },
+        {
+          "name": "达格达",
+          "portraitUrl": "https://media.prts.wiki/d/dd/%E5%A4%B4%E5%83%8F_%E8%BE%BE%E6%A0%BC%E8%BE%BE.png"
+        },
+        {
+          "name": "铅踝",
+          "portraitUrl": "https://media.prts.wiki/8/87/%E5%A4%B4%E5%83%8F_%E9%93%85%E8%B8%9D.png"
+        },
+        {
+          "name": "洛洛",
+          "portraitUrl": "https://media.prts.wiki/d/d4/%E5%A4%B4%E5%83%8F_%E6%B4%9B%E6%B4%9B.png"
+        },
+        {
+          "name": "因陀罗",
+          "portraitUrl": "https://media.prts.wiki/f/fe/%E5%A4%B4%E5%83%8F_%E5%9B%A0%E9%99%80%E7%BD%97.png"
+        }
+      ]
+    },
+    {
+      "id": "19.0",
+      "series": "regular",
+      "releaseDate": "2022/11/01",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01ZZNgVF1R8HHzXztgd_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "缄默德克萨斯",
+          "portraitUrl": "https://media.prts.wiki/b/b8/%E5%A4%B4%E5%83%8F_%E7%BC%84%E9%BB%98%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF.png"
+        },
+        {
+          "name": "伺夜",
+          "portraitUrl": "https://media.prts.wiki/d/df/%E5%A4%B4%E5%83%8F_%E4%BC%BA%E5%A4%9C.png"
+        },
+        {
+          "name": "斥罪",
+          "portraitUrl": "https://media.prts.wiki/1/1c/%E5%A4%B4%E5%83%8F_%E6%96%A5%E7%BD%AA.png"
+        },
+        {
+          "name": "雪绒",
+          "portraitUrl": "https://media.prts.wiki/8/82/%E5%A4%B4%E5%83%8F_%E9%9B%AA%E7%BB%92.png"
+        },
+        {
+          "name": "子月",
+          "portraitUrl": "https://media.prts.wiki/d/db/%E5%A4%B4%E5%83%8F_%E5%AD%90%E6%9C%88.png"
+        },
+        {
+          "name": "石英",
+          "portraitUrl": "https://media.prts.wiki/b/bc/%E5%A4%B4%E5%83%8F_%E7%9F%B3%E8%8B%B1.png"
+        },
+        {
+          "name": "拉普兰德",
+          "portraitUrl": "https://media.prts.wiki/b/bf/%E5%A4%B4%E5%83%8F_%E6%8B%89%E6%99%AE%E5%85%B0%E5%BE%B7.png"
+        }
+      ]
+    },
+    {
+      "id": "20.0",
+      "series": "regular",
+      "releaseDate": "2022/12/23",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01hDSsdD1R8HPmlMwn9_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "焰影苇草",
+          "portraitUrl": "https://media.prts.wiki/9/94/%E5%A4%B4%E5%83%8F_%E7%84%B0%E5%BD%B1%E8%8B%87%E8%8D%89.png"
+        },
+        {
+          "name": "刻俄柏",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E5%88%BB%E4%BF%84%E6%9F%8F.png"
+        },
+        {
+          "name": "和弦",
+          "portraitUrl": "https://media.prts.wiki/e/ed/%E5%A4%B4%E5%83%8F_%E5%92%8C%E5%BC%A6.png"
+        },
+        {
+          "name": "谜图",
+          "portraitUrl": "https://media.prts.wiki/7/79/%E5%A4%B4%E5%83%8F_%E8%B0%9C%E5%9B%BE.png"
+        },
+        {
+          "name": "海沫",
+          "portraitUrl": "https://media.prts.wiki/6/6c/%E5%A4%B4%E5%83%8F_%E6%B5%B7%E6%B2%AB.png"
+        },
+        {
+          "name": "布丁",
+          "portraitUrl": "https://media.prts.wiki/b/b0/%E5%A4%B4%E5%83%8F_%E5%B8%83%E4%B8%81.png"
+        },
+        {
+          "name": "绮良",
+          "portraitUrl": "https://media.prts.wiki/a/a8/%E5%A4%B4%E5%83%8F_%E7%BB%AE%E8%89%AF.png"
+        }
+      ]
+    },
+    {
+      "id": "21.0",
+      "series": "regular",
+      "releaseDate": "2023/01/18",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/5d93808588676c37f6506f54487cb8b18fcb1344.jpg",
+      "characters": [
+        {
+          "name": "年",
+          "portraitUrl": "https://media.prts.wiki/9/9c/%E5%A4%B4%E5%83%8F_%E5%B9%B4.png"
+        },
+        {
+          "name": "夕",
+          "portraitUrl": "https://media.prts.wiki/6/6b/%E5%A4%B4%E5%83%8F_%E5%A4%95.png"
+        },
+        {
+          "name": "令",
+          "portraitUrl": "https://media.prts.wiki/2/2c/%E5%A4%B4%E5%83%8F_%E4%BB%A4.png"
+        },
+        {
+          "name": "乌有",
+          "portraitUrl": "https://media.prts.wiki/0/04/%E5%A4%B4%E5%83%8F_%E4%B9%8C%E6%9C%89.png"
+        },
+        {
+          "name": "格劳克斯",
+          "portraitUrl": "https://media.prts.wiki/5/53/%E5%A4%B4%E5%83%8F_%E6%A0%BC%E5%8A%B3%E5%85%8B%E6%96%AF.png"
+        },
+        {
+          "name": "炎狱炎熔",
+          "portraitUrl": "https://media.prts.wiki/2/20/%E5%A4%B4%E5%83%8F_%E7%82%8E%E7%8B%B1%E7%82%8E%E7%86%94.png"
+        },
+        {
+          "name": "夜半",
+          "portraitUrl": "https://media.prts.wiki/a/a1/%E5%A4%B4%E5%83%8F_%E5%A4%9C%E5%8D%8A.png"
+        }
+      ]
+    },
+    {
+      "id": "22.0",
+      "series": "regular",
+      "releaseDate": "2023/01/18",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/5d93808588676c37f6506f54487cb8b18fcb1344.jpg",
+      "characters": [
+        {
+          "name": "林",
+          "portraitUrl": "https://media.prts.wiki/a/aa/%E5%A4%B4%E5%83%8F_%E6%9E%97.png"
+        },
+        {
+          "name": "重岳",
+          "portraitUrl": "https://media.prts.wiki/0/09/%E5%A4%B4%E5%83%8F_%E9%87%8D%E5%B2%B3.png"
+        },
+        {
+          "name": "截云",
+          "portraitUrl": "https://media.prts.wiki/8/81/%E5%A4%B4%E5%83%8F_%E6%88%AA%E4%BA%91.png"
+        },
+        {
+          "name": "火哨",
+          "portraitUrl": "https://media.prts.wiki/f/fa/%E5%A4%B4%E5%83%8F_%E7%81%AB%E5%93%A8.png"
+        },
+        {
+          "name": "寒芒克洛丝",
+          "portraitUrl": "https://media.prts.wiki/3/39/%E5%A4%B4%E5%83%8F_%E5%AF%92%E8%8A%92%E5%85%8B%E6%B4%9B%E4%B8%9D.png"
+        },
+        {
+          "name": "火神",
+          "portraitUrl": "https://media.prts.wiki/f/f1/%E5%A4%B4%E5%83%8F_%E7%81%AB%E7%A5%9E.png"
+        },
+        {
+          "name": "微风",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E5%BE%AE%E9%A3%8E.png"
+        }
+      ]
+    },
+    {
+      "id": "23.0",
+      "series": "regular",
+      "releaseDate": "2023/02/23",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/ccbe1e0cefe52766265e4318faa184bd36d14608.jpg",
+      "characters": [
+        {
+          "name": "老鲤",
+          "portraitUrl": "https://media.prts.wiki/e/e5/%E5%A4%B4%E5%83%8F_%E8%80%81%E9%B2%A4.png"
+        },
+        {
+          "name": "阿",
+          "portraitUrl": "https://media.prts.wiki/3/31/%E5%A4%B4%E5%83%8F_%E9%98%BF.png"
+        },
+        {
+          "name": "吽",
+          "portraitUrl": "https://media.prts.wiki/4/41/%E5%A4%B4%E5%83%8F_%E5%90%BD.png"
+        },
+        {
+          "name": "槐琥",
+          "portraitUrl": "https://media.prts.wiki/e/ed/%E5%A4%B4%E5%83%8F_%E6%A7%90%E7%90%A5.png"
+        },
+        {
+          "name": "惊蛰",
+          "portraitUrl": "https://media.prts.wiki/8/81/%E5%A4%B4%E5%83%8F_%E6%83%8A%E8%9B%B0.png"
+        },
+        {
+          "name": "孑",
+          "portraitUrl": "https://media.prts.wiki/5/54/%E5%A4%B4%E5%83%8F_%E5%AD%91.png"
+        },
+        {
+          "name": "雪雉",
+          "portraitUrl": "https://media.prts.wiki/2/24/%E5%A4%B4%E5%83%8F_%E9%9B%AA%E9%9B%89.png"
+        }
+      ]
+    },
+    {
+      "id": "24.0",
+      "series": "regular",
+      "releaseDate": "2023/02/23",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01o40pbH1R8H5Y749Du_!!2-item_pic.png_q50.jpg",
+      "characters": [
+        {
+          "name": "陈",
+          "portraitUrl": "https://media.prts.wiki/c/cf/%E5%A4%B4%E5%83%8F_%E9%99%88.png"
+        },
+        {
+          "name": "星熊",
+          "portraitUrl": "https://media.prts.wiki/0/07/%E5%A4%B4%E5%83%8F_%E6%98%9F%E7%86%8A.png"
+        },
+        {
+          "name": "仇白",
+          "portraitUrl": "https://media.prts.wiki/8/8a/%E5%A4%B4%E5%83%8F_%E4%BB%87%E7%99%BD.png"
+        },
+        {
+          "name": "诗怀雅",
+          "portraitUrl": "https://media.prts.wiki/5/50/%E5%A4%B4%E5%83%8F_%E8%AF%97%E6%80%80%E9%9B%85.png"
+        },
+        {
+          "name": "铎铃",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E9%93%8E%E9%93%83.png"
+        },
+        {
+          "name": "阿消",
+          "portraitUrl": "https://media.prts.wiki/2/2f/%E5%A4%B4%E5%83%8F_%E9%98%BF%E6%B6%88.png"
+        },
+        {
+          "name": "白雪",
+          "portraitUrl": "https://media.prts.wiki/b/b4/%E5%A4%B4%E5%83%8F_%E7%99%BD%E9%9B%AA.png"
+        }
+      ]
+    },
+    {
+      "id": "25.0",
+      "series": "regular",
+      "releaseDate": "2023/04/10",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/86d517104eb364acd2be60be324baf6e53b6fac5.jpg",
+      "characters": [
+        {
+          "name": "伊内丝",
+          "portraitUrl": "https://media.prts.wiki/8/8c/%E5%A4%B4%E5%83%8F_%E4%BC%8A%E5%86%85%E4%B8%9D.png"
+        },
+        {
+          "name": "煌",
+          "portraitUrl": "https://media.prts.wiki/3/30/%E5%A4%B4%E5%83%8F_%E7%85%8C.png"
+        },
+        {
+          "name": "灰喉",
+          "portraitUrl": "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E7%81%B0%E5%96%89.png"
+        },
+        {
+          "name": "洋灰",
+          "portraitUrl": "https://media.prts.wiki/e/e8/%E5%A4%B4%E5%83%8F_%E6%B4%8B%E7%81%B0.png"
+        },
+        {
+          "name": "U-Official",
+          "portraitUrl": "https://media.prts.wiki/4/45/%E5%A4%B4%E5%83%8F_U-Official.png"
+        },
+        {
+          "name": "安赛尔",
+          "portraitUrl": "https://media.prts.wiki/9/94/%E5%A4%B4%E5%83%8F_%E5%AE%89%E8%B5%9B%E5%B0%94.png"
+        },
+        {
+          "name": "休谟斯",
+          "portraitUrl": "https://media.prts.wiki/e/e0/%E5%A4%B4%E5%83%8F_%E4%BC%91%E8%B0%9F%E6%96%AF.png"
+        },
+        {
+          "name": "摩根",
+          "portraitUrl": "https://media.prts.wiki/f/fe/%E5%A4%B4%E5%83%8F_%E6%91%A9%E6%A0%B9.png"
+        }
+      ]
+    },
+    {
+      "id": "26.0",
+      "series": "regular",
+      "releaseDate": "2023/05/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/0095e907bae0c0567ea44a51824181d38af6f33f.jpg",
+      "characters": [
+        {
+          "name": "浊心斯卡蒂",
+          "portraitUrl": "https://media.prts.wiki/8/80/%E5%A4%B4%E5%83%8F_%E6%B5%8A%E5%BF%83%E6%96%AF%E5%8D%A1%E8%92%82.png"
+        },
+        {
+          "name": "凯尔希",
+          "portraitUrl": "https://media.prts.wiki/c/c5/%E5%A4%B4%E5%83%8F_%E5%87%AF%E5%B0%94%E5%B8%8C.png"
+        },
+        {
+          "name": "艾丝黛尔",
+          "portraitUrl": "https://media.prts.wiki/5/57/%E5%A4%B4%E5%83%8F_%E8%89%BE%E4%B8%9D%E9%BB%9B%E5%B0%94.png"
+        },
+        {
+          "name": "赤冬",
+          "portraitUrl": "https://media.prts.wiki/f/fe/%E5%A4%B4%E5%83%8F_%E8%B5%A4%E5%86%AC.png"
+        },
+        {
+          "name": "海蒂",
+          "portraitUrl": "https://media.prts.wiki/d/d9/%E5%A4%B4%E5%83%8F_%E6%B5%B7%E8%92%82.png"
+        },
+        {
+          "name": "安哲拉",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E5%AE%89%E5%93%B2%E6%8B%89.png"
+        },
+        {
+          "name": "嘉维尔",
+          "portraitUrl": "https://media.prts.wiki/c/cc/%E5%A4%B4%E5%83%8F_%E5%98%89%E7%BB%B4%E5%B0%94.png"
+        }
+      ]
+    },
+    {
+      "id": "27.0",
+      "series": "regular",
+      "releaseDate": "2023/05/01",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01MH6C3R1R8HPmlSBXE_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "缪尔赛思",
+          "portraitUrl": "https://media.prts.wiki/3/3a/%E5%A4%B4%E5%83%8F_%E7%BC%AA%E5%B0%94%E8%B5%9B%E6%80%9D.png"
+        },
+        {
+          "name": "霍尔海雅",
+          "portraitUrl": "https://media.prts.wiki/9/9e/%E5%A4%B4%E5%83%8F_%E9%9C%8D%E5%B0%94%E6%B5%B7%E9%9B%85.png"
+        },
+        {
+          "name": "淬羽赫默",
+          "portraitUrl": "https://media.prts.wiki/0/0d/%E5%A4%B4%E5%83%8F_%E6%B7%AC%E7%BE%BD%E8%B5%AB%E9%BB%98.png"
+        },
+        {
+          "name": "褐果",
+          "portraitUrl": "https://media.prts.wiki/5/58/%E5%A4%B4%E5%83%8F_%E8%A4%90%E6%9E%9C.png"
+        },
+        {
+          "name": "红豆",
+          "portraitUrl": "https://media.prts.wiki/b/bb/%E5%A4%B4%E5%83%8F_%E7%BA%A2%E8%B1%86.png"
+        },
+        {
+          "name": "玫拉",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E7%8E%AB%E6%8B%89.png"
+        },
+        {
+          "name": "Friston-3",
+          "portraitUrl": "https://media.prts.wiki/c/cf/%E5%A4%B4%E5%83%8F_Friston-3.png"
+        },
+        {
+          "name": "夜刀",
+          "portraitUrl": "https://media.prts.wiki/b/b2/%E5%A4%B4%E5%83%8F_%E5%A4%9C%E5%88%80.png"
+        }
+      ]
+    },
+    {
+      "id": "28.0",
+      "series": "regular",
+      "releaseDate": "2023/06/15",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/c334624ae8c54d4d0be73c80943d19723db8d0a5.jpg",
+      "characters": [
+        {
+          "name": "圣约送葬人",
+          "portraitUrl": "https://media.prts.wiki/7/7e/%E5%A4%B4%E5%83%8F_%E5%9C%A3%E7%BA%A6%E9%80%81%E8%91%AC%E4%BA%BA.png"
+        },
+        {
+          "name": "灵知",
+          "portraitUrl": "https://media.prts.wiki/9/9f/%E5%A4%B4%E5%83%8F_%E7%81%B5%E7%9F%A5.png"
+        },
+        {
+          "name": "极光",
+          "portraitUrl": "https://media.prts.wiki/4/43/%E5%A4%B4%E5%83%8F_%E6%9E%81%E5%85%89.png"
+        },
+        {
+          "name": "耶拉",
+          "portraitUrl": "https://media.prts.wiki/7/71/%E5%A4%B4%E5%83%8F_%E8%80%B6%E6%8B%89.png"
+        },
+        {
+          "name": "空构",
+          "portraitUrl": "https://media.prts.wiki/d/d1/%E5%A4%B4%E5%83%8F_%E7%A9%BA%E6%9E%84.png"
+        },
+        {
+          "name": "红云",
+          "portraitUrl": "https://media.prts.wiki/a/af/%E5%A4%B4%E5%83%8F_%E7%BA%A2%E4%BA%91.png"
+        },
+        {
+          "name": "隐现",
+          "portraitUrl": "https://media.prts.wiki/8/85/%E5%A4%B4%E5%83%8F_%E9%9A%90%E7%8E%B0.png"
+        }
+      ]
+    },
+    {
+      "id": "29.0",
+      "series": "regular",
+      "releaseDate": "2023/07/14",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/28ef48e0d44d1201c8411e7bb17da7cc54ca8c95.jpg",
+      "characters": [
+        {
+          "name": "提丰",
+          "portraitUrl": "https://media.prts.wiki/7/70/%E5%A4%B4%E5%83%8F_%E6%8F%90%E4%B8%B0.png"
+        },
+        {
+          "name": "嵯峨",
+          "portraitUrl": "https://media.prts.wiki/6/6d/%E5%A4%B4%E5%83%8F_%E5%B5%AF%E5%B3%A8.png"
+        },
+        {
+          "name": "安洁莉娜",
+          "portraitUrl": "https://media.prts.wiki/c/ca/%E5%A4%B4%E5%83%8F_%E5%AE%89%E6%B4%81%E8%8E%89%E5%A8%9C.png"
+        },
+        {
+          "name": "寒檀",
+          "portraitUrl": "https://media.prts.wiki/c/cd/%E5%A4%B4%E5%83%8F_%E5%AF%92%E6%AA%80.png"
+        },
+        {
+          "name": "凛视",
+          "portraitUrl": "https://media.prts.wiki/e/e3/%E5%A4%B4%E5%83%8F_%E5%87%9B%E8%A7%86.png"
+        },
+        {
+          "name": "稀音",
+          "portraitUrl": "https://media.prts.wiki/c/c6/%E5%A4%B4%E5%83%8F_%E7%A8%80%E9%9F%B3.png"
+        },
+        {
+          "name": "卡缇",
+          "portraitUrl": "https://media.prts.wiki/8/87/%E5%A4%B4%E5%83%8F_%E5%8D%A1%E7%BC%87.png"
+        },
+        {
+          "name": "玫兰莎",
+          "portraitUrl": "https://media.prts.wiki/4/4b/%E5%A4%B4%E5%83%8F_%E7%8E%AB%E5%85%B0%E8%8E%8E.png"
+        }
+      ]
+    },
+    {
+      "id": "30.0",
+      "series": "regular",
+      "releaseDate": "2023/08/14",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/72a010c7741d5a9397ed5ed91231bbca0bc0fa51.jpg",
+      "characters": [
+        {
+          "name": "纯烬艾雅法拉",
+          "portraitUrl": "https://media.prts.wiki/f/f0/%E5%A4%B4%E5%83%8F_%E7%BA%AF%E7%83%AC%E8%89%BE%E9%9B%85%E6%B3%95%E6%8B%89.png"
+        },
+        {
+          "name": "琳琅诗怀雅",
+          "portraitUrl": "https://media.prts.wiki/7/74/%E5%A4%B4%E5%83%8F_%E7%90%B3%E7%90%85%E8%AF%97%E6%80%80%E9%9B%85.png"
+        },
+        {
+          "name": "苍苔",
+          "portraitUrl": "https://media.prts.wiki/9/95/%E5%A4%B4%E5%83%8F_%E8%8B%8D%E8%8B%94.png"
+        },
+        {
+          "name": "青枳",
+          "portraitUrl": "https://media.prts.wiki/0/0e/%E5%A4%B4%E5%83%8F_%E9%9D%92%E6%9E%B3.png"
+        },
+        {
+          "name": "暮落",
+          "portraitUrl": "https://media.prts.wiki/f/fb/%E5%A4%B4%E5%83%8F_%E6%9A%AE%E8%90%BD.png"
+        },
+        {
+          "name": "流星",
+          "portraitUrl": "https://media.prts.wiki/1/14/%E5%A4%B4%E5%83%8F_%E6%B5%81%E6%98%9F.png"
+        },
+        {
+          "name": "暗索",
+          "portraitUrl": "https://media.prts.wiki/d/dd/%E5%A4%B4%E5%83%8F_%E6%9A%97%E7%B4%A2.png"
+        }
+      ]
+    },
+    {
+      "id": "31.0",
+      "series": "regular",
+      "releaseDate": "2023/08/14",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/72a010c7741d5a9397ed5ed91231bbca0bc0fa51.jpg",
+      "characters": [
+        {
+          "name": "假日威龙陈",
+          "portraitUrl": "https://media.prts.wiki/d/df/%E5%A4%B4%E5%83%8F_%E5%81%87%E6%97%A5%E5%A8%81%E9%BE%99%E9%99%88.png"
+        },
+        {
+          "name": "水月",
+          "portraitUrl": "https://media.prts.wiki/0/05/%E5%A4%B4%E5%83%8F_%E6%B0%B4%E6%9C%88.png"
+        },
+        {
+          "name": "龙舌兰",
+          "portraitUrl": "https://media.prts.wiki/4/42/%E5%A4%B4%E5%83%8F_%E9%BE%99%E8%88%8C%E5%85%B0.png"
+        },
+        {
+          "name": "羽毛笔",
+          "portraitUrl": "https://media.prts.wiki/b/b8/%E5%A4%B4%E5%83%8F_%E7%BE%BD%E6%AF%9B%E7%AC%94.png"
+        },
+        {
+          "name": "蓝毒",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E8%93%9D%E6%AF%92.png"
+        },
+        {
+          "name": "远山",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E8%BF%9C%E5%B1%B1.png"
+        },
+        {
+          "name": "杰西卡",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E6%9D%B0%E8%A5%BF%E5%8D%A1.png"
+        }
+      ]
+    },
+    {
+      "id": "32.0",
+      "series": "regular",
+      "releaseDate": "2023/10/09",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/1ac181e297b6a8613fd4611f0f30736361968129.jpg",
+      "characters": [
+        {
+          "name": "涤火杰西卡",
+          "portraitUrl": "https://media.prts.wiki/1/14/%E5%A4%B4%E5%83%8F_%E6%B6%A4%E7%81%AB%E6%9D%B0%E8%A5%BF%E5%8D%A1.png"
+        },
+        {
+          "name": "赫德雷",
+          "portraitUrl": "https://media.prts.wiki/f/f8/%E5%A4%B4%E5%83%8F_%E8%B5%AB%E5%BE%B7%E9%9B%B7.png"
+        },
+        {
+          "name": "冰酿",
+          "portraitUrl": "https://media.prts.wiki/c/cf/%E5%A4%B4%E5%83%8F_%E5%86%B0%E9%85%BF.png"
+        },
+        {
+          "name": "杏仁",
+          "portraitUrl": "https://media.prts.wiki/2/2e/%E5%A4%B4%E5%83%8F_%E6%9D%8F%E4%BB%81.png"
+        },
+        {
+          "name": "刺玫",
+          "portraitUrl": "https://media.prts.wiki/c/c6/%E5%A4%B4%E5%83%8F_%E5%88%BA%E7%8E%AB.png"
+        },
+        {
+          "name": "戴菲恩",
+          "portraitUrl": "https://media.prts.wiki/2/28/%E5%A4%B4%E5%83%8F_%E6%88%B4%E8%8F%B2%E6%81%A9.png"
+        },
+        {
+          "name": "维荻",
+          "portraitUrl": "https://media.prts.wiki/9/97/%E5%A4%B4%E5%83%8F_%E7%BB%B4%E8%8D%BB.png"
+        }
+      ]
+    },
+    {
+      "id": "33.0",
+      "series": "regular",
+      "releaseDate": "2023/11/07",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/dd37d4621ba8e3f05e23af2115525b5061968129.jpg",
+      "characters": [
+        {
+          "name": "薇薇安娜",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E8%96%87%E8%96%87%E5%AE%89%E5%A8%9C.png"
+        },
+        {
+          "name": "塑心",
+          "portraitUrl": "https://media.prts.wiki/0/05/%E5%A4%B4%E5%83%8F_%E5%A1%91%E5%BF%83.png"
+        },
+        {
+          "name": "止颂",
+          "portraitUrl": "https://media.prts.wiki/7/72/%E5%A4%B4%E5%83%8F_%E6%AD%A2%E9%A2%82.png"
+        },
+        {
+          "name": "深律",
+          "portraitUrl": "https://media.prts.wiki/d/d8/%E5%A4%B4%E5%83%8F_%E6%B7%B1%E5%BE%8B.png"
+        },
+        {
+          "name": "跃跃",
+          "portraitUrl": "https://media.prts.wiki/a/aa/%E5%A4%B4%E5%83%8F_%E8%B7%83%E8%B7%83.png"
+        },
+        {
+          "name": "芳汀",
+          "portraitUrl": "https://media.prts.wiki/6/6a/%E5%A4%B4%E5%83%8F_%E8%8A%B3%E6%B1%80.png"
+        },
+        {
+          "name": "折光",
+          "portraitUrl": "https://media.prts.wiki/c/c2/%E5%A4%B4%E5%83%8F_%E6%8A%98%E5%85%89.png"
+        }
+      ]
+    },
+    {
+      "id": "34.0",
+      "series": "regular",
+      "releaseDate": "2023/11/07",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/dd37d4621ba8e3f05e23af2115525b5061968129.jpg",
+      "characters": [
+        {
+          "name": "耀骑士临光",
+          "portraitUrl": "https://media.prts.wiki/0/03/%E5%A4%B4%E5%83%8F_%E8%80%80%E9%AA%91%E5%A3%AB%E4%B8%B4%E5%85%89.png"
+        },
+        {
+          "name": "焰尾",
+          "portraitUrl": "https://media.prts.wiki/c/c8/%E5%A4%B4%E5%83%8F_%E7%84%B0%E5%B0%BE.png"
+        },
+        {
+          "name": "远牙",
+          "portraitUrl": "https://media.prts.wiki/a/a1/%E5%A4%B4%E5%83%8F_%E8%BF%9C%E7%89%99.png"
+        },
+        {
+          "name": "野鬃",
+          "portraitUrl": "https://media.prts.wiki/9/9f/%E5%A4%B4%E5%83%8F_%E9%87%8E%E9%AC%83.png"
+        },
+        {
+          "name": "杜林",
+          "portraitUrl": "https://media.prts.wiki/2/24/%E5%A4%B4%E5%83%8F_%E6%9D%9C%E6%9E%97.png"
+        },
+        {
+          "name": "蚀清",
+          "portraitUrl": "https://media.prts.wiki/7/70/%E5%A4%B4%E5%83%8F_%E8%9A%80%E6%B8%85.png"
+        },
+        {
+          "name": "灰毫",
+          "portraitUrl": "https://media.prts.wiki/2/21/%E5%A4%B4%E5%83%8F_%E7%81%B0%E6%AF%AB.png"
+        },
+        {
+          "name": "正义骑士号",
+          "portraitUrl": "https://media.prts.wiki/c/c5/%E5%A4%B4%E5%83%8F_%E6%AD%A3%E4%B9%89%E9%AA%91%E5%A3%AB%E5%8F%B7.png"
+        }
+      ]
+    },
+    {
+      "id": "35.0",
+      "series": "regular",
+      "releaseDate": "2024/01/12",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/7910422ceed7e636d5dfe09788d2833e61968129.jpg",
+      "characters": [
+        {
+          "name": "锏",
+          "portraitUrl": "https://media.prts.wiki/0/0f/%E5%A4%B4%E5%83%8F_%E9%94%8F.png"
+        },
+        {
+          "name": "莱伊",
+          "portraitUrl": "https://media.prts.wiki/6/6a/%E5%A4%B4%E5%83%8F_%E8%8E%B1%E4%BC%8A.png"
+        },
+        {
+          "name": "烈夏",
+          "portraitUrl": "https://media.prts.wiki/6/65/%E5%A4%B4%E5%83%8F_%E7%83%88%E5%A4%8F.png"
+        },
+        {
+          "name": "哈洛德",
+          "portraitUrl": "https://media.prts.wiki/2/22/%E5%A4%B4%E5%83%8F_%E5%93%88%E6%B4%9B%E5%BE%B7.png"
+        },
+        {
+          "name": "温米",
+          "portraitUrl": "https://media.prts.wiki/3/3f/%E5%A4%B4%E5%83%8F_%E6%B8%A9%E7%B1%B3.png"
+        },
+        {
+          "name": "月禾",
+          "portraitUrl": "https://media.prts.wiki/b/b6/%E5%A4%B4%E5%83%8F_%E6%9C%88%E7%A6%BE.png"
+        },
+        {
+          "name": "薄绿",
+          "portraitUrl": "https://media.prts.wiki/3/30/%E5%A4%B4%E5%83%8F_%E8%96%84%E7%BB%BF.png"
+        }
+      ]
+    },
+    {
+      "id": "36.0",
+      "series": "regular",
+      "releaseDate": "2024/02/05",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01KOtGCe1R8HImADlgP_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "黍",
+          "portraitUrl": "https://media.prts.wiki/f/f2/%E5%A4%B4%E5%83%8F_%E9%BB%8D.png"
+        },
+        {
+          "name": "左乐",
+          "portraitUrl": "https://media.prts.wiki/e/e0/%E5%A4%B4%E5%83%8F_%E5%B7%A6%E4%B9%90.png"
+        },
+        {
+          "name": "小满",
+          "portraitUrl": "https://media.prts.wiki/1/1d/%E5%A4%B4%E5%83%8F_%E5%B0%8F%E6%BB%A1.png"
+        },
+        {
+          "name": "万顷",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E4%B8%87%E9%A1%B7.png"
+        },
+        {
+          "name": "蜜莓",
+          "portraitUrl": "https://media.prts.wiki/2/29/%E5%A4%B4%E5%83%8F_%E8%9C%9C%E8%8E%93.png"
+        },
+        {
+          "name": "红隼",
+          "portraitUrl": "https://media.prts.wiki/4/45/%E5%A4%B4%E5%83%8F_%E7%BA%A2%E9%9A%BC.png"
+        },
+        {
+          "name": "深靛",
+          "portraitUrl": "https://media.prts.wiki/9/92/%E5%A4%B4%E5%83%8F_%E6%B7%B1%E9%9D%9B.png"
+        }
+      ]
+    },
+    {
+      "id": "37.0",
+      "series": "regular",
+      "releaseDate": "2024/02/04",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/ba1d779272f140152d972cf7e28a072c61968129.jpg",
+      "characters": [
+        {
+          "name": "帕拉斯",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E5%B8%95%E6%8B%89%E6%96%AF.png"
+        },
+        {
+          "name": "史尔特尔",
+          "portraitUrl": "https://media.prts.wiki/e/e1/%E5%A4%B4%E5%83%8F_%E5%8F%B2%E5%B0%94%E7%89%B9%E5%B0%94.png"
+        },
+        {
+          "name": "空弦",
+          "portraitUrl": "https://media.prts.wiki/b/bb/%E5%A4%B4%E5%83%8F_%E7%A9%BA%E5%BC%A6.png"
+        },
+        {
+          "name": "暴行",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E6%9A%B4%E8%A1%8C.png"
+        },
+        {
+          "name": "桃金娘",
+          "portraitUrl": "https://media.prts.wiki/9/9d/%E5%A4%B4%E5%83%8F_%E6%A1%83%E9%87%91%E5%A8%98.png"
+        },
+        {
+          "name": "坚雷",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E5%9D%9A%E9%9B%B7.png"
+        },
+        {
+          "name": "杜宾",
+          "portraitUrl": "https://media.prts.wiki/a/a1/%E5%A4%B4%E5%83%8F_%E6%9D%9C%E5%AE%BE.png"
+        }
+      ]
+    },
+    {
+      "id": "38.0",
+      "series": "regular",
+      "releaseDate": "2024/04/28",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01FM8kef1R8HDqsMq6w_!!0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "阿斯卡纶",
+          "portraitUrl": "https://media.prts.wiki/7/76/%E5%A4%B4%E5%83%8F_%E9%98%BF%E6%96%AF%E5%8D%A1%E7%BA%B6.png"
+        },
+        {
+          "name": "闪灵",
+          "portraitUrl": "https://media.prts.wiki/5/54/%E5%A4%B4%E5%83%8F_%E9%97%AA%E7%81%B5.png"
+        },
+        {
+          "name": "夜莺",
+          "portraitUrl": "https://media.prts.wiki/6/64/%E5%A4%B4%E5%83%8F_%E5%A4%9C%E8%8E%BA.png"
+        },
+        {
+          "name": "阿罗玛",
+          "portraitUrl": "https://media.prts.wiki/f/f6/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%BD%97%E7%8E%9B.png"
+        },
+        {
+          "name": "奥达",
+          "portraitUrl": "https://media.prts.wiki/2/29/%E5%A4%B4%E5%83%8F_%E5%A5%A5%E8%BE%BE.png"
+        },
+        {
+          "name": "露托",
+          "portraitUrl": "https://media.prts.wiki/7/77/%E5%A4%B4%E5%83%8F_%E9%9C%B2%E6%89%98.png"
+        },
+        {
+          "name": "霜叶",
+          "portraitUrl": "https://media.prts.wiki/2/29/%E5%A4%B4%E5%83%8F_%E9%9C%9C%E5%8F%B6.png"
+        }
+      ]
+    },
+    {
+      "id": "39.0",
+      "series": "regular",
+      "releaseDate": "2024/04/28",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01XOusje1R8HDyFNzxD_!!0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "维什戴尔",
+          "portraitUrl": "https://media.prts.wiki/6/66/%E5%A4%B4%E5%83%8F_%E7%BB%B4%E4%BB%80%E6%88%B4%E5%B0%94.png"
+        },
+        {
+          "name": "魔王",
+          "portraitUrl": "https://media.prts.wiki/d/de/%E5%A4%B4%E5%83%8F_%E9%AD%94%E7%8E%8B.png"
+        },
+        {
+          "name": "逻各斯",
+          "portraitUrl": "https://media.prts.wiki/4/44/%E5%A4%B4%E5%83%8F_%E9%80%BB%E5%90%84%E6%96%AF.png"
+        },
+        {
+          "name": "华法琳",
+          "portraitUrl": "https://media.prts.wiki/3/30/%E5%A4%B4%E5%83%8F_%E5%8D%8E%E6%B3%95%E7%90%B3.png"
+        },
+        {
+          "name": "亚叶",
+          "portraitUrl": "https://media.prts.wiki/b/b5/%E5%A4%B4%E5%83%8F_%E4%BA%9A%E5%8F%B6.png"
+        },
+        {
+          "name": "慕斯",
+          "portraitUrl": "https://media.prts.wiki/f/fc/%E5%A4%B4%E5%83%8F_%E6%85%95%E6%96%AF.png"
+        },
+        {
+          "name": "历阵锐枪芬",
+          "portraitUrl": "https://media.prts.wiki/5/5a/%E5%A4%B4%E5%83%8F_%E5%8E%86%E9%98%B5%E9%94%90%E6%9E%AA%E8%8A%AC.png"
+        }
+      ]
+    },
+    {
+      "id": "40.0",
+      "series": "regular",
+      "releaseDate": "2024/08/16",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/a28e0c306cac7abf74ec681e7756ddfd61968129.jpg",
+      "characters": [
+        {
+          "name": "乌尔比安",
+          "portraitUrl": "https://media.prts.wiki/3/33/%E5%A4%B4%E5%83%8F_%E4%B9%8C%E5%B0%94%E6%AF%94%E5%AE%89.png"
+        },
+        {
+          "name": "归溟幽灵鲨",
+          "portraitUrl": "https://media.prts.wiki/b/be/%E5%A4%B4%E5%83%8F_%E5%BD%92%E6%BA%9F%E5%B9%BD%E7%81%B5%E9%B2%A8.png"
+        },
+        {
+          "name": "深巡",
+          "portraitUrl": "https://media.prts.wiki/b/bd/%E5%A4%B4%E5%83%8F_%E6%B7%B1%E5%B7%A1.png"
+        },
+        {
+          "name": "海霓",
+          "portraitUrl": "https://media.prts.wiki/7/72/%E5%A4%B4%E5%83%8F_%E6%B5%B7%E9%9C%93.png"
+        },
+        {
+          "name": "夜魔",
+          "portraitUrl": "https://media.prts.wiki/a/a7/%E5%A4%B4%E5%83%8F_%E5%A4%9C%E9%AD%94.png"
+        },
+        {
+          "name": "柏喙",
+          "portraitUrl": "https://media.prts.wiki/2/2f/%E5%A4%B4%E5%83%8F_%E6%9F%8F%E5%96%99.png"
+        },
+        {
+          "name": "豆苗",
+          "portraitUrl": "https://media.prts.wiki/c/cb/%E5%A4%B4%E5%83%8F_%E8%B1%86%E8%8B%97.png"
+        }
+      ]
+    },
+    {
+      "id": "41.0",
+      "series": "regular",
+      "releaseDate": "2024/08/16",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/8278c67a01460a516224c13f10ef3ad761968129.jpg",
+      "characters": [
+        {
+          "name": "流明",
+          "portraitUrl": "https://media.prts.wiki/7/72/%E5%A4%B4%E5%83%8F_%E6%B5%81%E6%98%8E.png"
+        },
+        {
+          "name": "艾丽妮",
+          "portraitUrl": "https://media.prts.wiki/5/57/%E5%A4%B4%E5%83%8F_%E8%89%BE%E4%B8%BD%E5%A6%AE.png"
+        },
+        {
+          "name": "掠风",
+          "portraitUrl": "https://media.prts.wiki/5/5c/%E5%A4%B4%E5%83%8F_%E6%8E%A0%E9%A3%8E.png"
+        },
+        {
+          "name": "调香师",
+          "portraitUrl": "https://media.prts.wiki/6/6a/%E5%A4%B4%E5%83%8F_%E8%B0%83%E9%A6%99%E5%B8%88.png"
+        },
+        {
+          "name": "守林人",
+          "portraitUrl": "https://media.prts.wiki/2/27/%E5%A4%B4%E5%83%8F_%E5%AE%88%E6%9E%97%E4%BA%BA.png"
+        },
+        {
+          "name": "蜜蜡",
+          "portraitUrl": "https://media.prts.wiki/1/1d/%E5%A4%B4%E5%83%8F_%E8%9C%9C%E8%9C%A1.png"
+        },
+        {
+          "name": "普罗旺斯",
+          "portraitUrl": "https://media.prts.wiki/7/72/%E5%A4%B4%E5%83%8F_%E6%99%AE%E7%BD%97%E6%97%BA%E6%96%AF.png"
+        }
+      ]
+    },
+    {
+      "id": "42.0",
+      "series": "regular",
+      "releaseDate": "2024/08/16",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/cf65e5b5ff3a4661508150ca2365f6bb61968129.jpg",
+      "characters": [
+        {
+          "name": "佩佩",
+          "portraitUrl": "https://media.prts.wiki/8/85/%E5%A4%B4%E5%83%8F_%E4%BD%A9%E4%BD%A9.png"
+        },
+        {
+          "name": "娜仁图亚",
+          "portraitUrl": "https://media.prts.wiki/b/ba/%E5%A4%B4%E5%83%8F_%E5%A8%9C%E4%BB%81%E5%9B%BE%E4%BA%9A.png"
+        },
+        {
+          "name": "妮芙",
+          "portraitUrl": "https://media.prts.wiki/1/1a/%E5%A4%B4%E5%83%8F_%E5%A6%AE%E8%8A%99.png"
+        },
+        {
+          "name": "莎草",
+          "portraitUrl": "https://media.prts.wiki/3/3d/%E5%A4%B4%E5%83%8F_%E8%8E%8E%E8%8D%89.png"
+        },
+        {
+          "name": "锡人",
+          "portraitUrl": "https://media.prts.wiki/a/a1/%E5%A4%B4%E5%83%8F_%E9%94%A1%E4%BA%BA.png"
+        },
+        {
+          "name": "渡桥",
+          "portraitUrl": "https://media.prts.wiki/f/fd/%E5%A4%B4%E5%83%8F_%E6%B8%A1%E6%A1%A5.png"
+        },
+        {
+          "name": "衡沙",
+          "portraitUrl": "https://media.prts.wiki/f/f8/%E5%A4%B4%E5%83%8F_%E8%A1%A1%E6%B2%99.png"
+        }
+      ]
+    },
+    {
+      "id": "43.0",
+      "series": "regular",
+      "releaseDate": "2024/11/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/ff1aaf110bee4a5fb683aa9efb85f20861968129.jpg",
+      "characters": [
+        {
+          "name": "维娜·维多利亚",
+          "portraitUrl": "https://media.prts.wiki/6/68/%E5%A4%B4%E5%83%8F_%E7%BB%B4%E5%A8%9C%C2%B7%E7%BB%B4%E5%A4%9A%E5%88%A9%E4%BA%9A.png"
+        },
+        {
+          "name": "弑君者",
+          "portraitUrl": "https://media.prts.wiki/1/12/%E5%A4%B4%E5%83%8F_%E5%BC%91%E5%90%9B%E8%80%85.png"
+        },
+        {
+          "name": "波卜",
+          "portraitUrl": "https://media.prts.wiki/d/d5/%E5%A4%B4%E5%83%8F_%E6%B3%A2%E5%8D%9C.png"
+        },
+        {
+          "name": "凯瑟琳",
+          "portraitUrl": "https://media.prts.wiki/e/e9/%E5%A4%B4%E5%83%8F_%E5%87%AF%E7%91%9F%E7%90%B3.png"
+        },
+        {
+          "name": "红",
+          "portraitUrl": "https://media.prts.wiki/a/ac/%E5%A4%B4%E5%83%8F_%E7%BA%A2.png"
+        },
+        {
+          "name": "爱丽丝",
+          "portraitUrl": "https://media.prts.wiki/9/9a/%E5%A4%B4%E5%83%8F_%E7%88%B1%E4%B8%BD%E4%B8%9D.png"
+        },
+        {
+          "name": "贝娜",
+          "portraitUrl": "https://media.prts.wiki/9/95/%E5%A4%B4%E5%83%8F_%E8%B4%9D%E5%A8%9C.png"
+        }
+      ]
+    },
+    {
+      "id": "44.0",
+      "series": "regular",
+      "releaseDate": "2024/11/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/035359f4c0ed32a80bf38a0007b86d5861968129.jpg",
+      "characters": [
+        {
+          "name": "荒芜拉普兰德",
+          "portraitUrl": "https://media.prts.wiki/0/04/%E5%A4%B4%E5%83%8F_%E8%8D%92%E8%8A%9C%E6%8B%89%E6%99%AE%E5%85%B0%E5%BE%B7.png"
+        },
+        {
+          "name": "忍冬",
+          "portraitUrl": "https://media.prts.wiki/7/79/%E5%A4%B4%E5%83%8F_%E5%BF%8D%E5%86%AC.png"
+        },
+        {
+          "name": "铃兰",
+          "portraitUrl": "https://media.prts.wiki/5/55/%E5%A4%B4%E5%83%8F_%E9%93%83%E5%85%B0.png"
+        },
+        {
+          "name": "裁度",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E8%A3%81%E5%BA%A6.png"
+        },
+        {
+          "name": "波登可",
+          "portraitUrl": "https://media.prts.wiki/4/43/%E5%A4%B4%E5%83%8F_%E6%B3%A2%E7%99%BB%E5%8F%AF.png"
+        },
+        {
+          "name": "云迹",
+          "portraitUrl": "https://media.prts.wiki/6/67/%E5%A4%B4%E5%83%8F_%E4%BA%91%E8%BF%B9.png"
+        },
+        {
+          "name": "菲莱",
+          "portraitUrl": "https://media.prts.wiki/0/00/%E5%A4%B4%E5%83%8F_%E8%8F%B2%E8%8E%B1.png"
+        }
+      ]
+    },
+    {
+      "id": "45.0",
+      "series": "regular",
+      "releaseDate": "2025/01/24",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/0a12afdd3b6b6500f7c7a4e48fe380c061968129.jpg",
+      "characters": [
+        {
+          "name": "余",
+          "portraitUrl": "https://media.prts.wiki/6/66/%E5%A4%B4%E5%83%8F_%E4%BD%99.png"
+        },
+        {
+          "name": "烛煌",
+          "portraitUrl": "https://media.prts.wiki/c/c4/%E5%A4%B4%E5%83%8F_%E7%83%9B%E7%85%8C.png"
+        },
+        {
+          "name": "寻澜",
+          "portraitUrl": "https://media.prts.wiki/6/65/%E5%A4%B4%E5%83%8F_%E5%AF%BB%E6%BE%9C.png"
+        },
+        {
+          "name": "行箸",
+          "portraitUrl": "https://media.prts.wiki/4/42/%E5%A4%B4%E5%83%8F_%E8%A1%8C%E7%AE%B8.png"
+        },
+        {
+          "name": "食铁兽",
+          "portraitUrl": "https://media.prts.wiki/d/dd/%E5%A4%B4%E5%83%8F_%E9%A3%9F%E9%93%81%E5%85%BD.png"
+        },
+        {
+          "name": "缠丸",
+          "portraitUrl": "https://media.prts.wiki/1/13/%E5%A4%B4%E5%83%8F_%E7%BC%A0%E4%B8%B8.png"
+        },
+        {
+          "name": "图耶",
+          "portraitUrl": "https://media.prts.wiki/9/93/%E5%A4%B4%E5%83%8F_%E5%9B%BE%E8%80%B6.png"
+        }
+      ]
+    },
+    {
+      "id": "46.0",
+      "series": "regular",
+      "releaseDate": "2025/02/17",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/2f10c0258f09f95f820c620927f0b43d61968129.jpg",
+      "characters": [
+        {
+          "name": "引星棘刺",
+          "portraitUrl": "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E5%BC%95%E6%98%9F%E6%A3%98%E5%88%BA.png"
+        },
+        {
+          "name": "隐德来希",
+          "portraitUrl": "https://media.prts.wiki/4/4c/%E5%A4%B4%E5%83%8F_%E9%9A%90%E5%BE%B7%E6%9D%A5%E5%B8%8C.png"
+        },
+        {
+          "name": "特克诺",
+          "portraitUrl": "https://media.prts.wiki/2/2e/%E5%A4%B4%E5%83%8F_%E7%89%B9%E5%85%8B%E8%AF%BA.png"
+        },
+        {
+          "name": "瑰盐",
+          "portraitUrl": "https://media.prts.wiki/8/8a/%E5%A4%B4%E5%83%8F_%E7%91%B0%E7%9B%90.png"
+        },
+        {
+          "name": "诺威尔",
+          "portraitUrl": "https://media.prts.wiki/6/69/%E5%A4%B4%E5%83%8F_%E8%AF%BA%E5%A8%81%E5%B0%94.png"
+        },
+        {
+          "name": "清道夫",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E6%B8%85%E9%81%93%E5%A4%AB.png"
+        },
+        {
+          "name": "宴",
+          "portraitUrl": "https://media.prts.wiki/f/f4/%E5%A4%B4%E5%83%8F_%E5%AE%B4.png"
+        }
+      ]
+    },
+    {
+      "id": "47.0",
+      "series": "regular",
+      "releaseDate": "2025/05/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/1b0de82caeb242d4c226cce56e28fb7f61968129.jpg",
+      "characters": [
+        {
+          "name": "死芒",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_450_necras_ambienceSynesthesia%237.png"
+        },
+        {
+          "name": "Mon3tr",
+          "portraitUrl": "https://media.prts.wiki/2/2a/%E5%A4%B4%E5%83%8F_Mon3tr.png"
+        },
+        {
+          "name": "钼铅",
+          "portraitUrl": "https://media.prts.wiki/2/20/%E5%A4%B4%E5%83%8F_%E9%92%BC%E9%93%85.png"
+        },
+        {
+          "name": "水灯心",
+          "portraitUrl": "https://media.prts.wiki/3/3b/%E5%A4%B4%E5%83%8F_%E6%B0%B4%E7%81%AF%E5%BF%83.png"
+        },
+        {
+          "name": "阿兰娜",
+          "portraitUrl": "https://media.prts.wiki/b/b6/%E5%A4%B4%E5%83%8F_%E9%98%BF%E5%85%B0%E5%A8%9C.png"
+        },
+        {
+          "name": "骋风",
+          "portraitUrl": "https://media.prts.wiki/f/fe/%E5%A4%B4%E5%83%8F_%E9%AA%8B%E9%A3%8E.png"
+        },
+        {
+          "name": "石棉",
+          "portraitUrl": "https://media.prts.wiki/1/18/%E5%A4%B4%E5%83%8F_%E7%9F%B3%E6%A3%89.png"
+        }
+      ]
+    },
+    {
+      "id": "48.0",
+      "series": "regular",
+      "releaseDate": "2025/05/01",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/ceb840f0895a03d2dd5133c86ce1ea7861968129.jpg",
+      "characters": [
+        {
+          "name": "新约能天使",
+          "portraitUrl": "https://media.prts.wiki/3/3a/%E5%A4%B4%E5%83%8F_%E6%96%B0%E7%BA%A6%E8%83%BD%E5%A4%A9%E4%BD%BF.png"
+        },
+        {
+          "name": "蕾缪安",
+          "portraitUrl": "https://media.prts.wiki/c/c5/%E5%A4%B4%E5%83%8F_%E8%95%BE%E7%BC%AA%E5%AE%89.png"
+        },
+        {
+          "name": "信仰搅拌机",
+          "portraitUrl": "https://media.prts.wiki/1/13/%E5%A4%B4%E5%83%8F_%E4%BF%A1%E4%BB%B0%E6%90%85%E6%8B%8C%E6%9C%BA.png"
+        },
+        {
+          "name": "聆音",
+          "portraitUrl": "https://media.prts.wiki/1/10/%E5%A4%B4%E5%83%8F_%E8%81%86%E9%9F%B3.png"
+        },
+        {
+          "name": "刻刀",
+          "portraitUrl": "https://media.prts.wiki/2/2c/%E5%A4%B4%E5%83%8F_%E5%88%BB%E5%88%80.png"
+        },
+        {
+          "name": "卡达",
+          "portraitUrl": "https://media.prts.wiki/4/43/%E5%A4%B4%E5%83%8F_%E5%8D%A1%E8%BE%BE.png"
+        },
+        {
+          "name": "PhonoR-0",
+          "portraitUrl": "https://media.prts.wiki/3/3d/%E5%A4%B4%E5%83%8F_PhonoR-0.png"
+        },
+        {
+          "name": "CONFESS-47",
+          "portraitUrl": "https://media.prts.wiki/c/c4/%E5%A4%B4%E5%83%8F_CONFESS-47.png"
+        }
+      ]
+    },
+    {
+      "id": "49.0",
+      "series": "regular",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/67ba3c0373bde518781a26ae7efa657461968129.jpg",
+      "characters": [
+        {
+          "name": "酒神",
+          "portraitUrl": "https://media.prts.wiki/0/0d/%E5%A4%B4%E5%83%8F_%E9%85%92%E7%A5%9E.png"
+        },
+        {
+          "name": "司霆惊蛰",
+          "portraitUrl": "https://media.prts.wiki/5/5c/%E5%A4%B4%E5%83%8F_%E5%8F%B8%E9%9C%86%E6%83%8A%E8%9B%B0.png"
+        },
+        {
+          "name": "Miss.Christine",
+          "portraitUrl": "https://media.prts.wiki/1/10/%E5%A4%B4%E5%83%8F_Miss.Christine.png"
+        },
+        {
+          "name": "蒂比",
+          "portraitUrl": "https://media.prts.wiki/0/09/%E5%A4%B4%E5%83%8F_%E8%92%82%E6%AF%94.png"
+        },
+        {
+          "name": "录武官",
+          "portraitUrl": "https://media.prts.wiki/0/09/%E5%A4%B4%E5%83%8F_%E5%BD%95%E6%AD%A6%E5%AE%98.png"
+        },
+        {
+          "name": "四月",
+          "portraitUrl": "https://media.prts.wiki/d/d3/%E5%A4%B4%E5%83%8F_%E5%9B%9B%E6%9C%88.png"
+        },
+        {
+          "name": "梅",
+          "portraitUrl": "https://media.prts.wiki/a/ac/%E5%A4%B4%E5%83%8F_%E6%A2%85.png"
+        }
+      ]
+    },
+    {
+      "id": "50.0",
+      "series": "regular",
+      "releaseDate": "2025/10/13",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/12b13af6d8399a9fa22bad2a53b4d75161968129.jpg",
+      "characters": [
+        {
+          "name": "斩业星熊",
+          "portraitUrl": "https://media.prts.wiki/e/e5/%E5%A4%B4%E5%83%8F_%E6%96%A9%E4%B8%9A%E6%98%9F%E7%86%8A.png"
+        },
+        {
+          "name": "遥",
+          "portraitUrl": "https://media.prts.wiki/e/ec/%E5%A4%B4%E5%83%8F_%E9%81%A5.png"
+        },
+        {
+          "name": "真言",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E7%9C%9F%E8%A8%80.png"
+        },
+        {
+          "name": "冬时",
+          "portraitUrl": "https://media.prts.wiki/2/27/%E5%A4%B4%E5%83%8F_%E5%86%AC%E6%97%B6.png"
+        },
+        {
+          "name": "折桠",
+          "portraitUrl": "https://media.prts.wiki/a/a0/%E5%A4%B4%E5%83%8F_%E6%8A%98%E6%A1%A0.png"
+        },
+        {
+          "name": "松桐",
+          "portraitUrl": "https://media.prts.wiki/5/56/%E5%A4%B4%E5%83%8F_%E6%9D%BE%E6%A1%90.png"
+        },
+        {
+          "name": "吉星",
+          "portraitUrl": "https://media.prts.wiki/f/fa/%E5%A4%B4%E5%83%8F_%E5%90%89%E6%98%9F.png"
+        }
+      ]
+    },
+    {
+      "id": "51.0",
+      "series": "regular",
+      "releaseDate": "2025/12/8",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01zfub381R8HNiZlJQZ_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "凛御银灰",
+          "portraitUrl": "https://media.prts.wiki/3/3d/%E5%A4%B4%E5%83%8F_%E5%87%9B%E5%BE%A1%E9%93%B6%E7%81%B0.png"
+        },
+        {
+          "name": "圣聆初雪",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E5%9C%A3%E8%81%86%E5%88%9D%E9%9B%AA.png"
+        },
+        {
+          "name": "溯光星源",
+          "portraitUrl": "https://media.prts.wiki/d/d0/%E5%A4%B4%E5%83%8F_%E6%BA%AF%E5%85%89%E6%98%9F%E6%BA%90.png"
+        },
+        {
+          "name": "雪猎",
+          "portraitUrl": "https://media.prts.wiki/c/cc/%E5%A4%B4%E5%83%8F_%E9%9B%AA%E7%8C%8E.png"
+        },
+        {
+          "name": "娜斯提",
+          "portraitUrl": "https://media.prts.wiki/9/97/%E5%A4%B4%E5%83%8F_%E5%A8%9C%E6%96%AF%E6%8F%90.png"
+        },
+        {
+          "name": "响石",
+          "portraitUrl": "https://media.prts.wiki/5/52/%E5%A4%B4%E5%83%8F_%E5%93%8D%E7%9F%B3.png"
+        },
+        {
+          "name": "天空盒",
+          "portraitUrl": "https://media.prts.wiki/d/d9/%E5%A4%B4%E5%83%8F_%E5%A4%A9%E7%A9%BA%E7%9B%92.png"
+        }
+      ]
+    },
+    {
+      "id": "52.0",
+      "series": "regular",
+      "releaseDate": "2026/02/12",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN016lAeW81R8HOXqJtoD_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "望",
+          "portraitUrl": "https://media.prts.wiki/3/38/%E5%A4%B4%E5%83%8F_%E6%9C%9B.png"
+        },
+        {
+          "name": "赤刃明霄陈",
+          "portraitUrl": "https://media.prts.wiki/d/d0/%E5%A4%B4%E5%83%8F_%E8%B5%A4%E5%88%83%E6%98%8E%E9%9C%84%E9%99%88.png"
+        },
+        {
+          "name": "矩",
+          "portraitUrl": "https://media.prts.wiki/a/a8/%E5%A4%B4%E5%83%8F_%E7%9F%A9.png"
+        },
+        {
+          "name": "缇缇",
+          "portraitUrl": "https://media.prts.wiki/a/aa/%E5%A4%B4%E5%83%8F_%E7%BC%87%E7%BC%87.png"
+        },
+        {
+          "name": "撷英调香师",
+          "portraitUrl": "https://media.prts.wiki/8/8f/%E5%A4%B4%E5%83%8F_%E6%92%B7%E8%8B%B1%E8%B0%83%E9%A6%99%E5%B8%88.png"
+        },
+        {
+          "name": "风絮",
+          "portraitUrl": "https://media.prts.wiki/1/1c/%E5%A4%B4%E5%83%8F_%E9%A3%8E%E7%B5%AE.png"
+        },
+        {
+          "name": "摆渡人",
+          "portraitUrl": "https://media.prts.wiki/e/e4/%E5%A4%B4%E5%83%8F_%E6%91%86%E6%B8%A1%E4%BA%BA.png"
+        }
+      ]
+    },
+    {
+      "id": "53.0",
+      "series": "regular",
+      "releaseDate": "2026/04/9",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01WQd0ur1R8HPA7VW8q_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "怒潮凛冬",
+          "portraitUrl": "https://media.prts.wiki/8/81/%E5%A4%B4%E5%83%8F_%E6%80%92%E6%BD%AE%E5%87%9B%E5%86%AC.png"
+        },
+        {
+          "name": "贝洛内",
+          "portraitUrl": "https://media.prts.wiki/8/83/%E5%A4%B4%E5%83%8F_%E8%B4%9D%E6%B4%9B%E5%86%85.png"
+        },
+        {
+          "name": "电弧",
+          "portraitUrl": "https://media.prts.wiki/5/56/%E5%A4%B4%E5%83%8F_%E7%94%B5%E5%BC%A7.png"
+        },
+        {
+          "name": "伯塔尼",
+          "portraitUrl": "https://media.prts.wiki/4/4d/%E5%A4%B4%E5%83%8F_%E4%BC%AF%E5%A1%94%E5%B0%BC.png"
+        },
+        {
+          "name": "乌啾",
+          "portraitUrl": "https://media.prts.wiki/5/55/%E5%A4%B4%E5%83%8F_%E4%B9%8C%E5%95%BE.png"
+        },
+        {
+          "name": "复奏",
+          "portraitUrl": "https://media.prts.wiki/6/61/%E5%A4%B4%E5%83%8F_%E5%A4%8D%E5%A5%8F.png"
+        },
+        {
+          "name": "协律",
+          "portraitUrl": "https://media.prts.wiki/8/8e/%E5%A4%B4%E5%83%8F_%E5%8D%8F%E5%BE%8B.png"
+        }
+      ]
+    },
+    {
+      "id": "54.0",
+      "series": "regular",
+      "releaseDate": "2026/07/13",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01JQA0R21R8HQLffawZ_!!4611686018427383858-0-item_pic.jpg_q50.jpg_.webp",
+      "characters": [
+        {
+          "name": "凯尔希·思衡托",
+          "portraitUrl": "https://media.prts.wiki/5/57/%E5%A4%B4%E5%83%8F_%E5%87%AF%E5%B0%94%E5%B8%8C%C2%B7%E6%80%9D%E8%A1%A1%E6%89%98.png"
+        },
+        {
+          "name": "可露希尔",
+          "portraitUrl": "https://media.prts.wiki/a/a5/%E5%A4%B4%E5%83%8F_%E5%8F%AF%E9%9C%B2%E5%B8%8C%E5%B0%94.png"
+        },
+        {
+          "name": "维伊",
+          "portraitUrl": "https://media.prts.wiki/5/56/%E5%A4%B4%E5%83%8F_%E7%BB%B4%E4%BC%8A.png"
+        },
+        {
+          "name": "谬因",
+          "portraitUrl": "https://media.prts.wiki/9/92/%E5%A4%B4%E5%83%8F_%E8%B0%AC%E5%9B%A0.png"
+        },
+        {
+          "name": "裂响",
+          "portraitUrl": "https://media.prts.wiki/d/d6/%E5%A4%B4%E5%83%8F_%E8%A3%82%E5%93%8D.png"
+        },
+        {
+          "name": "佩德洛",
+          "portraitUrl": "https://media.prts.wiki/4/4b/%E5%A4%B4%E5%83%8F_%E4%BD%A9%E5%BE%B7%E6%B4%9B.png"
+        },
+        {
+          "name": "哈蒂娅",
+          "portraitUrl": "https://media.prts.wiki/3/3c/%E5%A4%B4%E5%83%8F_%E5%93%88%E8%92%82%E5%A8%85.png"
+        }
+      ]
+    },
+    {
+      "id": "55.0",
+      "series": "regular",
+      "releaseDate": "2026/10/13",
+      "imageUrl": "https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01WFFWbYMsT1I2vH2e_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "予愿安洁莉娜",
+          "portraitUrl": "https://media.prts.wiki/c/c0/%E5%A4%B4%E5%83%8F_%E4%BA%88%E6%84%BF%E5%AE%89%E6%B4%81%E8%8E%89%E5%A8%9C.png"
+        },
+        {
+          "name": "珊比",
+          "portraitUrl": "https://media.prts.wiki/0/0c/%E5%A4%B4%E5%83%8F_%E7%8F%8A%E6%AF%94.png"
+        },
+        {
+          "name": "克莱门莎",
+          "portraitUrl": "https://media.prts.wiki/3/34/%E5%A4%B4%E5%83%8F_%E5%85%8B%E8%8E%B1%E9%97%A8%E8%8E%8E.png"
+        },
+        {
+          "name": "嘉辛塔",
+          "portraitUrl": "https://media.prts.wiki/8/8b/%E5%A4%B4%E5%83%8F_%E5%98%89%E8%BE%9B%E5%A1%94.png"
+        },
+        {
+          "name": "时隙",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E6%97%B6%E9%9A%99.png"
+        },
+        {
+          "name": "旅骨",
+          "portraitUrl": "https://media.prts.wiki/2/29/%E5%A4%B4%E5%83%8F_%E6%97%85%E9%AA%A8.png"
+        },
+        {
+          "name": "德·托莱多",
+          "portraitUrl": "https://media.prts.wiki/1/16/%E5%A4%B4%E5%83%8F_%E5%BE%B7%C2%B7%E6%89%98%E8%8E%B1%E5%A4%9A.png"
+        }
+      ]
+    },
+    {
+      "id": "CanNot Wait For",
+      "series": "ambience",
+      "releaseDate": "2021/05/22",
+      "imageUrl": "https://img.alicdn.com/imgextra/i2/2653448080/O1CN01nmocF729YhIcENNky_!!2653448080.png_q50.jpg",
+      "characters": [
+        {
+          "name": "煌",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E7%85%8C.png"
+        },
+        {
+          "name": "W",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021W.png"
+        },
+        {
+          "name": "风笛",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%A3%8E%E7%AC%9B.png"
+        },
+        {
+          "name": "讯使",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E8%AE%AF%E4%BD%BF.png"
+        },
+        {
+          "name": "红豆",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E7%BA%A2%E8%B1%86.png"
+        }
+      ]
+    },
+    {
+      "id": "ManiFesto:",
+      "series": "ambience",
+      "releaseDate": "2021/05/22",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/3142986457/O1CN016GpPDE1xZMVFKSVfS_!!3142986457.png_q50.jpg",
+      "characters": [
+        {
+          "name": "推进之王",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E6%8E%A8%E8%BF%9B%E4%B9%8B%E7%8E%8B.png"
+        },
+        {
+          "name": "拉普兰德",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E6%8B%89%E6%99%AE%E5%85%B0%E5%BE%B7.png"
+        },
+        {
+          "name": "因陀罗",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E5%9B%A0%E9%99%80%E7%BD%97.png"
+        },
+        {
+          "name": "大帝",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E5%A4%A7%E5%B8%9D.png"
+        },
+        {
+          "name": "伊桑",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F21%E4%BC%8A%E6%A1%91.png"
+        }
+      ]
+    },
+    {
+      "id": "前航远歌",
+      "series": "ambience",
+      "releaseDate": "2021/05/22",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2214383739530/O1CN01258rWr2KGnasmnJIn_!!2214383739530.png_q50.jpg",
+      "characters": [
+        {
+          "name": "闪灵",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%97%AA%E7%81%B5.png"
+        },
+        {
+          "name": "赫拉格",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E8%B5%AB%E6%8B%89%E6%A0%BC.png"
+        },
+        {
+          "name": "黑",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%BB%91.png"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "苏苏洛",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E8%8B%8F%E8%8B%8F%E8%90%BD.png"
+        },
+        {
+          "name": "安洁莉娜",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E5%AE%89%E6%9D%B0%E8%8E%89%E5%A8%9C.png"
+        },
+        {
+          "name": "赫默",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E8%B5%AB%E9%BB%98.png"
+        }
+      ]
+    },
+    {
+      "id": "灯华梦踏",
+      "series": "ambience",
+      "releaseDate": "2021/05/22",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2653448080/O1CN01iWNs4N29YhIa9dFu4_!!2653448080.png_q50.jpg",
+      "characters": [
+        {
+          "name": "食铁兽",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%A3%9F%E9%93%81%E5%85%BD.jpg"
+        },
+        {
+          "name": "陈",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%99%88.png"
+        },
+        {
+          "name": "阿",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%98%BF.png"
+        },
+        {
+          "name": "惊蛰",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E6%83%8A%E8%9B%B0.png"
+        },
+        {
+          "name": "阿消",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2021%2F2021%E9%98%BF%E6%B6%88.png"
+        }
+      ]
+    },
+    {
+      "id": "梦源之地",
+      "series": "ambience",
+      "releaseDate": "2022/10/25",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN018TWhn01R8HM9olQB3_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "艾雅法拉",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E8%89%BE%E9%9B%85%E6%B3%95%E6%8B%89.jpg"
+        },
+        {
+          "name": "琴柳",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E7%90%B4%E6%9F%B3.jpg"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E9%98%BF%E7%B1%B3%E5%A8%85.jpg"
+        },
+        {
+          "name": "初雪",
+          "portraitUrl": "https://media.prts.wiki/d/d7/%E5%A4%B4%E5%83%8F_%E5%88%9D%E9%9B%AA.png"
+        },
+        {
+          "name": "莱恩哈特",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E8%8E%B1%E6%81%A9%E5%93%88%E7%89%B9.jpg"
+        }
+      ]
+    },
+    {
+      "id": "零号特工",
+      "series": "ambience",
+      "releaseDate": "2022/10/25",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01PeyTfF1R8HM9rc4Gm_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "傀影",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E5%82%80%E5%BD%B1.jpg"
+        },
+        {
+          "name": "泥岩",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_311_mudrok_ambienceSynesthesia%232.png"
+        },
+        {
+          "name": "龙舌兰",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_486_takila_ambienceSynesthesia%232.png"
+        },
+        {
+          "name": "苇草",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_261_sddrag_ambienceSynesthesia%232.png"
+        }
+      ]
+    },
+    {
+      "id": "浮生听风",
+      "series": "ambience",
+      "releaseDate": "2022/10/25",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN017LlnrR1R8HMA2qTrU_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "星熊",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E6%98%9F%E7%86%8A.jpg"
+        },
+        {
+          "name": "夕",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E5%A4%95.jpg"
+        },
+        {
+          "name": "诗怀雅",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E8%AF%97%E6%80%80%E9%9B%85.jpg"
+        },
+        {
+          "name": "乌有",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E4%B9%8C%E6%9C%89.jpg"
+        }
+      ]
+    },
+    {
+      "id": "象限解构者",
+      "series": "ambience",
+      "releaseDate": "2022/10/25",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01Uoiiea1R8HM9vdjbf_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "水月",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E6%B0%B4%E6%9C%88.jpg"
+        },
+        {
+          "name": "炎客",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E7%82%8E%E5%AE%A2.jpg"
+        },
+        {
+          "name": "白面鸮",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E7%99%BD%E9%9D%A2%E9%B8%AE.jpg"
+        },
+        {
+          "name": "德克萨斯",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2F%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF.jpg"
+        },
+        {
+          "name": "THRM-EX",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2022%2FTHRM-EX.jpg"
+        }
+      ]
+    },
+    {
+      "id": "嘉年华2022",
+      "series": "ambience",
+      "releaseDate": "2023/06/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2217653990209/O1CN01TGoiab1DPlj3sjoTo_!!2217653990209.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "博士",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/doctor.png"
+        },
+        {
+          "name": "能天使",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E8%83%BD%E5%A4%A9%E4%BD%BF.png"
+        },
+        {
+          "name": "极境",
+          "portraitUrl": "https://media.prts.wiki/9/97/%E5%A4%B4%E5%83%8F_%E6%9E%81%E5%A2%83.png"
+        },
+        {
+          "name": "刻俄柏",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E5%88%BB%E4%BF%84%E6%9F%8F.png"
+        },
+        {
+          "name": "幽灵鲨",
+          "portraitUrl": "https://media.prts.wiki/2/28/%E5%A4%B4%E5%83%8F_%E5%B9%BD%E7%81%B5%E9%B2%A8.png"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        }
+      ]
+    },
+    {
+      "id": "迷航追踪",
+      "series": "ambience",
+      "releaseDate": "2023/04/29",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/d038b8c9fae9c02516368a2e46960e47e12c6379.jpg",
+      "characters": [
+        {
+          "name": "艾丽妮",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4009_irene_ambienceSynesthesia%233.png"
+        },
+        {
+          "name": "流明",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4042_lumen_ambienceSynesthesia%233.png"
+        },
+        {
+          "name": "号角",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E5%8F%B7%E8%A7%92.png"
+        },
+        {
+          "name": "罗比菈塔",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_484_robrta_ambienceSynesthesia%233.png"
+        }
+      ]
+    },
+    {
+      "id": "琅环玄机",
+      "series": "ambience",
+      "releaseDate": "2023/04/29",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/d038b8c9fae9c02516368a2e46960e47e12c6379.jpg",
+      "characters": [
+        {
+          "name": "令",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E4%BB%A4.png"
+        },
+        {
+          "name": "老鲤",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E8%80%81%E9%B2%A4.png"
+        },
+        {
+          "name": "林",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E6%9E%97.png"
+        },
+        {
+          "name": "炎狱炎熔",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E7%82%8E%E7%86%94.png"
+        }
+      ]
+    },
+    {
+      "id": "踏沙寻影",
+      "series": "ambience",
+      "releaseDate": "2023/04/29",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/d038b8c9fae9c02516368a2e46960e47e12c6379.jpg",
+      "characters": [
+        {
+          "name": "卡涅利安",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E5%8D%A1%E6%B6%85%E5%88%A9%E5%AE%89.png"
+        },
+        {
+          "name": "埃拉托",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E5%9F%83%E6%8B%89%E6%89%98.png"
+        },
+        {
+          "name": "白铁",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E7%99%BD%E9%93%81.png"
+        },
+        {
+          "name": "嘉维尔",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E5%98%89%E7%BB%B4%E5%B0%94.png"
+        }
+      ]
+    },
+    {
+      "id": "缉速狂飙",
+      "series": "ambience",
+      "releaseDate": "2023/04/29",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/d038b8c9fae9c02516368a2e46960e47e12c6379.jpg",
+      "characters": [
+        {
+          "name": "玛恩纳",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E7%8E%9B%E6%81%A9%E7%BA%B3.png"
+        },
+        {
+          "name": "菲亚梅塔",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E8%8F%B2%E4%BA%9A.png"
+        },
+        {
+          "name": "见行者",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E8%A7%81%E8%A1%8C%E8%80%85.png"
+        },
+        {
+          "name": "斥罪",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2023%2F23%E6%96%A5%E7%BD%AA.png"
+        }
+      ]
+    },
+    {
+      "id": "遗君",
+      "series": "ambience",
+      "releaseDate": "2024/06/12",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/fe27b366e1dbf1269a7eed31251419d161968129.jpg",
+      "characters": [
+        {
+          "name": "缄默德克萨斯",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF.png"
+        },
+        {
+          "name": "推进之王",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E6%8E%A8%E7%8E%8B.png"
+        },
+        {
+          "name": "白铁",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4072_ironmn_ambienceSynesthesia%235.png"
+        },
+        {
+          "name": "焰影苇草",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E8%8B%87%E8%8D%89.png"
+        },
+        {
+          "name": "耀骑士临光",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E4%B8%B4%E5%85%89.png"
+        }
+      ]
+    },
+    {
+      "id": "超新星",
+      "series": "ambience",
+      "releaseDate": "2024/06/12",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/fe27b366e1dbf1269a7eed31251419d161968129.jpg",
+      "characters": [
+        {
+          "name": "U-Official",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24U%E9%85%B1.png"
+        },
+        {
+          "name": "涤火杰西卡",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E6%9D%B0%E8%A5%BF%E5%8D%A1.png"
+        },
+        {
+          "name": "能天使",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E8%83%BD%E5%A4%A9%E4%BD%BF.png"
+        },
+        {
+          "name": "圣约送葬人",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E5%9C%A3%E8%91%AC.png"
+        },
+        {
+          "name": "琳琅诗怀雅",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_1033_swire2_ambienceSynesthesia%234.png"
+        }
+      ]
+    },
+    {
+      "id": "梦人",
+      "series": "ambience",
+      "releaseDate": "2024/06/12",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/ea65e39d978c49940a4c0704cbc344c287120723.png",
+      "characters": [
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "霍尔海雅",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4027_heyak_ambienceSynesthesia%234.png"
+        },
+        {
+          "name": "伊内丝",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4087_ines_ambienceSynesthesia%235.png"
+        },
+        {
+          "name": "夜莺",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E5%A4%9C%E8%8E%BA.png"
+        },
+        {
+          "name": "塑心",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E5%9B%BE%E5%9B%BE.png"
+        }
+      ]
+    },
+    {
+      "id": "行者",
+      "series": "ambience",
+      "releaseDate": "2024/06/12",
+      "imageUrl": "https://i0.hdslb.com/bfs/mall/vendor/1a/f8/1af87affcd93ad4225d01c3e6ba9529b.png",
+      "characters": [
+        {
+          "name": "重岳",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E9%87%8D%E5%B2%B3.png"
+        },
+        {
+          "name": "浊心斯卡蒂",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E6%B5%8A%E8%92%82.png"
+        },
+        {
+          "name": "凯尔希",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E5%87%AF%E5%B0%94%E5%B8%8C.png"
+        },
+        {
+          "name": "提丰",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E6%8F%90%E4%B8%B0.png"
+        },
+        {
+          "name": "银灰",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2024%2F24%E9%93%B6%E7%81%B0.png"
+        }
+      ]
+    },
+    {
+      "id": "嘉年华2024",
+      "series": "ambience",
+      "releaseDate": "2024/06/12",
+      "imageUrl": "https://i0.hdslb.com/bfs/mall/vendor/30/16/3016a8dee77c826b5eeccb2108ee13aa.png",
+      "characters": [
+        {
+          "name": "史尔特尔",
+          "portraitUrl": "https://media.prts.wiki/e/e1/%E5%A4%B4%E5%83%8F_%E5%8F%B2%E5%B0%94%E7%89%B9%E5%B0%94.png"
+        },
+        {
+          "name": "缪尔赛思",
+          "portraitUrl": "https://media.prts.wiki/3/3a/%E5%A4%B4%E5%83%8F_%E7%BC%AA%E5%B0%94%E8%B5%9B%E6%80%9D.png"
+        },
+        {
+          "name": "博士",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/doctor.png"
+        },
+        {
+          "name": "左乐",
+          "portraitUrl": "https://media.prts.wiki/e/e0/%E5%A4%B4%E5%83%8F_%E5%B7%A6%E4%B9%90.png"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "薇薇安娜",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E8%96%87%E8%96%87%E5%AE%89%E5%A8%9C.png"
+        }
+      ]
+    },
+    {
+      "id": "冰纹玉釉",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i4/2206488662066/O1CN01LSCoPd1R8HM9rDUwQ_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "安洁莉娜",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E5%AE%89%E6%9D%B0.png"
+        },
+        {
+          "name": "黍",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E9%BB%8D.png"
+        },
+        {
+          "name": "陈",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E9%99%88.png"
+        },
+        {
+          "name": "左乐",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E5%B7%A6%E4%B9%90.png"
+        },
+        {
+          "name": "煌",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E7%85%8C.png"
+        }
+      ]
+    },
+    {
+      "id": "熠曲丰碑",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01Ov1OMe1R8HM32hg17_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "空",
+          "portraitUrl": "https://media.prts.wiki/5/58/%E5%A4%B4%E5%83%8F_%E7%A9%BA.png"
+        },
+        {
+          "name": "可颂",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E5%8F%AF%E9%A2%82.png"
+        },
+        {
+          "name": "能天使",
+          "portraitUrl": "https://media.prts.wiki/a/ad/%E5%A4%B4%E5%83%8F_%E8%83%BD%E5%A4%A9%E4%BD%BF.png"
+        },
+        {
+          "name": "德克萨斯",
+          "portraitUrl": "https://media.prts.wiki/5/57/%E5%A4%B4%E5%83%8F_%E5%BE%B7%E5%85%8B%E8%90%A8%E6%96%AF.png"
+        },
+        {
+          "name": "大帝",
+          "portraitUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "时序花圃",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01dxiB7l1R8HM8Ypwhk_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "极境",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E6%9E%81%E5%A2%83.png"
+        },
+        {
+          "name": "妮芙",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4146_nymph_ambienceSynesthesia%236.png"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "迷迭香",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E8%BF%B7%E8%BF%AD%E9%A6%99.png"
+        },
+        {
+          "name": "归溟幽灵鲨",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E5%B9%BD%E7%81%B5%E9%B2%A8.png"
+        }
+      ]
+    },
+    {
+      "id": "移星桂冠",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01YFZgDu1R8HM9PTB7P_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "逻各斯",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4133_logos_ambienceSynesthesia%236.png"
+        },
+        {
+          "name": "史尔特尔",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_350_surtr_ambienceSynesthesia%236.png"
+        },
+        {
+          "name": "黑键",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E9%BB%91%E9%94%AE.png"
+        },
+        {
+          "name": "淬羽赫默",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/image%2F%E9%9F%B3%E5%BE%8B2025%2F25%E8%B5%AB%E9%BB%98.png"
+        },
+        {
+          "name": "缪尔赛思",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_249_mlyss_ambienceSynesthesia%236.png"
+        }
+      ]
+    },
+    {
+      "id": "雾色秘访",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01gf6XuI1R8HM9OVgPL_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "荒芜拉普兰德",
+          "portraitUrl": "https://media.prts.wiki/0/04/%E5%A4%B4%E5%83%8F_%E8%8D%92%E8%8A%9C%E6%8B%89%E6%99%AE%E5%85%B0%E5%BE%B7.png"
+        },
+        {
+          "name": "羽毛笔",
+          "portraitUrl": "https://media.prts.wiki/b/b8/%E5%A4%B4%E5%83%8F_%E7%BE%BD%E6%AF%9B%E7%AC%94.png"
+        },
+        {
+          "name": "棘刺",
+          "portraitUrl": "https://media.prts.wiki/2/2a/%E5%A4%B4%E5%83%8F_%E6%A3%98%E5%88%BA.png"
+        },
+        {
+          "name": "忍冬",
+          "portraitUrl": "https://media.prts.wiki/7/79/%E5%A4%B4%E5%83%8F_%E5%BF%8D%E5%86%AC.png"
+        },
+        {
+          "name": "莫斯提马",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_213_mostma_ambienceSynesthesia%236.png"
+        }
+      ]
+    },
+    {
+      "id": "集成映射",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01aLvZ0O1R8HM9fq2CF_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "傀影",
+          "portraitUrl": "https://media.prts.wiki/8/83/%E5%A4%B4%E5%83%8F_%E5%82%80%E5%BD%B1.png"
+        },
+        {
+          "name": "刻俄柏",
+          "portraitUrl": "https://media.prts.wiki/4/4a/%E5%A4%B4%E5%83%8F_%E5%88%BB%E4%BF%84%E6%9F%8F.png"
+        },
+        {
+          "name": "水月",
+          "portraitUrl": "https://media.prts.wiki/0/05/%E5%A4%B4%E5%83%8F_%E6%B0%B4%E6%9C%88.png"
+        },
+        {
+          "name": "提丰",
+          "portraitUrl": "https://media.prts.wiki/7/70/%E5%A4%B4%E5%83%8F_%E6%8F%90%E4%B8%B0.png"
+        },
+        {
+          "name": "麦哲伦",
+          "portraitUrl": "https://media.prts.wiki/4/4d/%E5%A4%B4%E5%83%8F_%E9%BA%A6%E5%93%B2%E4%BC%A6.png"
+        },
+        {
+          "name": "妮芙",
+          "portraitUrl": "https://media.prts.wiki/1/1a/%E5%A4%B4%E5%83%8F_%E5%A6%AE%E8%8A%99.png"
+        }
+      ]
+    },
+    {
+      "id": "野趣拾光",
+      "series": "ambience",
+      "releaseDate": "2025/07/15",
+      "imageUrl": "https://img.alicdn.com/imgextra/i3/2206488662066/O1CN01yaSvAc1R8HM8grDVZ_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "博士",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/doctor.png"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "乌尔比安",
+          "portraitUrl": "https://media.prts.wiki/3/33/%E5%A4%B4%E5%83%8F_%E4%B9%8C%E5%B0%94%E6%AF%94%E5%AE%89.png"
+        },
+        {
+          "name": "斯卡蒂",
+          "portraitUrl": "https://media.prts.wiki/5/53/%E5%A4%B4%E5%83%8F_%E6%96%AF%E5%8D%A1%E8%92%82.png"
+        },
+        {
+          "name": "死芒",
+          "portraitUrl": "https://media.prts.wiki/d/d9/%E5%A4%B4%E5%83%8F_%E6%AD%BB%E8%8A%92.png"
+        },
+        {
+          "name": "蕾缪安",
+          "portraitUrl": "https://raw.gitcode.com/gh_mirrors/ar/ArknightsGameResource/raw/main/avatar/char_4193_lemuen_ambienceSynesthesia%237.png"
+        }
+      ]
+    },
+    {
+      "id": "战术交汇",
+      "series": "cooperation",
+      "releaseDate": "2021/06/11",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/c246dc6763b5eb70b3ab9087b752e15f816099bf.jpg",
+      "characters": [
+        {
+          "name": "灰烬",
+          "portraitUrl": "https://media.prts.wiki/6/64/%E5%A4%B4%E5%83%8F_%E7%81%B0%E7%83%AC.png"
+        },
+        {
+          "name": "霜华",
+          "portraitUrl": "https://media.prts.wiki/5/51/%E5%A4%B4%E5%83%8F_%E9%9C%9C%E5%8D%8E.png"
+        },
+        {
+          "name": "闪击",
+          "portraitUrl": "https://media.prts.wiki/c/c1/%E5%A4%B4%E5%83%8F_%E9%97%AA%E5%87%BB.png"
+        },
+        {
+          "name": "战车",
+          "portraitUrl": "https://media.prts.wiki/c/cb/%E5%A4%B4%E5%83%8F_%E6%88%98%E8%BD%A6.png"
+        }
+      ]
+    },
+    {
+      "id": "通行喵",
+      "series": "cooperation",
+      "releaseDate": "2022/09/23",
+      "imageUrl": "https://i0.hdslb.com/bfs/article/fab4fc1a0824fb842f8d54a8e0610dd8287a736e.jpg",
+      "characters": [
+        {
+          "name": "罗小黑",
+          "portraitUrl": "https://media.prts.wiki/5/50/%E5%A4%B4%E5%83%8F_%E7%BD%97%E5%B0%8F%E9%BB%91.png"
+        }
+      ]
+    },
+    {
+      "id": "水晶箭行动",
+      "series": "cooperation",
+      "releaseDate": "2024/03/06",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/1261525b7e166e83a67c237c785762dd61968129.jpg",
+      "characters": [
+        {
+          "name": "艾拉",
+          "portraitUrl": "https://media.prts.wiki/2/26/%E5%A4%B4%E5%83%8F_%E8%89%BE%E6%8B%89.png"
+        },
+        {
+          "name": "医生",
+          "portraitUrl": "https://media.prts.wiki/1/11/%E5%A4%B4%E5%83%8F_%E5%8C%BB%E7%94%9F.png"
+        },
+        {
+          "name": "双月",
+          "portraitUrl": "https://media.prts.wiki/f/ff/%E5%A4%B4%E5%83%8F_%E5%8F%8C%E6%9C%88.png"
+        },
+        {
+          "name": "导火索",
+          "portraitUrl": "https://media.prts.wiki/7/70/%E5%A4%B4%E5%83%8F_%E5%AF%BC%E7%81%AB%E7%B4%A2.png"
+        }
+      ]
+    },
+    {
+      "id": "无忧梦呓",
+      "series": "cooperation",
+      "releaseDate": "2025/09/08",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01M0Hbya1R8HMNRVY11_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "丰川祥子",
+          "portraitUrl": "https://media.prts.wiki/c/cb/%E5%A4%B4%E5%83%8F_%E4%B8%B0%E5%B7%9D%E7%A5%A5%E5%AD%90.png"
+        },
+        {
+          "name": "八幡海铃",
+          "portraitUrl": "https://media.prts.wiki/f/f2/%E5%A4%B4%E5%83%8F_%E5%85%AB%E5%B9%A1%E6%B5%B7%E9%93%83.png"
+        },
+        {
+          "name": "三角初华",
+          "portraitUrl": "https://media.prts.wiki/b/b4/%E5%A4%B4%E5%83%8F_%E4%B8%89%E8%A7%92%E5%88%9D%E5%8D%8E.png"
+        },
+        {
+          "name": "若叶睦",
+          "portraitUrl": "https://media.prts.wiki/a/a0/%E5%A4%B4%E5%83%8F_%E8%8B%A5%E5%8F%B6%E7%9D%A6.png"
+        },
+        {
+          "name": "祐天寺若麦",
+          "portraitUrl": "https://media.prts.wiki/d/df/%E5%A4%B4%E5%83%8F_%E7%A5%90%E5%A4%A9%E5%AF%BA%E8%8B%A5%E9%BA%A6.png"
+        }
+      ]
+    },
+    {
+      "id": "月行水上",
+      "series": "cooperation",
+      "releaseDate": "2026/09/08",
+      "imageUrl": "https://img.alicdn.com/imgextra/i2/2206488662066/O1CN01r5Amy9nodJF2vH2e_!!4611686018427383858-0-item_pic.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "结城理",
+          "portraitUrl": "https://media.prts.wiki/5/54/%E5%A4%B4%E5%83%8F_%E7%BB%93%E5%9F%8E%E7%90%86.png"
+        },
+        {
+          "name": "埃癸斯",
+          "portraitUrl": "https://media.prts.wiki/a/ae/%E5%A4%B4%E5%83%8F_%E5%9F%83%E7%99%B8%E6%96%AF.png"
+        },
+        {
+          "name": "岳羽由加莉",
+          "portraitUrl": "https://media.prts.wiki/9/98/%E5%A4%B4%E5%83%8F_%E5%B2%B3%E7%BE%BD%E7%94%B1%E5%8A%A0%E8%8E%89.png"
+        },
+        {
+          "name": "虎狼丸",
+          "portraitUrl": "https://media.prts.wiki/5/56/%E5%A4%B4%E5%83%8F_%E8%99%8E%E7%8B%BC%E4%B8%B8.png"
+        }
+      ]
+    },
+    {
+      "id": "特别通行认证",
+      "series": "special",
+      "releaseDate": "",
+      "imageUrl": "https://img.alicdn.com/imgextra/i1/2206488662066/O1CN01yWsYAI1R8HJhxrn92_!!4611686018427383858-0-item_pic.jpg",
+      "characters": [
+        {
+          "name": "霜星(礼盒/单领购买)",
+          "portraitUrl": "https://media.prts.wiki/0/07/%E5%A4%B4%E5%83%8F_%E6%95%8C%E4%BA%BA_%E9%9C%9C%E6%98%9F.png"
+        },
+        {
+          "name": "塔露拉(愚人节单领)",
+          "portraitUrl": "https://media.prts.wiki/1/10/%E5%A4%B4%E5%83%8F_%E6%95%8C%E4%BA%BA_%E5%A1%94%E9%9C%B2%E6%8B%89.png"
+        },
+        {
+          "name": "杰斯顿·威廉姆斯(愚人节单领)",
+          "portraitUrl": "https://media.prts.wiki/1/17/%E5%A4%B4%E5%83%8F_%E6%95%8C%E4%BA%BA_%E6%9D%B0%E6%96%AF%E9%A1%BF%C2%B7%E5%A8%81%E5%BB%89%E5%A7%86%E6%96%AF.png"
+        },
+        {
+          "name": "克丽斯腾(愚人节单领)",
+          "portraitUrl": "https://media.prts.wiki/c/cc/%E5%A4%B4%E5%83%8F_%E6%95%8C%E4%BA%BA_%E5%85%8B%E4%B8%BD%E6%96%AF%E8%85%BE.png"
+        },
+        {
+          "name": "爱国者(愚人节单领)",
+          "portraitUrl": "https://media.prts.wiki/0/04/%E5%A4%B4%E5%83%8F_%E6%95%8C%E4%BA%BA_%E7%88%B1%E5%9B%BD%E8%80%85.png"
+        },
+        {
+          "name": "士兵(愚人节单领)",
+          "portraitUrl": "https://media.prts.wiki/3/34/%E5%A4%B4%E5%83%8F_%E6%95%8C%E4%BA%BA_%E5%A3%AB%E5%85%B5.png"
+        }
+      ]
+    },
+    {
+      "id": "第一期设定集赠品",
+      "series": "special",
+      "releaseDate": "",
+      "imageUrl": "https://img.alicdn.com/imgextra/i2/2217958638542/O1CN01bIUsBN2CyI9SzmgZ3_!!2217958638542.jpg_q50.jpg",
+      "characters": [
+        {
+          "name": "博士(设定集赠品)",
+          "portraitUrl": "https://raw.gitcode.com/huangjinzhou1/ArknightsAuthorization_Series/raw/main/doctor.png"
+        }
+      ]
+    },
+    {
+      "id": "白名单凭证1.0",
+      "series": "whitelist",
+      "releaseDate": "2025/05/31",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/b635f9a7c19096086d97e269d6c77bf961968129.jpg",
+      "characters": [
+        {
+          "name": "ACE",
+          "portraitUrl": ""
+        },
+        {
+          "name": "SCOUT",
+          "portraitUrl": ""
+        },
+        {
+          "name": "OUTCAST",
+          "portraitUrl": ""
+        },
+        {
+          "name": "MISERY",
+          "portraitUrl": ""
+        },
+        {
+          "name": "MECHANIST",
+          "portraitUrl": ""
+        },
+        {
+          "name": "MANTRA",
+          "portraitUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "白名单凭证2.0",
+      "series": "whitelist",
+      "releaseDate": "2025/05/31",
+      "imageUrl": "https://i0.hdslb.com/bfs/new_dyn/c6d1d888300c8e9974bb8da089d8147c61968129.jpg",
+      "characters": [
+        {
+          "name": "RAIDIAN",
+          "portraitUrl": "https://media.prts.wiki/5/56/%E5%A4%B4%E5%83%8F_%E7%94%B5%E5%BC%A7.png?20250715083533"
+        },
+        {
+          "name": "PITH",
+          "portraitUrl": ""
+        },
+        {
+          "name": "STORMEYE",
+          "portraitUrl": ""
+        },
+        {
+          "name": "TOUCH",
+          "portraitUrl": ""
+        },
+        {
+          "name": "SHARP",
+          "portraitUrl": ""
+        },
+        {
+          "name": "TULIP",
+          "portraitUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "嘉年华2026",
+      "series": "ambience",
+      "releaseDate": "2026/07/30",
+      "imageUrl": "https://i1.hdslb.com/bfs/openplatform/202607/wdI3SOFC1782980088_1782980088340.png",
+      "characters": [
+        {
+          "name": "博士",
+          "portraitUrl": ""
+        },
+        {
+          "name": "可露希尔",
+          "portraitUrl": "https://media.prts.wiki/a/a5/%E5%A4%B4%E5%83%8F_%E5%8F%AF%E9%9C%B2%E5%B8%8C%E5%B0%94.png"
+        },
+        {
+          "name": "赤刃明霄陈",
+          "portraitUrl": "https://media.prts.wiki/d/d0/%E5%A4%B4%E5%83%8F_%E8%B5%A4%E5%88%83%E6%98%8E%E9%9C%84%E9%99%88.png"
+        },
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "望",
+          "portraitUrl": "https://media.prts.wiki/3/38/%E5%A4%B4%E5%83%8F_%E6%9C%9B.png"
+        },
+        {
+          "name": "安洁莉娜",
+          "portraitUrl": "https://media.prts.wiki/c/ca/%E5%A4%B4%E5%83%8F_%E5%AE%89%E6%B4%81%E8%8E%89%E5%A8%9C.png"
+        }
+      ]
+    },
+    {
+      "id": "布道人",
+      "series": "ambience",
+      "releaseDate": "2026/07/30",
+      "imageUrl": "https://i2.hdslb.com/bfs/openplatform/202607/F6fevBfi1782985027_1782985027386.png",
+      "characters": [
+        {
+          "name": "蕾缪安",
+          "portraitUrl": "https://media.prts.wiki/c/c5/%E5%A4%B4%E5%83%8F_%E8%95%BE%E7%BC%AA%E5%AE%89.png"
+        },
+        {
+          "name": "圣聆初雪",
+          "portraitUrl": "https://media.prts.wiki/a/ab/%E5%A4%B4%E5%83%8F_%E5%9C%A3%E8%81%86%E5%88%9D%E9%9B%AA.png"
+        },
+        {
+          "name": "死芒",
+          "portraitUrl": "https://media.prts.wiki/d/d9/%E5%A4%B4%E5%83%8F_%E6%AD%BB%E8%8A%92.png"
+        },
+        {
+          "name": "塑心",
+          "portraitUrl": "https://media.prts.wiki/0/05/%E5%A4%B4%E5%83%8F_%E5%A1%91%E5%BF%83.png"
+        },
+        {
+          "name": "乌尔比安",
+          "portraitUrl": "https://media.prts.wiki/3/33/%E5%A4%B4%E5%83%8F_%E4%B9%8C%E5%B0%94%E6%AF%94%E5%AE%89.png"
+        }
+      ]
+    },
+    {
+      "id": "渡星客",
+      "series": "ambience",
+      "releaseDate": "2026/07/30",
+      "imageUrl": "https://i0.hdslb.com/bfs/openplatform/202607/tSkHL0Ce1782985387_1782985387402.png",
+      "characters": [
+        {
+          "name": "凛御银灰",
+          "portraitUrl": "https://media.prts.wiki/3/3d/%E5%A4%B4%E5%83%8F_%E5%87%9B%E5%BE%A1%E9%93%B6%E7%81%B0.png"
+        },
+        {
+          "name": "异客",
+          "portraitUrl": "https://media.prts.wiki/d/d2/%E5%A4%B4%E5%83%8F_%E5%BC%82%E5%AE%A2.png"
+        },
+        {
+          "name": "锏",
+          "portraitUrl": "https://media.prts.wiki/0/0f/%E5%A4%B4%E5%83%8F_%E9%94%8F.png"
+        },
+        {
+          "name": "塞雷娅",
+          "portraitUrl": "https://media.prts.wiki/e/ee/%E5%A4%B4%E5%83%8F_%E5%A1%9E%E9%9B%B7%E5%A8%85.png"
+        },
+        {
+          "name": "麦哲伦",
+          "portraitUrl": "https://media.prts.wiki/4/4d/%E5%A4%B4%E5%83%8F_%E9%BA%A6%E5%93%B2%E4%BC%A6.png"
+        }
+      ]
+    },
+    {
+      "id": "戏中身",
+      "series": "ambience",
+      "releaseDate": "2026/07/30",
+      "imageUrl": "https://i2.hdslb.com/bfs/openplatform/202607/eksQ3G1W1782985172_1782985172372.png",
+      "characters": [
+        {
+          "name": "酒神",
+          "portraitUrl": "https://media.prts.wiki/0/0d/%E5%A4%B4%E5%83%8F_%E9%85%92%E7%A5%9E.png"
+        },
+        {
+          "name": "斩业星熊",
+          "portraitUrl": "https://media.prts.wiki/e/e5/%E5%A4%B4%E5%83%8F_%E6%96%A9%E4%B8%9A%E6%98%9F%E7%86%8A.png"
+        },
+        {
+          "name": "司霆惊蛰",
+          "portraitUrl": "https://media.prts.wiki/5/5c/%E5%A4%B4%E5%83%8F_%E5%8F%B8%E9%9C%86%E6%83%8A%E8%9B%B0.png"
+        },
+        {
+          "name": "年",
+          "portraitUrl": "https://media.prts.wiki/9/9c/%E5%A4%B4%E5%83%8F_%E5%B9%B4.png"
+        },
+        {
+          "name": "余",
+          "portraitUrl": "https://media.prts.wiki/6/66/%E5%A4%B4%E5%83%8F_%E4%BD%99.png"
+        }
+      ]
+    },
+    {
+      "id": "失语者",
+      "series": "ambience",
+      "releaseDate": "2026/07/30",
+      "imageUrl": "https://i0.hdslb.com/bfs/openplatform/202607/4ymfal8l1782985512_1782985512315.png",
+      "characters": [
+        {
+          "name": "阿米娅",
+          "portraitUrl": "https://media.prts.wiki/3/36/%E5%A4%B4%E5%83%8F_%E9%98%BF%E7%B1%B3%E5%A8%85.png"
+        },
+        {
+          "name": "维什戴尔",
+          "portraitUrl": "https://media.prts.wiki/6/66/%E5%A4%B4%E5%83%8F_%E7%BB%B4%E4%BB%80%E6%88%B4%E5%B0%94.png"
+        },
+        {
+          "name": "真言",
+          "portraitUrl": "https://media.prts.wiki/6/63/%E5%A4%B4%E5%83%8F_%E7%9C%9F%E8%A8%80.png"
+        },
+        {
+          "name": "Mon3tr",
+          "portraitUrl": "https://media.prts.wiki/2/2a/%E5%A4%B4%E5%83%8F_Mon3tr.png"
+        },
+        {
+          "name": "凛冬",
+          "portraitUrl": "https://media.prts.wiki/c/cd/%E5%A4%B4%E5%83%8F_%E5%87%9B%E5%86%AC.png"
+        }
+      ]
+    }
+  ]
+}
