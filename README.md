@@ -1,6 +1,6 @@
 # 谷谷bot
 
-<img src="public/app-logo.svg" alt="谷谷bot" width="112">
+<img src="app/public/app-logo.svg" alt="谷谷bot" width="112">
 
 面向拼谷团长的Windows桌面工具：商品图片建档、QQ群相册评论排表、下单规划与肾表导出。
 
@@ -39,11 +39,12 @@ npm run start:isolated
 
 ## 项目结构
 
-- 根目录`.mjs/.cjs`：业务、数据、安全和桌面入口。
-- `public/`：界面和本地静态资源。
-- `skills/`：业务规则与公开角色/分盒参考资料。
-- `assets/`：应用图标与术语初始文件。
-- `scripts/`：只使用合成数据的隔离界面验证脚本，可通过`npx electron scripts/check-setup-guide.cjs`运行。
+- `app/`：应用代码与测试，集中放置业务、数据、安全和桌面入口。
+- `app/public/`：界面和本地静态资源。
+- `app/skills/`：业务规则与公开角色/分盒参考资料。
+- `app/assets/`：应用图标与术语初始文件。
+- `app/scripts/`：只使用合成数据的隔离界面验证脚本，可通过`npx electron app/scripts/check-setup-guide.cjs`运行。
+- `docs/`：服务器接入和版本发布说明。
 - `release-tools/`：隐私检查、Windows打包、校验及版本维护。
 - `.github/workflows/release.yml`：推送版本标签后创建或补齐GitHub Release。
 
@@ -55,7 +56,7 @@ npm run start:isolated
 
 应用凭据和业务数据保存在使用者本机，模型识别会将主动提交的图片/文字发送给所选API服务。提交Issue时请使用复现步骤及合成数据，不附密钥、二维码、真实群聊截图或工作区JSON。
 
-通用群指令以机器人`help`回复为准。正式删评撤排、交肾到账登记等尚未实现的流程不在功能承诺中。服务器说明见[服务器接入](服务器接入.md)。
+通用群指令以机器人`help`回复为准。正式删评撤排、交肾到账登记等尚未实现的流程不在功能承诺中。服务器说明见[服务器接入](docs/服务器接入.md)。
 
 第三方资料及图标说明见[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。项目整体源码许可尚待维护者指定；公开可见不代表对全部内容授予统一许可。
 

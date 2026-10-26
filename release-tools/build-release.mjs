@@ -23,14 +23,16 @@ await fs.rename(path.join(output,'electron.exe'),path.join(output,'谷谷bot.exe
 await fs.rm(path.join(output,'resources/default_app.asar'),{force:true});
 const appRoot=path.join(output,'resources/app');await fs.mkdir(appRoot,{recursive:true});
 const sourceStage=path.join(await fs.mkdtemp(path.join(dist,'.source-')),'gugu-bot');await fs.mkdir(sourceStage);
-for(const e of await fs.readdir(root,{withFileTypes:true})){
- if(e.isFile()&&/\.(?:mjs|cjs)$/.test(e.name)){await fs.copyFile(path.join(root,e.name),path.join(sourceStage,e.name));if(!e.name.endsWith('.test.mjs')&&e.name!=='test.mjs')await fs.copyFile(path.join(root,e.name),path.join(appRoot,e.name));}
+const codeRoot=path.join(root,'app'),sourceApp=path.join(sourceStage,'app');await fs.mkdir(sourceApp);
+for(const e of await fs.readdir(codeRoot,{withFileTypes:true})){
+ if(e.isFile()&&/\.(?:mjs|cjs)$/.test(e.name)){await fs.copyFile(path.join(codeRoot,e.name),path.join(sourceApp,e.name));if(!e.name.endsWith('.test.mjs')&&e.name!=='test.mjs')await fs.copyFile(path.join(codeRoot,e.name),path.join(appRoot,e.name));}
 }
-for(const dir of ['assets','public','skills']){await fs.cp(path.join(root,dir),path.join(appRoot,dir),{recursive:true});await fs.cp(path.join(root,dir),path.join(sourceStage,dir),{recursive:true});}
-for(const dir of ['scripts','release-tools','docs','.github'])await fs.cp(path.join(root,dir),path.join(sourceStage,dir),{recursive:true});
-for(const file of ['package.json','package-lock.json','README.md','CHANGELOG.md','AGENTS.md','THIRD_PARTY_NOTICES.md','服务器接入.md','.gitignore','.gitattributes'])await fs.copyFile(path.join(root,file),path.join(sourceStage,file));
-const releasePackage={name:pkg.name,version:pkg.version,productName:pkg.productName,type:pkg.type,main:pkg.main,private:true,description:pkg.description};await fs.writeFile(path.join(appRoot,'package.json'),JSON.stringify(releasePackage,null,2));
-for(const file of ['README.md','CHANGELOG.md','THIRD_PARTY_NOTICES.md','服务器接入.md'])await fs.copyFile(path.join(root,file),path.join(output,file));
+for(const dir of ['assets','public','skills']){await fs.cp(path.join(codeRoot,dir),path.join(appRoot,dir),{recursive:true});await fs.cp(path.join(codeRoot,dir),path.join(sourceApp,dir),{recursive:true});}
+await fs.cp(path.join(codeRoot,'scripts'),path.join(sourceApp,'scripts'),{recursive:true});
+for(const dir of ['release-tools','docs','.github'])await fs.cp(path.join(root,dir),path.join(sourceStage,dir),{recursive:true});
+for(const file of ['package.json','package-lock.json','README.md','CHANGELOG.md','AGENTS.md','THIRD_PARTY_NOTICES.md','.gitignore','.gitattributes'])await fs.copyFile(path.join(root,file),path.join(sourceStage,file));
+const releasePackage={name:pkg.name,version:pkg.version,productName:pkg.productName,type:pkg.type,main:'desktop.cjs',private:true,description:pkg.description};await fs.writeFile(path.join(appRoot,'package.json'),JSON.stringify(releasePackage,null,2));
+for(const file of ['README.md','CHANGELOG.md','THIRD_PARTY_NOTICES.md'])await fs.copyFile(path.join(root,file),path.join(output,file));await fs.cp(path.join(root,'docs'),path.join(output,'docs'),{recursive:true});
 const runtimeAudit=await auditPublic(appRoot,{runtime:true});if(!runtimeAudit.ok)throw Error('运行包隐私检查失败');
 const R=require('resedit'),exeFile=path.join(output,'谷谷bot.exe'),exe=R.NtExecutable.from(await fs.readFile(exeFile),{ignoreCert:true}),resources=R.NtExecutableResource.from(exe),icons=R.Data.IconFile.from(await fs.readFile(path.join(appRoot,'assets/icon.ico')));
 const groups=R.Resource.IconGroupEntry.fromEntries(resources.entries);if(!groups.length)throw Error('EXE没有可替换图标资源');for(const group of groups)R.Resource.IconGroupEntry.replaceIconsForResource(resources.entries,group.id,group.lang,icons.icons.map(i=>i.data));
