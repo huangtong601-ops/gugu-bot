@@ -13,6 +13,13 @@ export function memberName(db,qq,groupId=''){
  const scoped=g?db.groupMembers?.[g]?.[id]?.cn:'';
  return scoped||db.members?.[id]?.cn||'';
 }
+export function qqForCN(db,cn,groupId=''){
+ const name=String(cn||'').trim();if(!name)return '';
+ const ids=new Set([...Object.keys(db.members||{}),...Object.keys(db.groupMembers?.[String(groupId)]||{})]);
+ const matches=[...ids].filter(id=>/^\d{5,12}$/.test(id)&&memberName(db,id,groupId)===name);
+ if(matches.length>1)throw Error('该CN对应多个QQ，请明确填写QQ号');
+ return matches[0]||'';
+}
 export function recordMember(db,record,groupId=''){
  const cn=recordOwner(db,record,groupId);
  return record.proxyFor?`${cn} 代 ${record.proxyFor}`:cn;
@@ -95,7 +102,7 @@ export function cleanComment(text){
   .replace(/\s+/g,' ')
   .trim();
 }
-const COMMAND=/^(?:cn(?=[\s:：])|解释|查询|排量(?:\s|$)|余量(?:\s|$)|我的排表\s*$|肾表\s*$|(?:help|帮助|指令|命令列表)[。.!！?？]?\s*$)/i;
+const COMMAND=/^(?:撤排|cn(?=[\s:：])|解释|查询|排量(?:\s|$)|余量(?:\s|$)|我的排表\s*$|肾表\s*$|(?:help|帮助|指令|命令列表)[。.!！?？]?\s*$)/i;
 const countValue=s=>/^\d+$/.test(s)?Number(s):({'零':0,'一':1,'二':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10}[s]??NaN);
 export function parseComment(text,products,cn='',{resolutions={},quantities={},allProducts=[],ignoredItems=[],arknights=true}={}){
  const cleaned=cleanComment(text),empty={items:[],questions:[],lines:[]};
@@ -170,6 +177,7 @@ export function parseComment(text,products,cn='',{resolutions={},quantities={},a
  if(!items.length&&!questions.length)return {status:'skip',reason:ignored.size?'商品条目已全部删除':'未找到制品和数量',items,questions,lines};
  return {status:questions.length?'ambiguous':'resolved',items,questions,lines,...(proxyFor?{proxyFor}:{})};
 }
+export function compareCommentTime(a,b){return Date.parse(a.sourceAt||a.at||a.createdAt)-Date.parse(b.sourceAt||b.at||b.createdAt)||(a.sourceOrder??a.order??0)-(b.sourceOrder??b.order??0)||String(a.sourceId||a.id).localeCompare(String(b.sourceId||b.id),undefined,{numeric:true});}
 export function orderedRecords(c){return [...c.records].sort((a,b)=>String(a.sourceAt||a.createdAt).localeCompare(String(b.sourceAt||b.createdAt))||(a.sourceOrder??0)-(b.sourceOrder??0)||String(a.sourceId||a.requestId||a.id).localeCompare(String(b.sourceId||b.requestId||b.id),undefined,{numeric:true})||(a.itemIndex??0)-(b.itemIndex??0));}
 export function groupCapacity(category,boxId=''){
  if(category?.kind!=='group')return null;
@@ -202,7 +210,8 @@ export function addComment(db,c,event){
  if(parsed.proxyFor)log.proxyFor=parsed.proxyFor;
  const rows=parsed.items.map((item,i)=>{const p=c.products.find(p=>p.id===item.skuId);return {...item,id:randomUUID(),requestId:`comment:${event.id}:${i}`,member:displayMember,...(parsed.proxyFor?{proxyFor:parsed.proxyFor}:{}),qq:String(event.qq),name:p.name,unitCents:p.price==null?null:Math.round(p.price*100),status:p.price==null?'待定价':'暂估',source:String(event.text),sourceAt:at,sourceOrder:Number.isSafeInteger(event.order)?event.order:0,sourceId:String(event.id),itemIndex:i,createdAt:new Date().toISOString()};});
  for(const row of rows){row.albumId=event.albumId||'';row.photoIds=event.photoIds||[];row.feedId=event.feedId||'';}
- c.records.push(...rows);c.commentEvents.push(log);c.records=orderedRecords(c);return {message:`已录入 ${displayMember}：${rows.map(r=>r.name+' ×'+r.quantity).join('，')}`,count:rows.length};
+ const active=rows.filter(r=>!c.commentEvents.some(e=>e.withdrawal&&e.success&&e.skuId===r.skuId&&e.qq===r.qq&&!r.proxyFor&&compareCommentTime(e,r)>=0));
+ c.records.push(...active);c.commentEvents.push(log);c.records=orderedRecords(c);return {message:`已录入 ${displayMember}：${rows.map(r=>r.name+' ×'+r.quantity).join('，')}`,count:active.length};
 }
 export function bindAlbum(db,c,{groupId,albumId}){if(!String(groupId||'').trim()||!String(albumId||'').trim())throw Error('请填写群号和相册ID');if(c?.groupId&&String(c.groupId)!==String(groupId))throw Error('相册所属群与该期次的群不一致');db.albums??=[];if(db.albums.some(x=>(x.groupId===String(groupId)&&x.albumId===String(albumId))||x.campaignId===c.id))throw Error('相册或期次已绑定');db.albums.push({groupId:String(groupId),albumId:String(albumId),campaignId:c.id});}
 export function positionMatch(anchors,bounds){

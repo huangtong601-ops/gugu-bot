@@ -11,7 +11,7 @@ async function run(){
   {id:'b',name:'通行证-克莱门莎',type:'通行证',character:'克莱门莎',boxId:'55.0',price:20,unit:'对'},
   {id:'s',name:'双闪徽章-酒神（真我自扼）',type:'单领',price:5,unit:'件'}],records:[]};
  c.categories.find(x=>x.id==='通行证').sets=3;c.categories.find(x=>x.id==='通行证').boxPrices={'55.0':30};
- const db={campaigns:[c],members:{12345:{cn:'示例用户I'},54321:{cn:'示例用户K'}},qqGroups:[{id:'11111',name:'模拟群'}],onboarding:{completedAt:'2026-10-24T00:00:00Z'},settings:{provider:'custom',baseUrl:'https://example.test/v1',model:''}};
+ const db={campaigns:[c],members:{12345:{cn:'示例用户J'},54321:{cn:'示例用户L'}},qqGroups:[{id:'11111',name:'模拟群'}],onboarding:{completedAt:'2026-10-24T00:00:00Z'},settings:{provider:'custom',baseUrl:'https://example.test/v1',model:''}};
  const comments=[['代群外小明 洁哥通行证2 酒神皮肤吧唧1','12345'],['洁哥通行证1','54321'],['代群外小红 洁哥通行证1','12345'],['洁哥通行证1 酒神皮肤吧唧1','12345'],['代群外小明 洁哥通行证1','12345']];
  for(const [i,[text,qq]] of comments.entries())addComment(db,c,{id:String(i+1),qq,at:`2026-10-24T00:00:0${i+1}Z`,text});
  const pool=purchasePool(c),plan=planOrders(pool,{tiers:[10,20],rule:'once',rewardMode:'both'});for(const o of plan.orders)o.actualPaid=o.subtotal/100;
@@ -25,7 +25,7 @@ async function run(){
  const rows=await js("[...document.querySelectorAll('.settlement-preview tr')].map(r=>[...r.cells].map(c=>({text:c.textContent,span:c.rowSpan})))");
  assert.equal(rows.length,7);
  const identities=rows.slice(1).filter(r=>r.length===3).map(r=>[r[0].text,r[0].span,r[2].text,r[2].span]);
- assert.deepEqual(identities,[['示例用户I',2,'¥14.84',2],['示例用户I 代 小明',2,'¥34.84',2],['示例用户I 代 小红',1,'¥10.00',1],['示例用户K',1,'¥10.00',1]]);
+ assert.deepEqual(identities,[['示例用户J',2,'¥14.84',2],['示例用户J 代 小明',2,'¥34.84',2],['示例用户J 代 小红',1,'¥10.00',1],['示例用户L',1,'¥10.00',1]]);
  assert.equal(rows[3][1].text,'通行证-予愿安洁莉娜 ×3对');
  assert.equal(await js("document.querySelector('.settlement-preview button').disabled"),false);
  const alignment=await js("[...document.querySelectorAll('.settlement-product')].map(c=>({align:getComputedStyle(c).textAlign,x:c.getBoundingClientRect().x}))");assert.equal(alignment.length,6);assert.ok(alignment.every(c=>c.align==='left'&&Math.abs(c.x-alignment[0].x)<1));

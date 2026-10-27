@@ -4,3 +4,4 @@
 .order-payment button{width:88px;flex:0 0 88px}.order-payment button.is-saved{color:#34735d;background:#edf6f0;opacity:1}
 .settlement-preview td.settlement-product{text-align:left}
 .campaign-actions{border-bottom:1px solid var(--line);margin-bottom:18px;padding-bottom:14px}.campaign-phase{font-size:13px;font-weight:600;margin:0 0 10px}.campaign-actions .actions{display:flex;flex-wrap:wrap;gap:8px}.campaign-actions button{font-size:12px;padding:8px 12px}.campaign-actions .hint{font-size:12px;line-height:1.7;margin:10px 0 0}.order-config input:disabled,.order-config select:disabled{background:#f6f6f9;color:#777e8e}.order-heading h3{line-height:1.6}
+.custom-credit{padding:12px 0 0;border-top:1px solid var(--line)}.custom-credit[hidden]{display:none}

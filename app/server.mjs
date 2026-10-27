@@ -4,6 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {randomUUID,createHash,randomInt} from 'node:crypto';
 import {createCredentialStore} from './credentials.mjs';
+import appMetadata from './app-metadata.cjs';
 import {catalog,enrollment} from './domain.mjs';
 import {normalizeKey,upstreamError,modelHttpError} from './api-config.mjs';
 import {originalBounds} from './public/image-geometry.js';
@@ -12,7 +13,7 @@ import {createBotRegistry,importedRecognition} from './bots.mjs';
 import {createGlossaryStore} from './glossary.mjs';
 import {loadReferences,expandBox,enrichRecognition,verifyPrts,boxRosterHint,adjustmentRetryBoxes,replaceBoxObservations} from './pass-reference.mjs';
 import {saveImage,readImage,mediaFilename,mimeFor} from './media.mjs';
-import {defaultCategories,categories,registerCN,memberName,recordMember,parseComment,addComment,bindAlbum,summary,orderedRecords,positionMatch} from './workflow.mjs';
+import {defaultCategories,categories,registerCN,memberName,qqForCN,recordMember,parseComment,addComment,bindAlbum,summary,orderedRecords,positionMatch} from './workflow.mjs';
 import {workbook} from './tables.mjs';
 import {enrollmentView,reorderQueue} from './enrollment-view.mjs';
 import {processQQEvent,canHandleQQEvent,isMentioned,messageText,SCOPE_HINT} from './qq-commands.mjs';
@@ -34,6 +35,7 @@ import {businessState,businessDiff,createOperationHistory,applyInverse} from './
 import {createWorkspaceBackups} from './workspace-backups.mjs';
 import {searchProducts,productDeletionReason,categoryDeletionReason,validateCatalogChanges} from './catalog-management.mjs';
 import {createQQHealthProbe,runtimeSummary} from './runtime-status.mjs';
+import {sendWithdrawalNotices} from './album-withdrawal.mjs';
 import {applyAlbumComments,remindCompletedComments,createAlbumPoller,scopedProducts,scopeFromCaption,retryPending,dismissPending,deletePendingItem,deriveBatchScopes,batchPhotos,IGNORE_SCOPE,albumScope,reconcileAlbumPhotos} from './album-sync.mjs';
 const root=path.dirname(fileURLToPath(import.meta.url));
 async function listenLocal(server,port){
@@ -57,6 +59,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
   if(qqConfig){const u=new URL(qqConfig.url);if(!['ws:','wss:'].includes(u.protocol)||!['127.0.0.1','localhost','[::1]'].includes(u.hostname)||u.username||u.password||u.search||u.hash)throw Error('服务器QQ网关必须是本机WebSocket地址');privacy.remember(qqConfig.token);await credentialStore.set({provider:'qq',baseUrl:u.href},qqConfig.token||'');db.qqSettings={url:u.href};}
   const legacyAPI=db.settings?.apiKey||db.apiKey,legacyQQ=db.qqSettings?.token;
   db.qqEnrollmentEnabled=db.qqEnrollmentEnabled===true;
+  db.albumWithdrawalEnabled=db.albumWithdrawalEnabled===true;
   privacy.remember(legacyAPI);privacy.remember(legacyQQ);
   db.settings={...providerConfig(db.settings||{}),model:String(db.settings?.model||'')};
   for(const c of db.campaigns)c.categories??=defaultCategories();
@@ -175,6 +178,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
         if(!isCompleted(db.campaigns.find(c=>c.id===binding.campaignId)))await identifyAlbumPhotos(binding,result);
         if(backendSuspended||connection?.remote)continue;if(albumReads.get(binding)!==ticket){reconcileAlbumPhotos(binding,binding.photos);continue;}
         results.push({albumId:binding.albumId,...applyAlbumComments(db,binding,result)});
+        await sendWithdrawalNotices(db,binding,{send:params=>qqConnection.call('send_group_msg',params),persist:save,allowed:()=>!backendSuspended&&!connection?.remote&&qqConnection?.status()==='已连接'&&canHandleQQEvent(db,{group_id:binding.groupId})});
         await remindCompletedComments(db,binding,{send:params=>qqConnection.call('send_group_msg',params),persist:save,allowed:()=>!backendSuspended&&!connection?.remote&&qqConnection?.status()==='已连接'&&canHandleQQEvent(db,{group_id:binding.groupId})});}
       catch(e){binding.sync={...binding.sync,at:new Date().toISOString(),error:privacy.error(e)};results.push({albumId:binding.albumId,error:privacy.error(e)});}
     }
@@ -219,6 +223,15 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
     try {
       if(!trustedLocalRequest(req,server.address().port))return reply(403,{error:'请求来源不允许'});
       const url=new URL(req.url,'http://localhost');
+      if(url.pathname==='/api/app-update'){
+        if(!desktopActions.appUpdate)return reply(200,{supported:false,phase:'unsupported',currentVersion:appMetadata(root).version});
+        if(req.method==='GET')return reply(200,await desktopActions.appUpdate('snapshot'));
+        if(req.method!=='POST'||req.headers.origin!==`http://127.0.0.1:${server.address().port}`||!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type']||''))return reply(403,{error:'请求来源或格式不允许'});
+        let raw='';for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>4096)throw Error('更新请求过大');}let body;try{body=JSON.parse(raw);}catch{throw Error('更新请求无效');}
+        if(!['check','download','install'].includes(body?.action))throw Error('更新操作无效');
+        if(body.action==='install')await backups.create(db,'软件更新前备份');
+        return reply(200,await desktopActions.appUpdate(body.action));
+      }
       if(connectionRoute(url.pathname)){
         if(!connection)return reply(404,{error:'服务器端不提供本机连接设置'});
         if(req.method==='GET'&&url.pathname==='/api/server-connection')return reply(200,await connection.view());
@@ -352,6 +365,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
         if(url.pathname==='/api/qq-group-remove'){const id=String(b.groupId||'');const used=db.campaigns.filter(c=>String(c.groupId)===id);if(used.length)throw Error('还有期次属于该群：'+used.map(c=>c.name).join('、'));db.qqGroups=db.qqGroups.filter(g=>String(g.id)!==id);await save();return reply(200,{ok:true});}
         if(url.pathname==='/api/qq-test-group'){if(!qqConnection)throw Error('QQ尚未连接');const groups=await qqConnection.call('get_group_list',{}),group=groups.find(g=>String(g.group_id)===String(b.groupId)&&g.group_name===b.name);if(!group)throw Error('未找到指定测试群，请确认机器人已入群');db.qqTestGroup={id:String(group.group_id),name:group.group_name};await save();return reply(200,{ok:true,group:db.qqTestGroup});}
         if(url.pathname==='/api/qq-test-group-message'){if(!qqConnection||!db.qqTestGroup)throw Error('尚未指定测试群');const r=await qqConnection.call('send_group_msg',{group_id:Number(db.qqTestGroup.id),message:'【谷谷bot连接测试】机器人已接入此测试群。可 @机器人 发送“cn 你的CN”验证昵称录入；商品排表将在绑定测试相册后验证。'});return reply(200,{ok:true,messageId:r.message_id});}
+        if(url.pathname==='/api/album-withdrawal-settings'){if(typeof b.enabled!=='boolean')throw Error('请选择开启或关闭相册撤排');db.albumWithdrawalEnabled=b.enabled;operationResult=await save(op('修改相册撤排开关'));return reply(200,{ok:true,enabled:db.albumWithdrawalEnabled});}
         if(url.pathname==='/api/qq-enrollment-settings'){if(typeof b.enabled!=='boolean')throw Error('请选择开启或关闭@排表');db.qqEnrollmentEnabled=b.enabled;operationResult=await save(op('修改群内排表开关'));return reply(200,{ok:true,enabled:db.qqEnrollmentEnabled});}
     if(url.pathname==='/api/ui-prefs'){const prefs=db.uiPrefs??={};for(const key of ['botId','groupId','campaignId'])if(typeof b[key]==='string'&&b[key].length<=120)prefs[key]=b[key];if([2,3].includes(Number(b.columns)))prefs.columns=Number(b.columns);if(typeof b.showImages==='boolean')prefs.showImages=b.showImages;await save();return reply(200,{prefs});}
         if(url.pathname==='/api/qq-status'){if(!qqConnection)throw Error('QQ尚未连接');return reply(200,{identity:await qqConnection.call('get_login_info',{}),status:await qqConnection.call('get_status',{}),lastInbound:qqLastInbound,recentEvents:qqEvents});}
@@ -482,13 +496,15 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
           if(b.revision!==c.revision)throw Error('商品目录已变化，请重新识别');
           if(c.records.some(r=>r.requestId===b.requestId))return reply(200,{duplicate:true});
           if(!Array.isArray(b.items)||!b.items.length||!b.requestId)throw Error('缺少报名明细');
-          const qq=String(b.qq||'').trim();if(qq&&!/^\d{5,12}$/.test(qq))throw Error('QQ号格式不正确');
+          let qq=String(b.qq||'').trim();if(qq&&!/^\d{5,12}$/.test(qq))throw Error('QQ号格式不正确');
+          if(b.cnOnly===true&&qq)throw Error('仅按CN录入时请清空QQ');
+          const inferredQQ=!qq&&b.cnOnly!==true?qqForCN(db,b.member,c.groupId):'';qq||=inferredQQ;
           const owner=memberName(db,qq,c.groupId)||String(b.member||'').trim(),parsed=parseComment(b.source,c.products,owner,{arknights:!c.botId||c.botId==='zhougu'}),proxyFor=parsed.proxyFor||'';
           if(!owner||owner.length>40)throw Error('请填写1至40字的cn，或填写已绑定cn的QQ');
           if((b.proxyFor||'')!==proxyFor||parsed.questions.some(q=>q.code==='proxy'))throw Error('代排信息已变化，请重新识别');
           const member=proxyFor?`${owner} 代 ${proxyFor}`:owner;
           const createdAt=new Date().toISOString();const records=b.items.map((item,itemIndex)=>({...enrollment({...item,member},c.products),...(qq?{qq}:{}),...(proxyFor?{proxyFor}:{}),identityMode:qq?'qq':'cn',sourceType:'manual',id:randomUUID(),requestId:b.requestId,itemIndex,source:String(b.source||''),createdAt}));
-          c.records.push(...records);operationResult=await save(op('手动录入排表'));return reply(200,{ok:true});
+          c.records.push(...records);operationResult=await save(op('手动录入排表'));return reply(200,{ok:true,inferredQQ});
         }
         if(url.pathname==='/api/position-map'){
           if(!b.imageUrl||!Array.isArray(b.anchors)||!b.anchors.length)throw Error('请选择参照图片和商品位置');
@@ -565,7 +581,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
       }
       if(req.method!=='GET')return reply(405,{error:'不支持此操作'});
       const brandingFiles={'/app-logo.svg':['app-logo.svg','image/svg+xml'],'/favicon.ico':['favicon.ico','image/x-icon']};const branding=brandingFiles[url.pathname];if(branding){res.writeHead(200,{'content-type':branding[1],'content-security-policy':"default-src 'none'; style-src 'unsafe-inline'; sandbox"});return res.end(await fs.readFile(path.join(root,'public',branding[0])));}
-      const files={'/album-scope-picker.js':'album-scope-picker.js','/catalog-feedback.js':'catalog-feedback.js','/recognition-categories.js':'recognition-categories.js','/product-finder.js':'product-finder.js','/category-manager.js':'category-manager.js','/catalog-utils.js':'catalog-utils.js','/runtime-status.js':'runtime-status.js','/catalog-management.css':'catalog-management.css','/workspace-tools.js':'workspace-tools.js','/qq-connection.js':'qq-connection.js','/settings-page.js':'settings-page.js','/settings.css':'settings.css','/':'index.html','/app.js':'app.js','/album-picker.js':'album-picker.js','/model-picker.js':'model-picker.js','/skill-settings.js':'skill-settings.js','/setup-guide.js':'setup-guide.js','/runtime-picker.js':'runtime-picker.js','/usage-settings.js':'usage-settings.js','/setup-state.js':'setup-state.js','/product-editor.js':'product-editor.js','/image-geometry.js':'image-geometry.js','/image-input.js':'image-input.js','/image-batch.js':'image-batch.js','/product-merge.js':'product-merge.js','/style.css':'style.css','/gift-tiers.js':'gift-tiers.js','/enrollment-people.js':'enrollment-people.js','/enrollment-table.js':'enrollment-table.js','/enrollment-table.css':'enrollment-table.css','/order-workspaces.js':'order-workspaces.js','/order-workspaces.css':'order-workspaces.css'};const file=files[url.pathname];if(!file)return reply(404,{error:'页面不存在'});
+      const files={'/update-settings.js':'update-settings.js','/album-scope-picker.js':'album-scope-picker.js','/catalog-feedback.js':'catalog-feedback.js','/recognition-categories.js':'recognition-categories.js','/product-finder.js':'product-finder.js','/category-manager.js':'category-manager.js','/catalog-utils.js':'catalog-utils.js','/runtime-status.js':'runtime-status.js','/catalog-management.css':'catalog-management.css','/workspace-tools.js':'workspace-tools.js','/qq-connection.js':'qq-connection.js','/settings-page.js':'settings-page.js','/settings.css':'settings.css','/':'index.html','/app.js':'app.js','/album-picker.js':'album-picker.js','/model-picker.js':'model-picker.js','/skill-settings.js':'skill-settings.js','/setup-guide.js':'setup-guide.js','/runtime-picker.js':'runtime-picker.js','/usage-settings.js':'usage-settings.js','/setup-state.js':'setup-state.js','/product-editor.js':'product-editor.js','/image-geometry.js':'image-geometry.js','/image-input.js':'image-input.js','/image-batch.js':'image-batch.js','/product-merge.js':'product-merge.js','/style.css':'style.css','/gift-tiers.js':'gift-tiers.js','/enrollment-people.js':'enrollment-people.js','/enrollment-table.js':'enrollment-table.js','/enrollment-table.css':'enrollment-table.css','/order-workspaces.js':'order-workspaces.js','/order-workspaces.css':'order-workspaces.css'};const file=files[url.pathname];if(!file)return reply(404,{error:'页面不存在'});
       res.writeHead(200,{'content-type':file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8','content-security-policy':"default-src 'self'; img-src 'self' data: https:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'none'; object-src 'none'"});res.end(await fs.readFile(path.join(root,'public',file)));
     }catch(e){reply(400,{error:privacy.error(e)});}finally{if(localWork)localRequests--;}
   });

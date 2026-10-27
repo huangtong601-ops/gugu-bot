@@ -16,7 +16,7 @@ async function run(){
   {id:'custom',name:'人事部简历-阿米娅',type:'单领',categoryId:'custom',boxId:'1.0',price:8}
  ],records:[]};
  const row=(id,skuId,member,qq,quantity,time)=>({id,skuId,member,qq,quantity,sourceAt:'2026-10-24T0'+time+':00:00Z'});
- c.records=[row('a','p0','示例用户I','12345',3,1),row('b','p0','示例用户K','54321',2,2),row('c','p1','示例用户K','54321',1,2),row('d','p2','示例用户I','12345',1,3),row('s','solo','示例用户I','12345',2,1),row('s2','solo','示例用户K','54321',1,3),row('g','gift1','示例用户I','12345',1,1),row('set','set','示例用户K','54321',2,2),row('g2','gift2','示例用户I','12345',1,3),row('custom','custom','示例用户I','12345',1,1)];
+ c.records=[row('a','p0','示例用户J','12345',3,1),row('b','p0','示例用户L','54321',2,2),row('c','p1','示例用户L','54321',1,2),row('d','p2','示例用户J','12345',1,3),row('s','solo','示例用户J','12345',2,1),row('s2','solo','示例用户L','54321',1,3),row('g','gift1','示例用户J','12345',1,1),row('set','set','示例用户L','54321',2,2),row('g2','gift2','示例用户J','12345',1,3),row('custom','custom','示例用户J','12345',1,1)];
  const second={id:'second',name:'第二期',botId:'zhougu',groupId:'11111',categories:[{id:'second-only',name:'第二期专属',kind:'single'}],products:[],records:[]};
  await fsp.writeFile(path.join(fixture,'workspace.json'),JSON.stringify({settings:{provider:'openai',baseUrl:'https://api.openai.com/v1',model:''},onboarding:{completedAt:'2026-10-24T00:00:00Z'},qqGroups:[{id:'11111',name:'测试群'}],campaigns:[c,second]}));
  backend=await start({port:0,dataDir:fixture,credentialStore:{get:async()=>''},upstreamFetch:async()=>{throw Error('UI view must not call a model');}});

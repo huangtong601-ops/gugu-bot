@@ -6,14 +6,14 @@ test('unbound groups cannot enter business processing; binding affects only that
 test('explicit test group confines group operations even when other albums are bound',()=>{const db={qqTestGroup:{id:'90000003'},albums:[{groupId:'456'}]};assert.equal(canHandleQQEvent(db,{group_id:90000003}),true);assert.equal(canHandleQQEvent(db,{group_id:456}),false);assert.equal(canHandleQQEvent(db,{user_id:123}),true);});
 test('one manual multi-item submission retains its textual order',()=>{const records=[{id:'z',requestId:'batch',itemIndex:0,createdAt:'2026-10-23T01:00:00Z'},{id:'a',requestId:'batch',itemIndex:1,createdAt:'2026-10-23T01:00:00Z'}];assert.deepEqual(orderedRecords({records}).map(r=>r.id),['z','a']);});
 const products=()=>catalog([{id:'a',name:'通行证-予愿安洁莉娜',type:'通行证',boxId:'55.0',averagePrice:30,adjustment:40},{id:'b',name:'通行证-克莱门莎',type:'通行证',boxId:'55.0',averagePrice:30,adjustment:20},{id:'s',name:'双闪徽章-酒神（真我自扼）',type:'单领',price:20}]);
-test('multi-item aliases resolve only within campaign; duplicate CN is rejected',()=>{const db={};registerCN(db,'12345','示例用户I');assert.throws(()=>registerCN(db,'54321','示例用户I'));assert.deepEqual(parseComment('洁哥通行证2克莱门莎通行证1',products()).items,[{skuId:'a',quantity:2},{skuId:'b',quantity:1}]);assert.equal(parseComment('酒神皮肤吧唧1',products()).items[0].skuId,'s');assert.deepEqual(parseComment('吧唧',products()).items,[{skuId:'s',quantity:1}]);});
-test('late comments retain source order, quantities expand and duplicate events are idempotent',()=>{const db={};registerCN(db,'12345','示例用户I');registerCN(db,'54321','示例用户K');const c={products:products(),categories:defaultCategories(),records:[]};c.categories[2].sets=5;addComment(db,c,{id:'2',qq:'54321',at:'2026-10-23T02:00:00Z',text:'洁哥通行证2克莱门莎通行证1'});addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'});assert.deepEqual(summary(c)[0].queue,['示例用户I','示例用户I','示例用户I','示例用户K','示例用户K']);assert.equal(summary(c)[1].remaining,4);assert.equal(addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'}).duplicate,true);const sheets=tableData(c,db),kidney=sheets.find(s=>s.name==='肾表');assert.equal(kidney.rows.length,4);assert.equal(kidney.rows[1][2],210);assert.equal(kidney.rows[2][2],190);assert.deepEqual(kidney.merges,['A3:A4','C3:C4']);assert.equal(kidney.rows[1][1],'通行证-予愿安洁莉娜 ×3对');assert.equal(workbook(c,db).readUInt32LE(0),0x04034b50);});
+test('multi-item aliases resolve only within campaign; duplicate CN is rejected',()=>{const db={};registerCN(db,'12345','示例用户J');assert.throws(()=>registerCN(db,'54321','示例用户J'));assert.deepEqual(parseComment('洁哥通行证2克莱门莎通行证1',products()).items,[{skuId:'a',quantity:2},{skuId:'b',quantity:1}]);assert.equal(parseComment('酒神皮肤吧唧1',products()).items[0].skuId,'s');assert.deepEqual(parseComment('吧唧',products()).items,[{skuId:'s',quantity:1}]);});
+test('late comments retain source order, quantities expand and duplicate events are idempotent',()=>{const db={};registerCN(db,'12345','示例用户J');registerCN(db,'54321','示例用户L');const c={products:products(),categories:defaultCategories(),records:[]};c.categories[2].sets=5;addComment(db,c,{id:'2',qq:'54321',at:'2026-10-23T02:00:00Z',text:'洁哥通行证2克莱门莎通行证1'});addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'});assert.deepEqual(summary(c)[0].queue,['示例用户J','示例用户J','示例用户J','示例用户L','示例用户L']);assert.equal(summary(c)[1].remaining,4);assert.equal(addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'}).duplicate,true);const sheets=tableData(c,db),kidney=sheets.find(s=>s.name==='肾表');assert.equal(kidney.rows.length,4);assert.equal(kidney.rows[1][2],210);assert.equal(kidney.rows[2][2],190);assert.deepEqual(kidney.merges,['A3:A4','C3:C4']);assert.equal(kidney.rows[1][1],'通行证-予愿安洁莉娜 ×3对');assert.equal(workbook(c,db).readUInt32LE(0),0x04034b50);});
 test('fixed group prices and custom single categories survive catalog validation',()=>{const cats=[{id:'g',name:'人事部简历',kind:'group',pricingMode:'fixed'},{id:'x',name:'其他',kind:'single'}];const p=catalog([{id:'a',categoryId:'g',name:'简历-阿米娅',type:'单领',price:12},{id:'b',categoryId:'x',name:'立牌',type:'单领',price:30}],cats);assert.equal(p[0].price,12);assert.equal(p[0].pricingMode,'fixed');assert.equal(p[1].categoryId,'x');});
 test('position matching refuses overlapping and missing anchors',()=>{const a={skuId:'a',bounds:{x:0,y:0,width:.5,height:.5}},b={x:.1,y:.1,width:.1,height:.1};assert.equal(positionMatch([a],b).skuId,'a');assert.equal(positionMatch([a,a],b),null);assert.equal(positionMatch([a],null),null);});
-test('QQ command requires actual mention and uses sender identity',()=>{const db={campaigns:[]};assert.equal(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'今天吃啥'}}]}).ignored,true);assert.match(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'cn 示例用户I'}}]}).reply,/@/);const result=processQQEvent(db,{group_id:1,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:' cn 示例用户I'}}]});assert.match(result.reply,/已录入/);assert.equal(memberName(db,'12345','1'),'示例用户I');});
+test('QQ command requires actual mention and uses sender identity',()=>{const db={campaigns:[]};assert.equal(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'今天吃啥'}}]}).ignored,true);assert.match(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'cn 示例用户J'}}]}).reply,/@/);const result=processQQEvent(db,{group_id:1,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:' cn 示例用户J'}}]});assert.match(result.reply,/已录入/);assert.equal(memberName(db,'12345','1'),'示例用户J');});
 
 test('album-style parsing drops @ mentions, skips commands and keeps structured questions',()=>{
- const db={};registerCN(db,'12345','示例用户I');
+ const db={};registerCN(db,'12345','示例用户J');
  assert.equal(parseComment('@{uin:1,nick:小谷} 查询余量',products()).status,'skip');
  assert.equal(parseComment('@{uin:1,nick:小谷} 洁哥通行证1',products()).items.length,1);
  const ambiguous=parseComment('通行证1',products());
@@ -30,12 +30,12 @@ test('albums cannot be bound to a campaign that belongs to another group',()=>{
 });
 test('CN is scoped per group with a global fallback',()=>{
  const db={};
- registerCN(db,'12345','示例用户I','111111');
- assert.equal(memberName(db,'12345','111111'),'示例用户I');
+ registerCN(db,'12345','示例用户J','111111');
+ assert.equal(memberName(db,'12345','111111'),'示例用户J');
  assert.equal(memberName(db,'12345','222222'),'');
- registerCN(db,'54321','示例用户I','222222');
- assert.equal(memberName(db,'54321','222222'),'示例用户I');
- assert.throws(()=>registerCN(db,'99999','示例用户I','111111'),/本群/);
+ registerCN(db,'54321','示例用户J','222222');
+ assert.equal(memberName(db,'54321','222222'),'示例用户J');
+ assert.throws(()=>registerCN(db,'99999','示例用户J','111111'),/本群/);
  registerCN(db,'77777','全局名');
  assert.equal(memberName(db,'77777','333333'),'全局名');
 });
@@ -50,7 +50,7 @@ test('quantity overrides from pending resolution replace parsed and default valu
  const p=products();
  assert.deepEqual(parseComment('洁哥',p,'',{quantities:{'洁哥':3}}).items,[{skuId:'a',quantity:3}]);
  assert.deepEqual(parseComment('洁哥2',p,'',{quantities:{'洁哥':4}}).items,[{skuId:'a',quantity:4}]);
- const db={};registerCN(db,'12345','示例用户I');
+ const db={};registerCN(db,'12345','示例用户J');
  const c={products:p,categories:defaultCategories(),records:[]};
  addComment(db,c,{id:'q1',qq:'12345',at:'2026-10-25T01:00:00Z',text:'洁哥',quantities:{'洁哥':2}});
  assert.equal(c.records[0].quantity,2);

@@ -1,4 +1,5 @@
-import {addComment,memberName,parseComment} from './workflow.mjs';
+import {addComment,memberName,parseComment,compareCommentTime} from './workflow.mjs';
+import {withdrawalTarget,withdrawAlbumComment} from './album-withdrawal.mjs';
 import {isCompleted,endedMessage} from './campaign-lifecycle.mjs';
 
 // Closure notices are authorized by the administrator's explicit "下单完成" action.
@@ -38,7 +39,7 @@ export async function remindMissingCN(db,binding,{comments=[]},{send,persist,now
   await persist();
   if(!allowed()||memberName(db,qq,group))continue;
   try{
-   await send({group_id:Number(group),message:[{type:'at',data:{qq}},{type:'text',data:{text:' 你还没有录入CN，排谷评论已保留，暂未入表。请在本群 @机器人 后发送「cn 你的CN」，例如「cn 示例用户I」。录入成功后会自动重试原评论。'}}]});
+   await send({group_id:Number(group),message:[{type:'at',data:{qq}},{type:'text',data:{text:' 你还没有录入CN，排谷评论已保留，暂未入表。请在本群 @机器人 后发送「cn 你的CN」，例如「cn 示例用户J」。录入成功后会自动重试原评论。'}}]});
   }catch{
    for(const n of notices)n.error='CN提醒发送失败，请检查机器人连接或群发言权限';failed++;await persist();continue;
   }
@@ -137,9 +138,10 @@ export function deriveBatchScopes(binding){
 export function applyAlbumComments(db,binding,{photos,comments,captions=[]}){
  const c=db.campaigns.find(c=>c.id===binding.campaignId);if(!c)throw Error('相册绑定期次不存在');
  reconcileAlbumPhotos(binding,photos,captions);binding.pending??=[];let imported=0,duplicates=0,skipped=0;
- for(const event of comments){
+ for(const event of [...comments].sort(compareCommentTime)){
   if(!event.photoIds?.some(id=>photos.some(p=>p.id===id))){skipped++;continue;}
   if(c.commentEvents?.some(e=>e.id===event.id)){duplicates++;binding.pending=binding.pending.filter(p=>p.id!==event.id);continue;}
+  if(withdrawalTarget(event.text)!==undefined){withdrawAlbumComment(db,c,binding,event,commentProducts(c,binding,event));continue;}
   if(isCompleted(c)){
    // QQ timestamps have second precision; a comment just after completion can share its second.
    if(Date.parse(event.at)>=Math.floor(Date.parse(c.orderLifecycle.completedAt)/1000)*1000&&!binding.pending.some(p=>p.id===event.id)&&event.id&&/^\d{5,12}$/.test(String(event.qq))&&String(event.groupId)===String(binding.groupId)&&String(event.albumId)===String(binding.albumId)){

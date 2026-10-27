@@ -3,7 +3,7 @@ const clone=value=>value===undefined?undefined:structuredClone(value);
 const semantic=(value,key='')=>Array.isArray(value)?value.map(v=>semantic(v)):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([k])=>!['revision','version'].includes(k)).map(([k,v])=>[k,semantic(v,k)])):value;
 const same=(a,b)=>JSON.stringify(semantic(a))===JSON.stringify(semantic(b));
 // Credentials, connection state, usage accounting and model side effects are never undo data.
-export function businessState(db){return clone({campaigns:db.campaigns||[],albums:db.albums||[],members:db.members||{},groupMembers:db.groupMembers||{},qqGroups:db.qqGroups||[],qqEnrollmentEnabled:db.qqEnrollmentEnabled===true});}
+export function businessState(db){return clone({campaigns:db.campaigns||[],albums:db.albums||[],members:db.members||{},groupMembers:db.groupMembers||{},qqGroups:db.qqGroups||[],qqEnrollmentEnabled:db.qqEnrollmentEnabled===true,albumWithdrawalEnabled:db.albumWithdrawalEnabled===true});}
 export function businessDiff(before,after){
  const patches=[];
  const a=new Map(before.campaigns.map(c=>[c.id,c])),b=new Map(after.campaigns.map(c=>[c.id,c]));
@@ -13,7 +13,7 @@ export function businessDiff(before,after){
   for(const field of new Set([...Object.keys(x),...Object.keys(y)]))if(field!=='revision'&&!same(x[field],y[field]))patches.push({id,field,before:clone(x[field]),after:clone(y[field])});
   if(!same(x.orderLifecycle,y.orderLifecycle)&&same(x.records,y.records))patches.push({id,field:'records',before:clone(y.records),after:clone(y.records),guardOnly:true});
  }
- for(const field of ['albums','members','groupMembers','qqGroups','qqEnrollmentEnabled'])if(!same(before[field],after[field]))patches.push({field,before:clone(before[field]),after:clone(after[field])});
+ for(const field of ['albums','members','groupMembers','qqGroups','qqEnrollmentEnabled','albumWithdrawalEnabled'])if(!same(before[field],after[field]))patches.push({field,before:clone(before[field]),after:clone(after[field])});
  return patches;
 }
 export function applyInverse(db,patches){

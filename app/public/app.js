@@ -35,13 +35,6 @@ function itemMenu(onDelete){
  const del=document.createElement('button');del.type='button';del.textContent='删除';del.className='recognized-delete';
  del.onclick=()=>{menu.open=false;onDelete();};menu.append(toggle,del);return menu;
 }
-function renderManualScope(){
- const select=$('manualProductScope'),old=select.value,groups=new Map();
- for(const p of current()?.products||[]){const name=p.name.split(/[-－—]/u)[0].trim(),key=JSON.stringify([p.categoryId||p.type||'',p.boxId||'',name]);if(!groups.has(key))groups.set(key,{name,box:p.boxId||'',ids:[]});groups.get(key).ids.push(p.id);}
- select.replaceChildren(new Option('全部商品',''),...[...groups].map(([key,g])=>new Option(g.name+(g.box?' ['+g.box+']':''),key)));
- if(groups.has(old))select.value=old;else if(old)clearPending();
- select._groups=groups;
-}
 function renderManualResult(){
  const host=$('manualRecognized');host.replaceChildren();if(!pending)return;
  const issues=pending.questions||[],bad=new Set(issues.map(q=>q.entryKey));
@@ -68,11 +61,11 @@ const enrollmentTable=createEnrollmentTable({api,current,onChanged:()=>refresh()
 const settingsPage=createSettingsPage({api,notice,refresh,onWorkspaceChange:()=>runtimeStatus?.workspaceChanged(),beforeSwitch:()=>{if(dirty||[...drafts].some(([id,d])=>state?.campaigns.some(c=>c.id===id&&c.revision===d.revision))||pending||orderWorkspaces.hasUnsaved?.())throw Error('请先保存建档、下单或折算编辑，并处理当前识别结果，再切换工作区');clearTimeout(prefTimer);}});
 workspaceTools=createWorkspaceTools({api,notice,refresh,hasUnsaved:()=>dirty||pending||[...drafts.values()].length>0||orderWorkspaces.hasUnsaved(),onUndo:async()=>{await refresh();loadCampaign();await orderWorkspaces.reset(current());},onRestore:async()=>{drafts.clear();dirty=false;clearPending();await refresh();loadCampaign();await orderWorkspaces.reset(current());}});
 qqPresentation=createQQConnection({api,isSetup:()=>setupGuide.isOpen(),isQQSetup:()=>setupGuide.isQQ()});
-const manualFinder=createProductFinder({id:'manualProductSearch',mode:'manual',api,getCampaign:current,getProducts:()=>current()?.products||[],getScope:()=>{const scope=$('manualProductScope');return scope.value?{productIds:scope._groups?.get(scope.value)?.ids||[]}:{};},onError:notice,onPick:(p,quantity)=>action(async()=>{
+const manualFinder=createProductFinder({id:'manualProductSearch',mode:'manual',api,getCampaign:current,getProducts:()=>current()?.products||[],onError:notice,onPick:(p,quantity)=>action(async()=>{
  const c=current();if(!c||c.orderLifecycle?.status==='completed')throw Error('本期已结束，请先开启补单');
  if(manualSelections.has(p.name)&&manualSelections.get(p.name)!==p.id&&$('message').value.includes(p.name))throw Error('已选过另一盒的同名商品，请先完成本次录入，再选择另一盒');
  manualSelections.set(p.name,p.id);const input=$('message');input.value+=(input.value.trim()?'\n':'')+p.name+' '+quantity+' '+(p.unit||'件');clearPending();input.focus();input.setSelectionRange(input.value.length,input.value.length);
-})});$('manualProductScope').closest('label').before(manualFinder.root);
+})});$('message').closest('label').before(manualFinder.root);
 runtimeStatus=createRuntimeStatus({api,getGroup:()=>groupId,getWorkspace:()=>settingsPage.workspace()});
 catalogFeedback=createCatalogFeedback({getCampaign:current,getProductCount:()=>editor.snapshot().length,onChange:()=>{dirty=true;$('publish').textContent='保存商品 *';},onRestore:()=>action(async()=>{
  const c=current(),source=c?.lastRecognition;if(!source?.result?.products?.length)throw Error('没有可恢复的识别结果');if(editor.snapshot().length)throw Error('当前已有商品，请先核对现有草稿');
@@ -88,17 +81,17 @@ function loadCampaign(){manualSelections.clear();const maps=current()?.positionM
   const c=current(),cached=drafts.get(currentId);dirty=!!cached&&cached.revision===c?.revision;
   editor.load(dirty?cached.products:c?.products||[],dirty?cached.categories:c?.categories);$('publish').textContent=dirty?'保存商品 *':'保存商品';catalogFeedback.load(c);if(dirty&&cached.review)catalogFeedback.set(cached.review);clearPending();$('parsed').textContent='识别结果将在这里显示。';resetImage();renderRecords();
 }
-function renderBot(){const bot=state.bots.find(b=>b.id===botId);$('activeBotName').textContent=bot.name;$('skillBotName').textContent=bot.name;$('botSkill').textContent=[bot.skillId,...(bot.additionalSkills||[])].join('、');$('sharedSkills').textContent=bot.sharedSkills.join('、');}
+function renderBot(){const bot=state.bots.find(b=>b.id===botId);$('activeBotName').textContent=bot.name;}
 function renderGroupSelect(){const groups=state?.qqGroups||[];if(!groupId||!groups.some(g=>String(g.id)===String(groupId)))groupId=groups[0]?.id||'';const options=groups.map(g=>new Option(g.name+' · '+g.id,g.id));if((state?.campaigns||[]).some(c=>!c.groupId))options.push(new Option('未分配群',''));$('group').replaceChildren(...options);$('group').value=groupId;}
 function campaignsInGroup(){return (state?.campaigns||[]).filter(c=>String(c.groupId||'')===String(groupId||''));}
 function renderCampaignSelect(){const list=campaignsInGroup().filter(c=>c.botId===botId);if(!list.some(c=>c.id===currentId))currentId=list[0]?.id||'';$('campaign').replaceChildren(...list.map(c=>new Option(c.name,c.id)));if(!list.length)$('campaign').add(new Option('请新建期次',''));$('campaign').value=currentId;const phase=current()?.orderLifecycle?.status||'open';const badge=$('campaignPhase');badge.textContent=phase==='completed'?'已结束':phase==='supplement'?'补单中':'拼谷中';badge.dataset.phase=phase;badge.hidden=!current();if(uiRestored)savePrefs({});}
 function renderGroupManager(){const box=$('qqGroupList');if(!box)return;box.replaceChildren();const groups=state?.qqGroups||[];if(!groups.length){const p=document.createElement('p');p.className='hint';p.textContent='还没有启用的群，先读取机器人已加入的群再启用。';box.append(p);}for(const g of groups){const row=document.createElement('div');row.className='group-row';const info=document.createElement('div');const name=document.createElement('strong');name.textContent=g.name;const meta=document.createElement('small');meta.textContent=g.id+' · 期次 '+state.campaigns.filter(c=>String(c.groupId||'')===String(g.id)).length;info.append(name,meta);const remove=document.createElement('button');remove.className='secondary';remove.textContent='移除';remove.onclick=()=>action(async()=>{await api('qq-group-remove',{groupId:g.id});await refresh();notice('已移除该群');});row.append(info,remove);box.append(row);}const cand=$('qqGroupCandidates');if(!cand)return;cand.replaceChildren();const fresh=groupCandidates.filter(g=>!groups.some(x=>String(x.id)===String(g.id)));if(!fresh.length)return;const title=document.createElement('p');title.className='hint';title.textContent='机器人已加入、但还没启用的群：';cand.append(title);for(const g of fresh){const row=document.createElement('div');row.className='group-row';const info=document.createElement('div');const name=document.createElement('strong');name.textContent=g.name;const meta=document.createElement('small');meta.textContent=g.id;info.append(name,meta);const add=document.createElement('button');add.textContent='启用';add.onclick=()=>action(async()=>{await api('qq-group-add',{groupId:g.id,name:g.name});await refresh();notice('已启用该群');});row.append(info,add);cand.append(row);}}
 async function refresh(connection=false){await applyState(await api('state'),connection);}
-async function applyState(next,connection=false,{table=true}={}){const previous=current();state=next;settingsPage.sync(state);qqPresentation?.sync(state);Object.assign(uiPrefs,next.uiPrefs||{});if(!next.bots.some(b=>b.id===botId))botId=next.bots[0]?.id||'zhougu';if(!uiRestored){uiRestored=true;if(uiPrefs.botId&&next.bots.some(b=>b.id===uiPrefs.botId))botId=uiPrefs.botId;if(uiPrefs.groupId&&(next.qqGroups||[]).some(g=>String(g.id)===String(uiPrefs.groupId)))groupId=uiPrefs.groupId;if(uiPrefs.campaignId&&(next.campaigns||[]).some(c=>c.id===uiPrefs.campaignId))currentId=uiPrefs.campaignId;}void usageSettings.load(state);$('qqEnrollmentEnabled').checked=state.qqEnrollmentEnabled===true;if($("qqStatus"))$("qqStatus").textContent=state.qq.status;if(connection&&state.qqSettings)$("qqUrl").value=state.qqSettings.url;$('bot').replaceChildren(...state.bots.map(b=>new Option(b.name,b.id)));$('bot').value=botId;renderBot();renderGroupSelect();renderGroupManager();renderCampaignSelect();if(connection){picker.sync(state);await runtimePicker.refresh();}const c=current();if(!dirty&&c&&c.id===previous?.id&&c.revision!==previous.revision)editor.load(c.products,c.categories);renderRecords({table});runtimeStatus?.sync(state);}
+async function applyState(next,connection=false,{table=true}={}){const previous=current();state=next;settingsPage.sync(state);qqPresentation?.sync(state);Object.assign(uiPrefs,next.uiPrefs||{});if(!next.bots.some(b=>b.id===botId))botId=next.bots[0]?.id||'zhougu';if(!uiRestored){uiRestored=true;if(uiPrefs.botId&&next.bots.some(b=>b.id===uiPrefs.botId))botId=uiPrefs.botId;if(uiPrefs.groupId&&(next.qqGroups||[]).some(g=>String(g.id)===String(uiPrefs.groupId)))groupId=uiPrefs.groupId;if(uiPrefs.campaignId&&(next.campaigns||[]).some(c=>c.id===uiPrefs.campaignId))currentId=uiPrefs.campaignId;}void usageSettings.load(state);$('qqEnrollmentEnabled').checked=state.qqEnrollmentEnabled===true;$('albumWithdrawalEnabled').checked=state.albumWithdrawalEnabled===true;if($("qqStatus"))$("qqStatus").textContent=state.qq.status;if(connection&&state.qqSettings)$("qqUrl").value=state.qqSettings.url;$('bot').replaceChildren(...state.bots.map(b=>new Option(b.name,b.id)));$('bot').value=botId;renderBot();renderGroupSelect();renderGroupManager();renderCampaignSelect();if(connection){picker.sync(state);await runtimePicker.refresh();}const c=current();if(!dirty&&c&&c.id===previous?.id&&c.revision!==previous.revision)editor.load(c.products,c.categories);renderRecords({table});runtimeStatus?.sync(state);}
 function renderRecords({table=true}={}){
   const c=current();if(table)void enrollmentTable.render(c,currentPage==='enrollment');
   const ended=c?.orderLifecycle?.status==='completed';$('parse').disabled=ended;if(ended)$('confirm').disabled=true;$('parse').title=ended?'本期已结束，请先开启补单':'';
-  albumPicker.render(currentPage==='enrollment');renderAlbumSync();renderManualScope();manualFinder.refresh();
+  albumPicker.render(currentPage==='enrollment');renderAlbumSync();manualFinder.refresh();
   void orderWorkspaces.render(c);
 }
 let albumRenderKey='';const albumScopeDrafts=new Map();
@@ -196,7 +189,7 @@ function renderAlbumSync(){
   }
   renderPending(c,binding);
 }
-const titles={workspace:'商品建档',enrollment:'排表识别',planning:'下单规划',settlement:'肾表导出',skills:'业务技能',settings:'设置'};
+const titles={workspace:'商品建档',enrollment:'排表识别',planning:'下单规划',settlement:'肾表导出',settings:'设置'};
 function fitWorkbenches(){for(const section of document.querySelectorAll('main>section:not([hidden])')){const wb=section.querySelector('.workbench');if(!wb)continue;const top=wb.getBoundingClientRect().top,main=wb.closest('main'),pad=main?parseFloat(getComputedStyle(main).paddingBottom)||24:24;wb.style.setProperty('--workbench-height',Math.max(360,Math.round(window.innerHeight-top-pad))+'px');}}
 window.addEventListener('resize',fitWorkbenches);
 function page(name){currentPage=name;document.querySelectorAll('main>section').forEach(s=>s.hidden=s.id!==name);document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));$('title').textContent=titles[name];$('campaignToolbar').hidden=!['workspace','enrollment','planning','settlement'].includes(name);albumPicker.render(name==='enrollment');void enrollmentTable.render(current(),name==='enrollment');if(name==='settings'){void action(()=>skillSettings.load());void qqPresentation?.check(true);}fitWorkbenches();}
@@ -255,7 +248,7 @@ async function recognize(mode){
     const qq=$('memberQQ').value.trim();if(qq&&!/^\d{5,12}$/.test(qq))throw Error('QQ号格式不正确');
     const member=memberOf(qq)||$('member').value.trim();if(!member||member.length>40)throw Error('请填写1至40字的cn，或填写已绑定cn的QQ');
     if(!$('member').value.trim())$('member').value=member;updateManualBinding();
-    const scope=$('manualProductScope');const response=await api('recognize',{botId:selectedBot,campaignId,mode,member,text:$('message').value,manualSelections:[...manualSelections].filter(([phrase])=>$('message').value.includes(phrase)).map(([phrase,skuId])=>({phrase,skuId})),...(scope.value?{productIds:scope._groups?.get(scope.value)?.ids||[]}:{} )});
+    const response=await api('recognize',{botId:selectedBot,campaignId,mode,member,text:$('message').value,manualSelections:[...manualSelections].filter(([phrase])=>$('message').value.includes(phrase)).map(([phrase,skuId])=>({phrase,skuId}))});
     if(currentId!==campaignId||botId!==selectedBot)throw Error('已切换期次，请重新识别');
     {
       pending={...response.data,botId:selectedBot,campaignId,revision:response.revision,requestId:crypto.randomUUID(),source:$('message').value};renderManualResult();
@@ -266,10 +259,10 @@ $('recognizeImage').onclick=()=>action(()=>recognize('image'));$('parse').onclic
 $('recognitionDoneClose').onclick=()=>$('recognitionDone').close();
 $('addProduct').onclick=()=>action(async()=>{if(!current())throw Error('请先新建期次');editor.add();});
 $('publish').onclick=()=>action(async()=>{const c=current();if(!c)throw Error('请先新建期次');const id=c.id;$('publish').disabled=true;catalogFeedback.saveState('saving','正在保存商品…');try{const result=await api('catalog',{campaignId:id,botId,revision:c.revision,products:editor.snapshot(),categories:editor.categories(),catalogReview:catalogFeedback.snapshot()});drafts.delete(id);if(currentId===id){dirty=false;$('publish').textContent='保存商品';await refresh();editor.load(current().products,current().categories);catalogFeedback.saveState('saved','商品已保存 · '+current().products.length+'种商品');}notice('商品已保存。'+(result.updatedRecords?`已更新 ${result.updatedRecords} 条报名金额。`:''));}catch(error){if(currentId===id){catalogFeedback.saveState('error','商品未保存：'+error.message+'。当前草稿仍保留，请修改后重试。');$('publish').textContent='保存失败，重试';}throw error;}finally{$('publish').disabled=false;}});
-$('message').oninput=()=>{clearPending();for(const phrase of manualSelections.keys())if(!$('message').value.includes(phrase))manualSelections.delete(phrase);};$('manualProductScope').onchange=()=>{clearPending();manualSelections.clear();manualFinder.refresh();};
+$('message').oninput=()=>{clearPending();for(const phrase of manualSelections.keys())if(!$('message').value.includes(phrase))manualSelections.delete(phrase);};
 function updateManualBinding(){$('bindCN').disabled=!/^\d{5,12}$/.test($('memberQQ').value.trim())||!$('member').value.trim();}
 for(const id of ['memberQQ','member'])$(id).oninput=()=>{clearPending();updateManualBinding();};
-$('confirm').onclick=()=>action(async()=>{if(!pending)throw Error('请先识别报名');$('confirm').disabled=true;try{await api('enroll-batch',{...pending,member:$('member').value,qq:$('memberQQ').value});clearPending();await refresh();notice('报名已入表。');}catch(e){$('confirm').disabled=false;throw e;}});
+$('confirm').onclick=()=>action(async()=>{if(!pending)throw Error('请先识别报名');$('confirm').disabled=true;try{const result=await api('enroll-batch',{...pending,member:$('member').value,qq:$('memberQQ').value,cnOnly:$('manualCNOnly').checked});clearPending();await refresh();notice(result.inferredQQ?'已入表，已按CN关联QQ：'+result.inferredQQ:'报名已入表。');}catch(e){$('confirm').disabled=false;throw e;}});
 $('export').onclick=()=>action(async()=>{if(!current())throw Error('请先选择期次');const a=document.createElement('a');a.href='/api/export?campaignId='+encodeURIComponent(currentId)+'&kind=enrollment';a.click();});
 $('refreshRecords').onclick=()=>action(async()=>{
  if(!current())throw Error('请先选择期次');const id=currentId,button=$('refreshRecords');button.disabled=true;
@@ -307,5 +300,6 @@ $('reconnectBot').onclick=()=>action(autoConnectQQ);
 
 
 $('qqForm').onsubmit=e=>{e.preventDefault();action(async()=>{await api('qq-settings',{url:$('qqUrl').value,token:$('qqToken').value});$('qqToken').value='';await refresh();notice('QQ连接配置已保存');});};
+$('albumWithdrawalEnabled').onchange=async()=>{const control=$('albumWithdrawalEnabled');control.disabled=true;await action(async()=>{const r=await api('album-withdrawal-settings',{enabled:control.checked});state.albumWithdrawalEnabled=r.enabled;notice(r.enabled?'已开启相册撤排':'已关闭相册撤排');});control.checked=state.albumWithdrawalEnabled===true;control.disabled=false;};
 $('qqEnrollmentEnabled').onchange=async()=>{const control=$('qqEnrollmentEnabled');control.disabled=true;await action(async()=>{const r=await api('qq-enrollment-settings',{enabled:control.checked});state.qqEnrollmentEnabled=r.enabled;notice(r.enabled?'已开启@排表':'已关闭@排表');});control.checked=state.qqEnrollmentEnabled===true;control.disabled=false;};
 setInterval(()=>{if((currentPage==='settings'||setupGuide.isQQ())&&!qqPreparing)qqLoginStatus().then(async r=>{if(r.loggedIn&&qqSetupActive&&!state.qq.connected){qqSetupActive=false;await $('qqAutoConnect').onclick();}}).catch(()=>{});},4000);

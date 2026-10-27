@@ -111,3 +111,25 @@ test('unpriced unclaimed gifts may save and warn without blocking an otherwise c
 test('unpriced ordered gifts block final export even when deduction is entered manually; explicit zero is valid',()=>{
  const c=priced();c.products.find(p=>p.id==='set').price=null;for(const giftRevenue of [null,25]){c.settlement.giftRevenue=giftRevenue;const s=settlementSummary(c);assert.equal(s.ready,false);assert.equal(s.rate,null);assert.match(s.missing.join(),/特典SET：特典售价尚未填写/);assert.equal(s.items.find(p=>p.skuId==='set').finalCents,null);assert.throws(()=>tableData(c,{}, {kind:'settlement'}),/售价/);assert.equal(applyAutomaticGroupPrices(c).updated,0);}c.products.find(p=>p.id==='set').price=0;c.settlement.giftRevenue=null;assert.equal(settlementSummary(c).ready,true);assert.equal(settlementSummary(c).giftRevenueCents,0);
 });
+
+test('empty or partial planning drafts submit complete gift rules without losing explicit choices',async()=>{
+ const {planningDraftSettings}=await import('./public/order-workspaces.js');
+ const empty=planningDraftSettings({});assert.deepEqual(empty.tiers,[null,null]);
+ const configured={...empty,tiers:[100,400],rule:'once',leftoverStrategy:'fewerOrders'};
+ assert.doesNotThrow(()=>planOrders(fromPrices([400,100]),configured));
+ assert.equal(configured.rewardMode,'both');
+ const saved={tiers:[100,400],rewardMode:'highest',rule:'stack',leftoverStrategy:'fewerOrders'};
+ assert.deepEqual(planningDraftSettings(saved),{...saved,objective:'tier2'});
+ assert.equal(saved.objective,undefined);
+ assert.equal(planningDraftSettings({tiers:[100]}).rule,'once');
+});
+
+test('custom shopping credit validates both amounts, survives JSON persistence, and reaches exported settlement',()=>{
+ const c=priced();c.settlement={...c.settlement,...settlementSettings({creditType:'custom',customCredit:{paid:400,face:426}})};
+ const saved=JSON.parse(JSON.stringify(c)),summary=settlementSummary(saved);
+ assert.equal(summary.ready,true);assert.equal(summary.shoppingCents,Math.round(summary.actualCents*400/426));
+ assert.ok(tableData(saved,{}, {kind:'settlement'}).length);
+ for(const value of [undefined,{paid:0,face:100},{paid:100,face:0},{paid:101,face:100},{paid:1.001,face:2},{paid:'1',face:2},{paid:1,face:1000001}])assert.throws(()=>settlementSettings({creditType:'custom',customCredit:value}));
+ c.settlement={creditType:'custom',customCredit:{paid:0,face:10}};assert.equal(settlementSummary(c).ready,false);
+ assert.equal(settlementSettings({creditType:'none',customCredit:{paid:0,face:0}}).customCredit,undefined);
+});

@@ -9,8 +9,8 @@ const campaign=()=>({id:'c',botId:'zhougu',name:'示例期次',categories:[{id:'
  {id:'stand',name:'角色亚克力立牌-克莱门莎款',type:'单领',unit:'件'},
  {id:'gift',name:'特典明信片',type:'特典',unit:'张'},
  {id:'r',name:'简历-阿米娅',type:'单领',categoryId:'resume',boxId:'24.0',unit:'份'}
-],records:[{id:'1',skuId:'a',quantity:3,member:'示例用户I',createdAt:'2026-10-23T01:00:00Z'},{id:'2',skuId:'b',quantity:2,member:'示例用户K',createdAt:'2026-10-23T02:00:00Z'},{id:'3',skuId:'stand',quantity:1,member:'示例用户I',createdAt:'2026-10-23T03:00:00Z'}]});
-test('new and legacy query prefixes accept single targets and whole-box targets',()=>{for(const text of ['查询余量 洁哥通行证','查询 余量：洁哥通行证','余量洁哥通行证'])assert.deepEqual(parseQueueCommand(text),{kind:'余量',target:'洁哥通行证'});assert.equal(parseQueueCommand('查询排量 通行证55.0').target,'通行证55.0');assert.equal(parseQueueCommand('cn 示例用户I'),null);});
+],records:[{id:'1',skuId:'a',quantity:3,member:'示例用户J',createdAt:'2026-10-23T01:00:00Z'},{id:'2',skuId:'b',quantity:2,member:'示例用户L',createdAt:'2026-10-23T02:00:00Z'},{id:'3',skuId:'stand',quantity:1,member:'示例用户J',createdAt:'2026-10-23T03:00:00Z'}]});
+test('new and legacy query prefixes accept single targets and whole-box targets',()=>{for(const text of ['查询余量 洁哥通行证','查询 余量：洁哥通行证','余量洁哥通行证'])assert.deepEqual(parseQueueCommand(text),{kind:'余量',target:'洁哥通行证'});assert.equal(parseQueueCommand('查询排量 通行证55.0').target,'通行证55.0');assert.equal(parseQueueCommand('cn 示例用户J'),null);});
 test('single-product query matches aliases, uses total quantities and refuses ambiguity',()=>{const c=campaign();assert.match(queryQueue(c,'排量','克莱门莎立牌').reply,/：1件/);assert.equal(queryQueue(c,'排量','洁哥通行证55.0').products[0].demand,3);assert.throws(()=>queryQueue(c,'排量','洁哥通行证'),/多个商品/);assert.throws(()=>queryQueue(c,'排量','克莱门莎'),/多个商品/);});
 test('whole box returns all roles including zero, excludes other boxes, and totals quantities',()=>{const c=campaign();for(const target of ['通行证55.0','通行证 55.0','55.0通行证','通行证55盒']){const r=queryQueue(c,'排量',target);assert.deepEqual(r.products.map(p=>p.id),['a','b','c']);assert.equal(r.totalDemand,5);assert.match(r.reply,/珊比：0对/);assert.doesNotMatch(r.reply,/合计/);assert.doesNotMatch(r.reply,/排量/);}assert.throws(()=>queryQueue(c,'排量','通行证99.0'),/未匹配/);});
 test('remaining requires a group category and configured capacity per box',()=>{const c=campaign();assert.throws(()=>queryQueue(c,'余量','克莱门莎立牌'),/仅支持拼团/);assert.throws(()=>queryQueue(c,'余量','特典'),/仅支持拼团/);assert.throws(()=>queryQueue(c,'余量','通行证56.0'),/尚未设置总配数/);assert.equal(summary(c).find(p=>p.id==='other').remaining,null);const r=queryQueue(c,'余量','通行证55.0');assert.deepEqual(r.products.map(p=>p.remaining),[2,3,5]);assert.match(r.reply,/已排 3 \/ 总配数 5/);assert.match(queryQueue(c,'余量','通行证').reply,/未设置总配数/);});
@@ -39,13 +39,13 @@ test('QQ queries ask for campaign names when multiple campaigns match and honor 
 
 test('bare QQ demand query aggregates sender quantities by campaign and keeps proxies separate without crossing groups',()=>{
  const c={...campaign(),groupId:'11111'};c.records[0].qq='12345';c.records[1].qq='54321';c.records[2].qq='12345';
- c.records.push({id:'4',skuId:'a',qq:'12345',member:'示例用户I',quantity:2,createdAt:'2026-10-23T04:00:00Z'},
-  {id:'5',skuId:'a',qq:'12345',member:'示例用户I 代 小明',proxyFor:'小明',quantity:2,createdAt:'2026-10-23T05:00:00Z'},
-  {id:'6',skuId:'gift',member:'示例用户I',quantity:1,createdAt:'2026-10-23T06:00:00Z'},
-  {id:'7',skuId:'gift',qq:'99998',member:'示例用户I',quantity:9,createdAt:'2026-10-23T07:00:00Z'});
- const other={...campaign(),id:'other',name:'本群另一期',groupId:'11111',records:[{id:'8',skuId:'stand',qq:'12345',member:'示例用户I',quantity:4,createdAt:'2026-10-23T08:00:00Z'}]};
+ c.records.push({id:'4',skuId:'a',qq:'12345',member:'示例用户J',quantity:2,createdAt:'2026-10-23T04:00:00Z'},
+  {id:'5',skuId:'a',qq:'12345',member:'示例用户J 代 小明',proxyFor:'小明',quantity:2,createdAt:'2026-10-23T05:00:00Z'},
+  {id:'6',skuId:'gift',member:'示例用户J',quantity:1,createdAt:'2026-10-23T06:00:00Z'},
+  {id:'7',skuId:'gift',qq:'99998',member:'示例用户J',quantity:9,createdAt:'2026-10-23T07:00:00Z'});
+ const other={...campaign(),id:'other',name:'本群另一期',groupId:'11111',records:[{id:'8',skuId:'stand',qq:'12345',member:'示例用户J',quantity:4,createdAt:'2026-10-23T08:00:00Z'}]};
  const foreign={...other,id:'foreign',name:'外群期次',groupId:'22222'},empty={...other,id:'empty',name:'空期次',records:[]};
- const db={campaigns:[c,other,foreign,empty],members:{12345:{cn:'示例用户I'}}},before=JSON.stringify(db);
+ const db={campaigns:[c,other,foreign,empty],members:{12345:{cn:'示例用户J'}}},before=JSON.stringify(db);
  const say=t=>({group_id:11111,self_id:99999,user_id:12345,message:[{type:'at',data:{qq:99999}},{type:'text',data:{text:t}}]});
  for(const command of ['查询排量','查询 排量：　','排量']){
   const result=processQQEvent(db,say(command));assert.equal(result.readOnly,true);

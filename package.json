@@ -1,13 +1,13 @@
 {
   "name": "pingu-desk",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "type": "module",
   "productName": "谷谷bot",
   "description": "谷谷bot：拼谷应用与内置业务 skill",
   "main": "app/desktop.cjs",
   "scripts": {
-    "test": "cd app && node --test test.mjs catalog.test.mjs image-input.test.mjs workflow.test.mjs napcat-login.test.mjs qq-runtime.test.mjs onebot.test.mjs album.test.mjs queue-query.test.mjs qq-commands.test.mjs order-planning.test.mjs album-picker.test.mjs skill-settings.test.mjs setup-guide.test.mjs security.test.mjs proxy-enrollment.test.mjs usage.test.mjs enrollment-view.test.mjs server-connection.test.mjs administrators.test.mjs qq-connection-view.test.mjs maintenance.test.mjs catalog-tools.test.mjs blind-box.test.mjs",
+    "test": "cd app && node --test app-update.test.mjs test.mjs catalog.test.mjs image-input.test.mjs workflow.test.mjs napcat-login.test.mjs qq-runtime.test.mjs onebot.test.mjs album.test.mjs queue-query.test.mjs qq-commands.test.mjs order-planning.test.mjs album-picker.test.mjs skill-settings.test.mjs setup-guide.test.mjs security.test.mjs proxy-enrollment.test.mjs usage.test.mjs enrollment-view.test.mjs server-connection.test.mjs administrators.test.mjs qq-connection-view.test.mjs maintenance.test.mjs catalog-tools.test.mjs blind-box.test.mjs",
     "server:init": "node app/server-entry.mjs init",
     "server:start": "node app/server-entry.mjs start",
     "start": "electron .",

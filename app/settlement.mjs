@@ -5,9 +5,15 @@ import {giftCounts,giftTiers} from './public/gift-tiers.js';
 import {planningIssues} from './campaign-lifecycle.mjs';
 export const creditTypes=[{id:'none',name:'无优惠',paid:0,face:0},{id:'600-620',name:'600–620',paid:600,face:620},{id:'1000-1050',name:'1000–1050',paid:1000,face:1050},{id:'3000-3200',name:'3000–3200',paid:3000,face:3200}];
 export function settlementSettings(b={}){
- if(b.creditType&&!creditTypes.some(x=>x.id===b.creditType))throw Error('请选择支持的购物金类型');
+ if(b.creditType&&b.creditType!=='custom'&&!creditTypes.some(x=>x.id===b.creditType))throw Error('请选择支持的购物金类型');
+ const customCredit=b.creditType==='custom'?customCreditValue(b.customCredit):null;
  const giftRevenue=b.giftRevenue==null?null:cents(b.giftRevenue,'特典抵扣收入')/100;
- return {creditType:b.creditType||'',giftRevenue,groupPricing:b.groupPricing||{}};
+ return {creditType:b.creditType||'',...(customCredit?{customCredit}:{}),giftRevenue,groupPricing:b.groupPricing||{}};
+}
+export function customCreditValue(value){
+ const paid=cents(value?.paid,'购物金购买金额'),face=cents(value?.face,'购物金到账面额');
+ if(paid<=0||face<=0||paid>face||face>100000000)throw Error('购物金金额须大于0、购买金额不超过到账面额，且面额不超过100万元');
+ return {paid:paid/100,face:face/100};
 }
 export function groupPricingMode(c,cat,boxId=''){
  const explicit=cat?.averageModesByBox?.[boxId];if(explicit)return explicit==='auto'?'auto':'current';
@@ -59,7 +65,9 @@ export function settlementSummary(c,db={}){
  if(!plan?.orders?.length)missing.push('请先生成下单规划');
  const orders=plan?.orders||[];let actual=0;
  for(const o of orders){if(o.actualPaid==null){missing.push('第'+o.number+'单未填写实付金额');continue;}actual+=cents(o.actualPaid);}
- const credit=creditTypes.find(x=>x.id===config.creditType);if(!credit)missing.push('请选择购物金类型');
+ let credit=creditTypes.find(x=>x.id===config.creditType);
+ if(config.creditType==='custom')try{credit={id:'custom',...customCreditValue(config.customCredit)};}catch(e){missing.push(e.message);}
+ if(!credit)missing.push('请选择购物金类型');
  const complete=orders.length>0&&orders.every(o=>o.actualPaid!=null);
  const noCredit=credit?.id==='none',face=credit?cents(credit.face):0,paid=credit?cents(credit.paid):0,creditUsed=complete?(noCredit?0:actual):null,cash=complete?(noCredit?actual:0):null,creditCost=credit&&complete?(noCredit?0:actual*paid/face):null,effective=creditCost===null?null:Math.round(creditCost+(cash||0));
  const unpricedGifts=c.products.filter(p=>isGift(p,c)&&p.price==null).map(p=>({id:p.id,name:p.name}));

@@ -34,7 +34,7 @@ test('CN notices honor group bindings and global fallback, skip commands and pro
  const db={campaigns:[{...campaign(),groupId:'11111'}],members:{22222:{cn:'全局CN'}},groupMembers:{'22222':{33333:{cn:'仅别群CN'}}}},binding={groupId:'11111',albumId:'album',campaignId:'c'};
  const base=parseFeedResponse(response(),info).comments[0],comment=(qq,text,id)=>({...base,qq,text,id});
  db.campaigns[0].commentEvents=[{id:'processed'}];const sent=[];
- const comments=[comment('22222','洁哥1','global'),comment('33333','洁哥1','other-group-cn'),comment('12345','help','help'),comment('12345','帮助','help2'),comment('12345','查询排量','query'),comment('12345','cn 示例用户I','cn'),comment('12345','  ','empty'),comment('12345','洁哥1','processed'),{...comment('12345','洁哥1','foreign-group'),groupId:'22222'},{...comment('12345','洁哥1','foreign-album'),albumId:'other'},comment('all','洁哥1','invalid-qq')];
+ const comments=[comment('22222','洁哥1','global'),comment('33333','洁哥1','other-group-cn'),comment('12345','help','help'),comment('12345','帮助','help2'),comment('12345','查询排量','query'),comment('12345','cn 示例用户J','cn'),comment('12345','  ','empty'),comment('12345','洁哥1','processed'),{...comment('12345','洁哥1','foreign-group'),groupId:'22222'},{...comment('12345','洁哥1','foreign-album'),albumId:'other'},comment('all','洁哥1','invalid-qq')];
  const options={send:async p=>sent.push(p),persist:async()=>{}};
  assert.equal((await remindMissingCN(db,binding,{comments},options)).notified,1);assert.deepEqual(sent.map(p=>p.message[0].data.qq),['33333']);
  assert.equal((await remindMissingCN(db,{...binding,groupId:'22222'},{comments},options)).notified,0);
@@ -61,8 +61,8 @@ test('CN registration automatically allows the original pending comment to impor
  const result={photos:[{id:'photo'}],comments:parseFeedResponse(response(),info).comments};let sent=0;
  const options={send:async()=>{sent++;},persist:async()=>{}};
  await remindMissingCN(db,binding,result,options);applyAlbumComments(db,binding,result);assert.equal(binding.pending.length,1);assert.equal(c.records.length,0);
- processQQEvent(db,{group_id:11111,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:'cn 示例用户I'}}]});
- await remindMissingCN(db,binding,result,options);assert.equal(applyAlbumComments(db,binding,result).imported,3);assert.equal(sent,1);assert.equal(binding.pending.length,0);assert.ok(c.records.every(r=>r.member==='示例用户I'&&r.sourceAt===result.comments[0].at));
+ processQQEvent(db,{group_id:11111,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:'cn 示例用户J'}}]});
+ await remindMissingCN(db,binding,result,options);assert.equal(applyAlbumComments(db,binding,result).imported,3);assert.equal(sent,1);assert.equal(binding.pending.length,0);assert.ok(c.records.every(r=>r.member==='示例用户J'&&r.sourceAt===result.comments[0].at));
 });
 
 test('server keeps missing-CN comments pending and never mentions anyone on background album reads',async()=>{
@@ -87,20 +87,20 @@ test('server keeps missing-CN comments pending and never mentions anyone on back
 });
 test('feed reader retains real comment identity, timestamp, numeric text, upload caption and photo scope',()=>{const r=parseFeedResponse(response({text:'123',caption:'这张是通行证55.0调价图'}),info);assert.equal(r.comments[0].text,'123');assert.equal(r.comments[0].qq,'12345');assert.equal(r.comments[0].at,'2026-10-23T11:56:42.000Z');assert.deepEqual(r.comments[0].photoIds,['photo']);assert.equal(r.caption,'这张是通行证55.0调价图');assert.throws(()=>parseFeedResponse('00',info));});
 test('upload caption keywords cover every default and custom category, including longer names',()=>{const c=campaign();c.categories.push({id:'x',name:'人事部简历',kind:'group'},{id:'y',name:'角色单领',kind:'single'});for(const [text,id]of [['这张是通行证55.0调价图','通行证'],['本期特典请在此排','特典'],['示例期次单领区','单领'],['人事部简历的说明','x'],['角色单领请看这里','y']])assert.equal(scopeFromCaption(text,c).categoryId,id);assert.equal(scopeFromCaption('通行证和特典',c),null);assert.equal(scopeFromCaption('通行证99.0',c),null);assert.equal(scopeFromCaption('无分类',c),null);});
-test('photo context resolves roles without crossing category and duplicate reads survive restart',()=>{const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户I'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证',boxId:'55.0'}}};const result={photos:[{id:'photo'}],comments:parseFeedResponse(response(),info).comments};assert.equal(applyAlbumComments(db,binding,result).imported,3);assert.deepEqual(c.records.map(r=>[r.skuId,r.quantity]),[['a',3],['b',1],['d',2]]);assert.deepEqual(c.records[0].photoIds,['photo']);const restored=JSON.parse(JSON.stringify({db,binding}));assert.equal(applyAlbumComments(restored.db,restored.binding,result).duplicates,1);assert.equal(restored.db.campaigns[0].records.length,3);});
-test('unknown image scope and CN failures stay pending and can retry after correction',()=>{const c=campaign(),db={campaigns:[c]},binding={campaignId:'c'},result={photos:[{id:'photo'}],comments:parseFeedResponse(response(),info).comments};applyAlbumComments(db,binding,result);assert.equal(c.records.length,0);assert.equal(binding.pending.length,1);binding.photoScopes={photo:{categoryId:'通行证'}};applyAlbumComments(db,binding,result);assert.match(binding.pending[0].reason,/CN/);db.members={12345:{cn:'示例用户I'}};assert.equal(applyAlbumComments(db,binding,result).imported,3);assert.equal(binding.pending.length,0);});
-test('a comment follows its upload batch, not the individual photo list',()=>{const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户I'}}},photos=[{id:'photo',batchId:'b1'},{id:'photo2',batchId:'b1'}],r={photos,comments:parseFeedResponse(response(),info).comments};const scoped={campaignId:'c',photos,batchScopes:{b1:{categoryId:'通行证',source:'人工确认'}}};assert.equal(applyAlbumComments(db,scoped,r).imported,3);const fresh={campaignId:'c',photos};applyAlbumComments({campaigns:[campaign()],members:{12345:{cn:'示例用户I'}}},fresh,r);assert.equal(fresh.pending.length,1);assert.match(fresh.pending[0].reason,/大类/);});
+test('photo context resolves roles without crossing category and duplicate reads survive restart',()=>{const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户J'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证',boxId:'55.0'}}};const result={photos:[{id:'photo'}],comments:parseFeedResponse(response(),info).comments};assert.equal(applyAlbumComments(db,binding,result).imported,3);assert.deepEqual(c.records.map(r=>[r.skuId,r.quantity]),[['a',3],['b',1],['d',2]]);assert.deepEqual(c.records[0].photoIds,['photo']);const restored=JSON.parse(JSON.stringify({db,binding}));assert.equal(applyAlbumComments(restored.db,restored.binding,result).duplicates,1);assert.equal(restored.db.campaigns[0].records.length,3);});
+test('unknown image scope and CN failures stay pending and can retry after correction',()=>{const c=campaign(),db={campaigns:[c]},binding={campaignId:'c'},result={photos:[{id:'photo'}],comments:parseFeedResponse(response(),info).comments};applyAlbumComments(db,binding,result);assert.equal(c.records.length,0);assert.equal(binding.pending.length,1);binding.photoScopes={photo:{categoryId:'通行证'}};applyAlbumComments(db,binding,result);assert.match(binding.pending[0].reason,/CN/);db.members={12345:{cn:'示例用户J'}};assert.equal(applyAlbumComments(db,binding,result).imported,3);assert.equal(binding.pending.length,0);});
+test('a comment follows its upload batch, not the individual photo list',()=>{const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户J'}}},photos=[{id:'photo',batchId:'b1'},{id:'photo2',batchId:'b1'}],r={photos,comments:parseFeedResponse(response(),info).comments};const scoped={campaignId:'c',photos,batchScopes:{b1:{categoryId:'通行证',source:'人工确认'}}};assert.equal(applyAlbumComments(db,scoped,r).imported,3);const fresh={campaignId:'c',photos};applyAlbumComments({campaigns:[campaign()],members:{12345:{cn:'示例用户J'}}},fresh,r);assert.equal(fresh.pending.length,1);assert.match(fresh.pending[0].reason,/大类/);});
 test('album reader reads upload batches and photos, paginates and deduplicates returned comments',async()=>{let calls=0;const result=await readAlbumFeeds(async(action,params)=>{if(action==='get_group_album_media_list')return {media_list:[{batch_id:'batch',image:{lloc:'photo'}}]};calls++;const root=decodeProto(Buffer.from(params.data,'hex')),data=root.find(x=>x.field===4).value,cursor=data.find(x=>x.field===5).value;if(cursor)return response({id:'11',total:2});return response({total:2,more:true,cursor:'next',caption:'通行证55.0'});},'11111','album');assert.equal(calls,4);assert.equal(result.comments.length,2);assert.equal(result.captions[0].text,'通行证55.0');});
-test('@ signup cannot write album records and concurrent polling shares one read',async()=>{const c=campaign(),db={campaigns:[c],albums:[{groupId:'11111',campaignId:'c'}],members:{12345:{cn:'示例用户I'}}};const r=processQQEvent(db,{group_id:'11111',user_id:'12345',self_id:'99999',message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:'洁哥通行证1'}}]});assert.match(r.reply,/相册/);assert.equal(c.records.length,0);let reads=0,release;const poller=createAlbumPoller({read:()=>{reads++;return new Promise(r=>release=r);}});const a=poller.run(),b=poller.run();assert.equal(reads,1);release('ok');assert.equal(await a,'ok');assert.equal(await b,'ok');poller.close();});
+test('@ signup cannot write album records and concurrent polling shares one read',async()=>{const c=campaign(),db={campaigns:[c],albums:[{groupId:'11111',campaignId:'c'}],members:{12345:{cn:'示例用户J'}}};const r=processQQEvent(db,{group_id:'11111',user_id:'12345',self_id:'99999',message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:'洁哥通行证1'}}]});assert.match(r.reply,/相册/);assert.equal(c.records.length,0);let reads=0,release;const poller=createAlbumPoller({read:()=>{reads++;return new Promise(r=>release=r);}});const a=poller.run(),b=poller.run();assert.equal(reads,1);release('ok');assert.equal(await a,'ok');assert.equal(await b,'ok');poller.close();});
 
 test('album commands are skipped and never become pending',()=>{
- const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户I'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证'}}};
+ const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户J'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证'}}};
  const result={photos:[{id:'photo'}],comments:parseFeedResponse(response({text:'@{uin:90000002,nick:客服小谷} 查询余量'}),info).comments};
  const stats=applyAlbumComments(db,binding,result);
  assert.equal(stats.skipped,1);assert.equal(binding.pending.length,0);assert.equal(c.records.length,0);assert.equal(c.commentEvents[0].skipped,true);
 });
 test('items outside the photo scope surface as selectable issues and resolve on retry',()=>{
- const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户I'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证'}}};
+ const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户J'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证'}}};
  const result={photos:[{id:'photo'}],comments:parseFeedResponse(response({text:'克莱门莎立牌1'}),info).comments};
  applyAlbumComments(db,binding,result);
  assert.equal(binding.pending.length,1);
@@ -111,7 +111,7 @@ test('items outside the photo scope surface as selectable issues and resolve on 
  assert.equal(binding.pending.length,0);assert.equal(c.records[0].skuId,'e');
 });
 test('dismissed pending comments are remembered so the poller does not bring them back',()=>{
- const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户I'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证'}}};
+ const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户J'}}},binding={campaignId:'c',photoScopes:{photo:{categoryId:'通行证'}}};
  const result={photos:[{id:'photo'}],comments:parseFeedResponse(response({text:'克莱门莎立牌1'}),info).comments};
  applyAlbumComments(db,binding,result);
  dismissPending(db,binding,binding.pending[0].commentId);
@@ -163,7 +163,7 @@ test('album sync keeps uploaded photos when the campaign has no saved products',
  }finally{if(app?.server.listening)await new Promise(r=>app.server.close(r));await fs.rm(dir,{recursive:true,force:true});}
 });
 test('ignored upload batch never enters enrollment or pending',()=>{
- const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户I'}}};
+ const c=campaign(),db={campaigns:[c],members:{12345:{cn:'示例用户J'}}};
  const binding={campaignId:'c',photos:[{id:'photo',batchId:'b1'}],batchScopes:{b1:{ignored:true,source:'人工确认'}},photoScopes:{photo:{ignored:true,source:'人工确认'}}};
  const result={photos:binding.photos,comments:[{id:'x',qq:'12345',at:'2026-10-23T11:56:42.000Z',text:'洁哥1',photoIds:['photo'],groupId:'11111',albumId:'album'}]};
  const stats=applyAlbumComments(db,binding,result);
@@ -223,4 +223,72 @@ test('multi-category scope and deleted-photo reconciliation persist through serv
  failComments=true;photos=[{id:'new',batchId:'new'}];const partial=await post('qq-album-photos',{groupId:'11111',albumId:'album'});assert.equal(partial.status,200);assert.match(partial.data.warning,/图片已刷新/);assert.equal((await state()).albums[0].photos[0].id,'new');malformed=true;assert.equal((await post('qq-album-photos',{groupId:'11111',albumId:'album'})).status,400);assert.equal((await state()).albums[0].photos[0].id,'new');malformed=false;failComments=false;
  let release,started;const blocked=new Promise(r=>started=r);hold=()=>{started();return new Promise(r=>release=r);};const older=post('qq-album-photos',{groupId:'11111',albumId:'album'});await blocked;photos=[];assert.equal((await post('qq-album-photos',{groupId:'11111',albumId:'album'})).status,200);failComments=true;release();const oldResult=await older;assert.equal(oldResult.status,200);assert.deepEqual(oldResult.data.photos,[]);db=await state();assert.deepEqual(db.albums[0].photos,[]);assert.equal(db.campaigns[0].records.length,2);
  }finally{await app?.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
+
+
+test('album withdrawal removes only own scoped SKU, preserves proxies, and cannot revive on replay',()=>{
+ const c={...campaign(),groupId:'11111'},db={campaigns:[c],albumWithdrawalEnabled:true,members:{12345:{cn:'测试甲'},23456:{cn:'测试乙'}}};
+ const binding={campaignId:'c',groupId:'11111',albumId:'album',photoScopes:{photo:{categoryId:'通行证'}}};
+ const event=(id,text,qq='12345')=>({id,commentId:id,qq,text,groupId:'11111',albumId:'album',photoIds:['photo'],at:`2026-10-26T12:00:${id.padStart(2,'0')}Z`});
+ const original=[event('1','洁哥3'),event('2','洁哥2','23456'),event('3','代群外测试丙 洁哥1')];
+ const run=comments=>applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments});
+ run(original);assert.equal(c.records.length,3);
+ const withdrawal=event('4','撤排洁哥');run([withdrawal]);
+ assert.equal(c.records.length,2);assert.ok(c.records.some(r=>r.proxyFor==='测试丙'));assert.equal(binding.withdrawalNotices.length,1);assert.match(binding.withdrawalNotices[0].message,/已撤排.*3/);
+ run([...original,withdrawal]);assert.equal(c.records.length,2);assert.equal(binding.withdrawalNotices.length,1);
+ run([event('0','洁哥2')]);assert.equal(c.records.length,2);
+ run([event('5','洁哥1')]);assert.equal(c.records.length,3);
+ const restored=JSON.parse(JSON.stringify({db,binding}));applyAlbumComments(restored.db,restored.binding,{photos:[{id:'photo'}],comments:[...original,withdrawal]});assert.equal(restored.db.campaigns[0].records.length,3);
+});
+
+test('withdrawals reject disabled, unknown, ambiguous, foreign identity, quantity, and completed requests without enrollment',()=>{
+ const c={...campaign(),groupId:'11111'},db={campaigns:[c],members:{12345:{cn:'测试甲'}}},binding={campaignId:'c',groupId:'11111',albumId:'album',photoScopes:{photo:{categoryId:'通行证'}}};let id=0;
+ const run=(text,extra={})=>applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments:[{id:String(++id),qq:'12345',text,groupId:'11111',albumId:'album',photoIds:['photo'],at:'2026-10-26T12:00:00Z',...extra}]});
+ run('洁哥3');run('撤排洁哥');assert.match(binding.withdrawalNotices.at(-1).message,/未开启/);assert.equal(c.records.length,1);
+ db.albumWithdrawalEnabled=true;
+ for(const [text,pattern]of [['撤排克莱门莎',/没有排过/],['撤排不存在的产品',/未找到/],['撤排通行证',/具体制品/],['撤排洁哥1',/不要附数量/],['撤排',/请评论/]]){run(text);assert.match(binding.withdrawalNotices.at(-1).message,pattern);assert.equal(c.records.length,1);}
+ const notices=binding.withdrawalNotices.length;run('撤排洁哥',{groupId:'22222'});run('撤排洁哥',{albumId:'other'});run('撤排洁哥',{qq:'all'});assert.equal(binding.withdrawalNotices.length,notices);assert.equal(c.records.length,1);
+ run('撤排洁哥',{qq:'34567'});assert.match(binding.withdrawalNotices.at(-1).message,/cn 你的CN/);
+ c.orderLifecycle={status:'completed'};run('撤排洁哥');assert.match(binding.withdrawalNotices.at(-1).message,/已经结束/);assert.equal(c.records.length,1);
+});
+
+test('album withdrawal processes mixed arrival order by source time and leaves later enrollments',()=>{
+ const c={...campaign(),groupId:'11111'},db={campaigns:[c],albumWithdrawalEnabled:true,members:{12345:{cn:'测试甲'}}},binding={campaignId:'c',groupId:'11111',albumId:'album',photoScopes:{photo:{categoryId:'通行证'}}};
+ const comments=['洁哥3','撤排洁哥','洁哥1'].map((text,i)=>({id:String(i),qq:'12345',text,groupId:'11111',albumId:'album',photoIds:['photo'],at:`2026-10-26T12:00:0${i}Z`}));
+ applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments:comments.reverse()});assert.equal(c.records.length,1);assert.equal(c.records[0].quantity,1);
+});
+
+test('withdrawal notices persist before sending, retry safely, and use sender QQ only',async()=>{
+ const {sendWithdrawalNotices}=await import('./album-withdrawal.mjs');const c={...campaign(),groupId:'11111'},db={campaigns:[c]},binding={campaignId:'c',groupId:'11111',withdrawalNotices:[{id:'x',qq:'12345',message:'测试撤排',attempts:0}]};let saved=0,sent=0,time=100000;
+ const opts={persist:async()=>saved++,send:async p=>{assert.ok(saved);assert.equal(p.group_id,11111);assert.equal(p.message[0].data.qq,'12345');sent++;},now:()=>time};
+ await sendWithdrawalNotices(db,binding,opts);await sendWithdrawalNotices(db,binding,opts);assert.equal(sent,1);
+ binding.withdrawalNotices=[{id:'y',qq:'12345',message:'失败测试',attempts:0}];const fail={...opts,send:async()=>{sent++;throw Error('private-transport-secret');}};
+ for(let i=0;i<5;i++){await sendWithdrawalNotices(db,binding,fail);time+=120000;}assert.equal(sent,4);assert.doesNotMatch(JSON.stringify(binding),/private-transport-secret/);
+});
+
+
+test('withdrawal server sync persists removal, updates XLSX, sends once and survives restart',async()=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path'),{start}=await import('./server.mjs');
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-withdrawal-integration-'));let app,mode='enroll',sent=[];
+ const c={...campaign(),name:'测试期次',groupId:'11111',botId:'zhougu',revision:0},binding={campaignId:'c',groupId:'11111',albumId:'album',photoScopes:{photo:{categoryId:'通行证',source:'人工确认'}}};
+ await fs.writeFile(path.join(dir,'workspace.json'),JSON.stringify({campaigns:[c],albums:[binding],settings:{provider:'custom',baseUrl:'https://example.test/v1',model:''},albumWithdrawalEnabled:true,members:{12345:{cn:'测试甲'}},qqGroups:[{id:'11111'}],qqSettings:{url:'ws://127.0.0.1:12345'}}));
+ const options={port:0,dataDir:dir,credentialStore:{get:async()=>'',set:async()=>{}},upstreamFetch:async()=>{throw Error('No model');},qqConnector:()=>({status:()=> '已连接',close(){},call:async action=>{
+  if(action==='get_group_album_media_list')return {media_list:[{image:{lloc:'photo'}}]};
+  if(action==='send_packet')return response({id:mode==='enroll'?'10':'20',text:mode==='enroll'?'洁哥3':'撤排洁哥'});
+  if(action==='send_group_msg'){const db=JSON.parse(await fs.readFile(path.join(dir,'workspace.json'),'utf8'));assert.equal(db.campaigns[0].records.length,0);sent.push(action);return {};}
+  throw Error('Unexpected mock action '+action);
+ }})};
+ const sync=async()=>{const r=await fetch(app.url+'/api/qq-album-comments',{method:'POST',headers:{origin:app.url,'content-type':'application/json'},body:'{}'});assert.equal(r.status,200);};
+ try{app=await start(options);await sync();const before=await fs.readFile(path.join(dir,'tables','c.xlsx'));mode='withdraw';await sync();assert.equal(sent.length,1);assert.notDeepEqual(await fs.readFile(path.join(dir,'tables','c.xlsx')),before);
+  const state=await (await fetch(app.url+'/api/state')).json();assert.equal(state.campaigns[0].records.length,0);assert.ok(state.campaigns[0].commentEvents.some(e=>e.withdrawal&&e.success));
+  await app.shutdown();app=await start(options);await sync();assert.equal(sent.length,1);mode='enroll';await sync();assert.equal((await (await fetch(app.url+'/api/state')).json()).campaigns[0].records.length,0);
+ }finally{await app?.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
+
+test('same-second withdrawal uses comment sequence and explicit box disambiguation',()=>{
+ const c={...campaign(),groupId:'11111'},db={campaigns:[c],albumWithdrawalEnabled:true,members:{12345:{cn:'测试甲'}}},binding={campaignId:'c',groupId:'11111',albumId:'album',photoScopes:{photo:{categoryId:'通行证'}}};
+ c.products.push({...c.products[0],id:'another',boxId:'56.0'});
+ const base={qq:'12345',groupId:'11111',albumId:'album',photoIds:['photo'],at:'2026-10-26T12:00:00Z'};
+ c.records=[{...base,id:'later',sourceId:'30',sourceAt:base.at,skuId:'a',quantity:1},{...base,id:'earlier',sourceId:'10',sourceAt:base.at,skuId:'a',quantity:3}];
+ applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments:[{...base,id:'20',text:'撤排洁哥通行证55.0'}]});assert.equal(c.records.length,1);assert.equal(c.records[0].id,'later');
 });

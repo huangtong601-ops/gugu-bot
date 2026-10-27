@@ -19,6 +19,7 @@ export function isMentioned(e){return messageSegments(e.message).some(s=>s.type=
 const CN_COMMAND=/^cn(?:\s*[:：]\s*|\s+)(.+)$/i;
 // Keep command recognition and help in one catalogue. New commands must also add a help test.
 export const QQ_COMMANDS=Object.freeze({
+ albumWithdraw:{albumOnly:true,usage:'撤排 制品名称',description:'在商品图下评论，撤掉本人该商品全部数量'},
  help:{pattern:/^(?:help|帮助|指令|命令列表)[。.!！?？]?$/i,usage:'help / 帮助',description:'查看可用指令',private:true},
  cn:{pattern:CN_COMMAND,usage:'cn 你的CN',description:'录入或修改自己的CN',private:true},
  explain:{pattern:/^解释\s*[:：]?\s*/,usage:'解释 捆 / 解释 k1',description:'查询拼谷术语'},
@@ -32,6 +33,7 @@ const matchCommand=(id,text)=>{const c=QQ_COMMANDS[id];return c.parse?c.parse(te
 export function commandHelp(db,{qq,group}={}){
  const lines=[group?'可用指令（先 @机器人）':'私聊可用指令'];
  for(const c of Object.values(QQ_COMMANDS)){
+  if(c.albumOnly)continue;
   if(!group&&!c.private)continue;
   if(c.admin&&!isAdministrator(db,qq))continue;
   if(c.enrollment&&db.qqEnrollmentEnabled!==true)continue;
@@ -39,6 +41,7 @@ export function commandHelp(db,{qq,group}={}){
  }
  if(group)lines.push('多期同名商品时，请加上期次名，例如「示例期次 查询排量 通行证」。',
   '相册排谷：在对应商品图下评论「制品名 数量」，不用 @。',
+  db.albumWithdrawalEnabled===true?`相册撤排：在商品图下评论「${QQ_COMMANDS.albumWithdraw.usage}」，撤掉本人该商品全部数量。`:'相册撤排未开启，请联系管理员。',
   '代排：评论「代群外XXX 制品名 数量」，单独列肾表。',
   '本期下单完成后停止入表；需要补单请联系管理员在工作台开启。',
   db.qqEnrollmentEnabled===true?'群内@排表已开启；相册评论同样可用。':'群内@排表未开启，请通过相册评论排谷。');
@@ -67,7 +70,7 @@ export function processQQEvent(db,e,{terms=defaultGlossaryEntries,usageReport}={
  if(matchCommand('help',text))return {reply:commandHelp(db,{qq,group}),readOnly:true};
  const cn=matchCommand('cn',text);
  if(cn){const reply=registerCN(db,qq,cn[1],group);for(const c of db.campaigns){if(group&&String(c.groupId||'')!==group)continue;for(const r of c.records)if(r.qq===qq)r.member=recordMember(db,r,c.groupId);}return {reply};}
- if(/^cn\b/i.test(text))return {reply:'CN 指令格式：cn 你的CN，例如「cn 示例用户I」。'};
+ if(/^cn\b/i.test(text))return {reply:'CN 指令格式：cn 你的CN，例如「cn 示例用户J」。'};
  if(!group)throw Error('私聊仅支持「cn 你的CN」；查询请在群内 @机器人，报名请在群相册商品图片下评论。');
  if(matchCommand('explain',text))return {reply:explainTerm(terms,text.replace(QQ_COMMANDS.explain.pattern,'')),readOnly:true};
  const costCommand=matchCommand('cost',text);if(costCommand)return {reply:usageReport?usageReport(group,costCommand.period).reply:'费用统计尚未启用',readOnly:true};

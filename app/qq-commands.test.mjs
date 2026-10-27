@@ -20,7 +20,7 @@ test('help reflects admin, enrollment and private-chat availability without expo
  const db={qqAdmin:'12345',campaigns:[{name:'别群私有期次',groupId:'22222'}]};
  const say=qq=>({group_id:11111,user_id:qq,self_id:99999,message:[at(),text('help')]});
  const regular=processQQEvent(db,say(54321)).reply;
- for(const c of Object.values(QQ_COMMANDS).filter(c=>!c.admin&&!c.enrollment))for(const line of c.lines||[c.usage])assert.ok(regular.includes(line));
+ for(const c of Object.values(QQ_COMMANDS).filter(c=>!c.admin&&!c.enrollment&&!c.albumOnly))for(const line of c.lines||[c.usage])assert.ok(regular.includes(line));
  assert.doesNotMatch(regular,/导出指定期次肾表|群内直接录入排表|别群私有期次|22222|12345/);
  assert.match(regular,/@排表未开启/);assert.match(regular,/不用 @/);
  assert.match(processQQEvent(db,say(12345)).reply,/肾表：导出指定期次肾表/);
@@ -53,7 +53,7 @@ test('CN accepts full-width input, CQ-coded strings and private chat',()=>{
 });
 test('unaddressed commands get a hint instead of silence',()=>{
  const db={campaigns:[]};
- assert.match(processQQEvent(db,{group_id:1,message:[text('cn 示例用户I')]}).reply,/@/);
+ assert.match(processQQEvent(db,{group_id:1,message:[text('cn 示例用户J')]}).reply,/@/);
  assert.match(processQQEvent(db,{group_id:1,message:[text('查询排量 洁哥')]}).reply,/@/);
  assert.equal(processQQEvent(db,{group_id:1,message:[text('今天好热')]}).ignored,true);
 });
@@ -65,7 +65,7 @@ test('malformed CN explains the format while duplicate CN still reports the conf
 });
 test('CN binding is accepted outside the confined test group while queries are not',()=>{
  const db={qqTestGroup:{id:'90000003'},albums:[],campaigns:[]},bot='90000002';
- assert.equal(canHandleQQEvent(db,{group_id:90000004,self_id:bot,message:[at(bot),text('cn 示例用户J')]}),true);
+ assert.equal(canHandleQQEvent(db,{group_id:90000004,self_id:bot,message:[at(bot),text('cn 示例用户K')]}),true);
  assert.equal(canHandleQQEvent(db,{group_id:90000004,self_id:bot,message:[at(bot),text('查询排量 洁哥')]}),false);
  assert.equal(canHandleQQEvent(db,{group_id:90000003}),true);
 });
@@ -78,7 +78,7 @@ test('messageText normalizes full-width text and strips zero-width characters',(
 
 test('managed groups are isolated from each other',()=>{
  const campaign=(id,name,groupId)=>({id,name,groupId,categories:defaultCategories(),products:[],records:[]});
- const db={qqGroups:[{id:'111111',name:'A'},{id:'222222',name:'B'}],albums:[],members:{12345:{cn:'示例用户I'}},campaigns:[campaign('a','团A','111111'),campaign('b','团B','222222')]};
+ const db={qqGroups:[{id:'111111',name:'A'},{id:'222222',name:'B'}],albums:[],members:{12345:{cn:'示例用户J'}},campaigns:[campaign('a','团A','111111'),campaign('b','团B','222222')]};
  assert.equal(canHandleQQEvent(db,{group_id:111111}),true);
  assert.equal(canHandleQQEvent(db,{group_id:222222}),true);
  assert.equal(canHandleQQEvent(db,{group_id:333333}),false);
@@ -94,7 +94,7 @@ test('disabled managed groups cannot query even when a legacy test-group or albu
 
 test('mention enrollments default off and legacy comment events cannot bypass album scope',()=>{
  const c={id:'c',name:'示例期次',groupId:'11111',categories:defaultCategories(),products:[{id:'p',name:'通行证-予愿安洁丽娜',type:'通行证',unit:'对',price:20}],records:[],commentEvents:[]};
- const db={campaigns:[c],albums:[{groupId:'11111',albumId:'album',campaignId:'c'}],members:{12345:{cn:'示例用户I'}}};
+ const db={campaigns:[c],albums:[{groupId:'11111',albumId:'album',campaignId:'c'}],members:{12345:{cn:'示例用户J'}}};
  const before=JSON.stringify(db);
  for(const content of ['洁哥通行证1','报名 洁哥通行证1','排表 洁哥通行证1','示例期次 洁哥通行证1']){
   const result=processQQEvent(db,{group_id:11111,user_id:12345,self_id:99999,message:[at(),text(content)]});
@@ -107,10 +107,10 @@ test('mention enrollments default off and legacy comment events cannot bypass al
 
 test('enabled mentions enroll by sender, message identity and time; toggling off keeps queries and prevents new rows',()=>{
  const c={id:'c',name:'示例期次',groupId:'11111',categories:defaultCategories(),products:[{id:'p',name:'通行证-予愿安洁丽娜',character:'予愿安洁丽娜',aliases:['洁哥'],type:'通行证',unit:'对',price:20}],records:[],commentEvents:[]};
- const db={qqEnrollmentEnabled:true,campaigns:[c],members:{12345:{cn:'示例用户I'}}};
+ const db={qqEnrollmentEnabled:true,campaigns:[c],members:{12345:{cn:'示例用户J'}}};
  const say=(message_id,time,t)=>({group_id:11111,user_id:12345,self_id:99999,message_id,time,message:[at(),text(t)]});
  assert.match(processQQEvent(db,say(2,200,'洁哥通行证2')).reply,/已录入/);
- processQQEvent(db,say(1,100,'洁哥通行证1'));assert.deepEqual(c.records.map(r=>r.quantity),[1,2]);assert.ok(c.records.every(r=>r.qq==='12345'&&r.member==='示例用户I'));
+ processQQEvent(db,say(1,100,'洁哥通行证1'));assert.deepEqual(c.records.map(r=>r.quantity),[1,2]);assert.ok(c.records.every(r=>r.qq==='12345'&&r.member==='示例用户J'));
  processQQEvent(db,say(2,200,'洁哥通行证2'));assert.equal(c.records.length,2);
  assert.throws(()=>processQQEvent(db,{...say(3,300,'洁哥通行证1'),message_id:undefined}),/编号或时间/);
  assert.equal(processQQEvent(db,{...say(4,400,'洁哥通行证1'),message:[text('洁哥通行证1')]}).ignored,true);
@@ -130,4 +130,25 @@ test('mention enrollment setting validates boolean, persists and defaults off fo
   await new Promise(r=>app.server.close(r));app=await start({port:0,dataDir:dir});assert.equal((await state()).qqEnrollmentEnabled,true);
   await post(false);await new Promise(r=>app.server.close(r));app=await start({port:0,dataDir:dir});assert.equal((await state()).qqEnrollmentEnabled,false);
  }finally{if(app?.server.listening)await new Promise(r=>app.server.close(r));await fs.rm(dir,{recursive:true,force:true});}
+});
+
+test('album withdrawal setting validates boolean, persists and defaults off for new workspaces',async()=>{
+ const fs=await import('node:fs/promises'),os=await import('node:os'),path=await import('node:path'),{start}=await import('./server.mjs');
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-withdrawal-toggle-'));let app;
+ try{
+  app=await start({port:0,dataDir:dir});
+  const state=async()=> (await fetch(app.url+'/api/state')).json();
+  const post=enabled=>fetch(app.url+'/api/album-withdrawal-settings',{method:'POST',headers:{origin:app.url,'content-type':'application/json'},body:JSON.stringify({enabled})});
+  assert.equal((await state()).albumWithdrawalEnabled,false);assert.equal((await post('true')).status,400);assert.equal((await state()).albumWithdrawalEnabled,false);
+  assert.equal((await post(true)).status,200);assert.equal((await state()).albumWithdrawalEnabled,true);
+  await new Promise(r=>app.server.close(r));app=await start({port:0,dataDir:dir});assert.equal((await state()).albumWithdrawalEnabled,true);
+  await post(false);await new Promise(r=>app.server.close(r));app=await start({port:0,dataDir:dir});assert.equal((await state()).albumWithdrawalEnabled,false);
+ }finally{if(app?.server.listening)await new Promise(r=>app.server.close(r));await fs.rm(dir,{recursive:true,force:true});}
+});
+
+
+test('help explains album withdrawal separately from mention enrollment',()=>{
+ const say={group_id:11111,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:'help'}}]},db={qqGroups:[{id:'11111'}],campaigns:[]};
+ assert.match(processQQEvent(db,say).reply,/相册撤排未开启/);db.albumWithdrawalEnabled=true;
+ assert.match(processQQEvent(db,say).reply,/撤排 制品名称/);assert.match(processQQEvent(db,say).reply,/群内@排表未开启/);
 });
