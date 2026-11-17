@@ -1,5 +1,6 @@
 import {createHash,randomUUID} from 'node:crypto';
 import {purchasePool,isGift} from './order-planning.mjs';
+import {giftCounts} from './public/gift-tiers.js';
 
 export const isCompleted=c=>c?.orderLifecycle?.status==='completed';
 export const endedMessage=c=>`「${c.name}」本期已经结束，未录入本次排谷；如需补单，请联系管理员。`;
@@ -12,13 +13,33 @@ export function purchaseSource(c){
   roles:c.products.filter(p=>!isGift(p,c)).map(p=>[p.id,p.categoryId||p.type,p.boxId||'']).sort((a,b)=>a[0].localeCompare(b[0]))};
 }
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const paidOrders=orders=>orders.filter(o=>o.actualPaid!=null);
+export function canReplanUnpaid(c){
+ const orders=c.orderPlanning?.plan?.orders||[];
+ return !isCompleted(c)&&orders.some(o=>o.actualPaid!=null)&&orders.some(o=>o.actualPaid==null);
+}
+function purchaseTotals(orders){
+ const totals=new Map();
+ for(const order of orders)for(const line of order.lines||[]){
+  const total=totals.get(line.id)||{id:line.id,name:line.name,unit:line.unit,quantity:0,cents:0};
+  total.quantity+=line.quantity;total.cents+=line.quantity*line.unitCents;totals.set(line.id,total);
+ }
+ return totals;
+}
+export function paidBoxQuantity(c,categoryId,boxId){
+ const bought=purchaseTotals(paidOrders(c.orderPlanning?.plan?.orders||[]));
+ return bought.get('box:'+categoryId+'|'+boxId)?.quantity||0;
+}
 export const sourceHash=c=>createHash('sha256').update(JSON.stringify(purchaseSource(c))).digest('hex');
 export function planningIssues(c){
  const planning=c.orderPlanning,plan=planning?.plan;if(!plan)return [];
  const issues=[];
  if(planning.source&&!same(planning.source,purchaseSource(c)))issues.push('商品价格、配数或排量已变化，请核对购买清单并更新下单方案');
- const bought=new Map();for(const o of plan.orders||[])for(const line of o.lines||[])bought.set(line.id,(bought.get(line.id)||0)+line.quantity);
- if(planning.source)for(const row of purchasePool({...c,orderPlanning:undefined}))if(row.quantity>(bought.get(row.id)||0)||row.kind==='group'&&row.demand>(bought.get(row.id)||0))issues.push(row.name+'排量或开配数超过已规划购买数量，请补充订单');
+ const bought=purchaseTotals(plan.orders||[]);
+ if(planning.source)for(const row of purchasePool({...c,orderPlanning:undefined})){
+  const quantity=bought.get(row.id)?.quantity||0;
+  if(row.quantity>quantity||row.kind==='group'&&row.demand>quantity)issues.push(row.name+'排量或开配数超过已规划购买数量，请补充订单');
+ }
  if(planning.supplementOpen)issues.push('补单尚未完成，请生成补单方案并保存实付');
  return issues;
 }
@@ -33,7 +54,6 @@ export function completeCampaign(c,{version,expectedSource}={}){
  const issues=planningIssues(noExtra?{...c,orderPlanning:{...c.orderPlanning,supplementOpen:false}}:c);if(issues.length)throw Error(issues.join('；'));
  if(noExtra)c.orderPlanning.supplementOpen=false;
  c.orderLifecycle={...c.orderLifecycle,status:'completed',version:(c.orderLifecycle?.version||0)+1,completedAt:new Date().toISOString(),purchasedOrderIds:plan.orders.map(o=>o.id)};
- // Retain pending comments for review, but never import them while this phase is closed.
  return {ok:true,message:'本期下单已完成',lifecycle:c.orderLifecycle};
 }
 export function openSupplement(c,{version}={}){
@@ -46,9 +66,20 @@ export function openSupplement(c,{version}={}){
  return {ok:true,message:'已开启补单，原订单与实付保留',lifecycle:c.orderLifecycle};
 }
 export function supplementaryPool(c){
- const pool=purchasePool({...c,orderPlanning:undefined}),purchased=new Map();
- for(const o of c.orderPlanning?.plan?.orders||[])for(const line of o.lines)purchased.set(line.id,(purchased.get(line.id)||0)+line.quantity);
- return pool.map(row=>({...row,purchased:purchased.get(row.id)||0,quantity:Math.max(0,row.quantity-(purchased.get(row.id)||0))}));
+ const pool=purchasePool({...c,orderPlanning:undefined}),bought=purchaseTotals(c.orderPlanning?.plan?.orders||[]);
+ return pool.map(row=>{const purchased=bought.get(row.id)?.quantity||0;return {...row,purchased,quantity:Math.max(0,row.quantity-purchased)};});
+}
+export function remainingPurchasePool(c){
+ const planning=c.orderPlanning,orders=planning.plan.orders,bought=purchaseTotals(paidOrders(orders));
+ const baseline=new Map((planning.source?.pool||[]).map(row=>[row.id,row]));
+ const current=new Map(purchasePool({...c,orderPlanning:undefined}).map(row=>[row.id,row]));
+ const pendingPrices=new Map(orders.filter(o=>o.actualPaid==null).flatMap(o=>o.lines.map(l=>[l.id,l.unitCents/100])));
+ return purchasePool(c).map(row=>{
+  const purchased=bought.get(row.id)?.quantity||0,prior=baseline.get(row.id),fresh=current.get(row.id);
+  const quantity=row.kind==='group'&&prior&&prior.quantity!==fresh.quantity?fresh.quantity:row.quantity;
+  const price=prior&&prior.price!==fresh.price?fresh.price:pendingPrices.get(row.id)??row.price;
+  return {...row,purchased,quantity:Math.max(0,quantity-purchased),price};
+ });
 }
 export function validatePurchasedCatalog(c,next){
  if(!c.orderPlanning?.plan?.orders.some(o=>o.actualPaid!=null))return;
@@ -56,12 +87,16 @@ export function validatePurchasedCatalog(c,next){
  const members=(campaign,key)=>campaign.products.filter(p=>(p.categoryId||p.type)+'|'+(p.boxId||'')===key).map(p=>p.id).sort();
  for(const key of groups)if(!same(members(c,key),members(next,key)))throw Error('已下单整盒的款式不能更换；新增整盒请使用新的盒号');
 }
-export function appendSupplement(c,addition,pool){
- const old=c.orderPlanning.plan,offset=old.orders.length,batchId=randomUUID();
- const orders=[...old.orders,...addition.orders.map((o,i)=>({...o,id:batchId+'-'+o.id,number:offset+i+1,supplement:true}))];
- const combined=new Map((old.pool||[]).map(p=>[p.id,{...p}]));
- for(const row of pool){const previous=combined.get(row.id);if(previous){const total=previous.quantity+row.quantity;if(total&&row.quantity)previous.price=Math.round(((previous.price||0)*previous.quantity+(row.price||0)*row.quantity)/total*100)/100;previous.quantity=total;}else combined.set(row.id,{...row});}
- const counts=Array.from({length:Math.max(old.giftCounts.length,addition.giftCounts.length)},(_,i)=>(old.giftCounts[i]||0)+(addition.giftCounts[i]||0));
+export function mergeOrderPlan(c,addition,{replaceUnpaid=false}={}){
+ const old=c.orderPlanning.plan,kept=replaceUnpaid?paidOrders(old.orders):old.orders;
+ const offset=Math.max(0,...kept.map(o=>o.number)),batchId=randomUUID(),supplement=!replaceUnpaid||c.orderLifecycle?.status==='supplement';
+ const orders=[...kept,...addition.orders.map((o,i)=>({...o,id:batchId+'-'+o.id,number:offset+i+1,...(supplement?{supplement:true}:{})}))];
+ const combined=new Map([...(old.pool||[]),...addition.pool].map(({purchased,...row})=>[row.id,{...row,quantity:0}]));
+ for(const {cents,quantity,...line} of purchaseTotals(orders).values()){
+  combined.set(line.id,{...(combined.get(line.id)||line),quantity,price:Math.round(cents/quantity)/100});
+ }
+ const pool=[...combined.values()],totalCents=orders.reduce((sum,order)=>sum+order.subtotal,0);
+ const counts=Array.from({length:Math.max(giftCounts(old).length,addition.giftCounts.length)},(_,i)=>orders.reduce((sum,order)=>sum+(giftCounts(order)[i]||0),0));
  c.orderPlanning={...c.orderPlanning,version:(c.orderPlanning.version||0)+1,source:purchaseSource(c),supplementOpen:false,settings:addition.settings,
-  pool:[...combined.values()],plan:{...old,orders,pool:[...combined.values()],totalCents:old.totalCents+addition.totalCents,giftCounts:counts,tier1:counts[0]||0,tier2:counts[1]||0,proven:false}};
+  pool,plan:{...addition,orders,pool,totalCents,giftCounts:counts,tier1:counts[0]||0,tier2:counts[1]||0,proven:false}};
 }

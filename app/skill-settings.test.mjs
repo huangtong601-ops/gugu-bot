@@ -15,7 +15,7 @@ test('glossary commands require mention, work without campaign or CN, normalize 
  assert.ok(defaultGlossaryEntries.length>=50);assert.match(processQQEvent(db,event('解释 捆')).reply,/带走/);assert.match(processQQEvent(db,event('解释 Ｋ１')).reply,/1件或1单位/);
  assert.deepEqual(defaultGlossaryEntries.find(e=>e.term==='均价').aliases,[]);
  assert.match(processQQEvent(db,event('解释')).reply,/用法/);assert.match(processQQEvent(db,event('解释 未收录词')).reply,/暂未收录/);assert.equal(processQQEvent(db,event('解释 捆')).readOnly,true);
- assert.match(processQQEvent(db,{...event('解释 捆'),message:'解释 捆'}).reply,/@/);assert.equal(canHandleQQEvent(db,{...event('解释 捆'),group_id:22222}),false);assert.equal(JSON.stringify(db),snapshot);
+ assert.equal(processQQEvent(db,{...event('解释 捆'),message:'解释 捆'}).ignored,true);assert.equal(canHandleQQEvent(db,{...event('解释 捆'),group_id:22222}),false);assert.equal(JSON.stringify(db),snapshot);
 });
 test('partial glossary edits preserve other entries and sources, persist across restarts and reject stale saves',async()=>{
  const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-glossary-'));

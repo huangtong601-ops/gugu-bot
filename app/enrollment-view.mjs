@@ -5,15 +5,19 @@ import {isGift} from './order-planning.mjs';
 import {giftTiers,tierLabel,giftCounts} from './public/gift-tiers.js';
 import {groupRecipients} from './public/enrollment-people.js';
 import {queueScope,queueEntryKey,queueVersion,orderQueue} from './queue-order.mjs';
+import {bundleRule,bundleVersion} from './bundles.mjs';
+import {transferVersion} from './enrollment-transfer.mjs';
 
 const categoryId=p=>p.categoryId||p.type;
 const money=value=>value==null?null:Math.round(value*100);
 export function categoryQueues(c,db,cat){
  const products=c.products.filter(p=>categoryId(p)===cat.id),gift=isGiftCategory(cat)||(products.length>0&&products.every(p=>isGift(p,c)));
  if(cat.kind!=='group'&&!gift)return [];
+ const bundleCounts=new Map();for(const r of c.records)if(r.bundleParent){const key=JSON.stringify([r.bundleParent.recordId,r.bundleParent.unit]);bundleCounts.set(key,(bundleCounts.get(key)||0)+r.quantity);}
+ const existingUnits=new Set();for(const link of c.bundleLinks||[]){const key=JSON.stringify([link.parent.recordId,link.parent.unit]);bundleCounts.set(key,(bundleCounts.get(key)||0)+1);existingUnits.add(JSON.stringify([link.target.recordId,link.target.unit]));}
  const records=orderedRecords(c),boxes=gift?['']:[...new Set(products.map(p=>p.boxId||''))];
  return boxes.map(box=>{
-  const own=gift?products:products.filter(p=>(p.boxId||'')===box),columns=own.filter(p=>!gift||p.giftTier!=='set').map(p=>({id:p.id,label:gift?(Number.isInteger(p.giftTier)?tierLabel(p.giftTier)+' · ':'')+p.name:p.character||p.name,adjustmentCents:money(p.adjustment||0),priceCents:money(p.price),tier:Number.isInteger(p.giftTier)?p.giftTier:null,queue:[],sets:gift?null:groupCapacity(cat,box),unit:p.unit||'件'}));
+  const own=gift?products:products.filter(p=>(p.boxId||'')===box),columns=own.filter(p=>!gift||p.giftTier!=='set').map(p=>({id:p.id,label:gift?(Number.isInteger(p.giftTier)?tierLabel(p.giftTier)+' · ':'')+p.name:p.character||p.name,adjustmentCents:money(p.adjustment||0),priceCents:money(p.price),tier:Number.isInteger(p.giftTier)?p.giftTier:null,queue:[],sets:gift?null:groupCapacity(cat,box),unit:p.unit||'件',bundleRule:bundleRule(c,p.id),bundleEditable:true}));
   const byId=new Map(columns.map(col=>[col.id,col])),sets=new Map();
   for(const p of own.filter(p=>gift&&p.giftTier==='set')){
    let targets=p.giftComponents?.length?p.giftComponents.map(id=>byId.get(id)):giftTiers(p,products)?.map(tier=>{
@@ -29,7 +33,7 @@ export function categoryQueues(c,db,cat){
   }
   for(const r of records){
    const targets=sets.get(r.skuId)||(byId.has(r.skuId)?[byId.get(r.skuId)]:[]);
-   for(const column of targets)for(let i=0;i<r.quantity;i++)column.queue.push({cn:recordMember(db,r,c.groupId),fromSet:sets.has(r.skuId),sourceId:r.sourceId||r.id,entryKey:queueEntryKey(r,i)});
+   for(const column of targets)for(let i=0;i<r.quantity;i++)column.queue.push({cn:recordMember(db,r,c.groupId),fromSet:sets.has(r.skuId),sourceId:r.sourceId||r.id,entryKey:queueEntryKey(r,i),bundleGenerated:!!r.bundleParent,bundleLinked:existingUnits.has(JSON.stringify([r.id,i])),bundleCount:bundleCounts.get(JSON.stringify([r.id,i]))||0});
   }
   const supply=c.orderPlanning?.plan?giftCounts(c.orderPlanning.plan):[];
   for(const column of columns){
@@ -38,7 +42,7 @@ export function categoryQueues(c,db,cat){
    if(gift&&column.tier&&Number.isSafeInteger(supply[column.tier-1])&&supply[column.tier-1]>=0)column.sets=supply[column.tier-1];
    column.demand=column.queue.length;column.remaining=column.sets===null?null:Math.max(0,column.sets-column.demand);column.overflow=column.sets===null?0:Math.max(0,column.demand-column.sets);
   }
-  return {id:box||cat.id,label:cat.name+(box?' '+box:''),gift,setPrices:gift?own.filter(p=>p.giftTier==='set').map(p=>({name:p.name,priceCents:money(p.price),unit:p.unit||'套'})):[],pricingMode:cat.pricingMode||'adjustment',columns,positions:Math.max(1,...columns.map(col=>Math.max(col.demand,col.sets||0)))};
+  return {id:box||cat.id,boxId:box,label:cat.name+(box?' '+box:''),gift,setPrices:gift?own.filter(p=>p.giftTier==='set').map(p=>({name:p.name,priceCents:money(p.price),unit:p.unit||'套'})):[],pricingMode:cat.pricingMode||'adjustment',columns,positions:Math.max(1,...columns.map(col=>Math.max(col.demand,col.sets||0)))};
  });
 }
 
@@ -63,10 +67,11 @@ export function reorderQueue(c,db,{categoryId,blockId,columnId,entryKey,directio
 }
 
 export function enrollmentView(c,db={}){
- const items=financialItems(c,db);
- return {campaignId:c.id,categories:c.categories.map(cat=>{
+ const items=financialItems(c,db),recordMap=new Map(c.records.map(r=>[r.id,r])),used=new Map(),keys=new Map();
+ for(const item of items){const unit=used.get(item.recordId)||0;used.set(item.recordId,unit+1);keys.set(item,queueEntryKey(recordMap.get(item.recordId),unit));}
+ return {campaignId:c.id,bundleVersion:bundleVersion(c),transferVersion:transferVersion(c,db),categories:c.categories.map(cat=>{
   const products=c.products.filter(p=>categoryId(p)===cat.id),own=items.filter(i=>i.categoryId===cat.id),queues=categoryQueues(c,db,cat),gift=queues.some(q=>q.gift);
   return {id:cat.id,name:cat.name,kind:cat.kind,gift,pricingMode:cat.pricingMode||'adjustment',productCount:products.length,quantity:own.length,queues,
-   people:groupRecipients(own).map(person=>({key:person.key,cn:person.cn,totalCents:person.items.some(i=>i.finalCents===null)?null:person.items.reduce((n,i)=>n+i.finalCents,0),items:person.items.map(i=>({name:i.name,boxId:i.boxId,originalCents:i.originalCents,averageCents:i.averageCents,adjustmentCents:i.adjustmentCents,finalCents:i.finalCents}))}))};
+   people:groupRecipients(own).map(person=>({key:person.key,cn:person.cn,totalCents:person.items.some(i=>i.finalCents===null)?null:person.items.reduce((n,i)=>n+i.finalCents,0),items:person.items.map(i=>({entryKey:keys.get(i),name:i.name,boxId:i.boxId,originalCents:i.originalCents,averageCents:i.averageCents,adjustmentCents:i.adjustmentCents,finalCents:i.finalCents}))}))};
  })};
 }

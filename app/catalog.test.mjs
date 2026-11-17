@@ -2,7 +2,83 @@ import {test} from 'node:test';import assert from 'node:assert/strict';import fs
 import {catalog,imageLink} from './domain.mjs';import {loadReferences,expandBox,enrichRecognition,characterReference,verifyPrts,findBox} from './pass-reference.mjs';import {start} from './server.mjs';import {loadBotSkills,requireBot} from './bots.mjs';
 import {readAdjustment} from './pass-adjustment.mjs';
 import {boxRosterHint,adjustmentRetryBoxes,replaceBoxObservations} from './pass-reference.mjs';
+import {characterRosterFromNote,constrainRecognitionCharacters} from './recognition-roster.mjs';
 const root=path.dirname(fileURLToPath(import.meta.url));
+
+test('catalogue save acknowledges the durable normalized version so later local edits can save against it',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-catalog-ack-'));let app;
+ try{
+  app=await start({port:0,dataDir:dir,credentialStore:{get:async()=>'',set:async()=>{}}});
+  const post=async(route,body)=>{const response=await fetch(app.url+'/api/'+route,{method:'POST',headers:{origin:app.url,'content-type':'application/json'},body:JSON.stringify(body)});return {status:response.status,data:await response.json()};};
+  const created=await post('campaign',{name:'合成保存回执',botId:'zhougu'}),c=created.data;
+  const products=[{id:'p',name:'模拟单领',type:'单领',price:20},{id:'gift',name:'模拟特典',type:'特典',giftTier:1,price:null}],catalogReview={sourceAt:'',items:[{message:'核对模拟商品',done:false}]};
+  const first=await post('catalog',{campaignId:c.id,revision:0,products,catalogReview});assert.equal(first.status,200);const ack=first.data.catalog;
+  const disk=JSON.parse(await fs.readFile(path.join(dir,'workspace.json'),'utf8')).campaigns.find(x=>x.id===c.id);
+  for(const key of ['revision','products','categories','catalogReview'])assert.deepEqual(ack[key],disk[key]);assert.equal(ack.revision,1);assert.equal(ack.products.find(p=>p.id==='gift').price,null);
+  const next=structuredClone(ack.products);next.find(p=>p.id==='p').price=21;
+  assert.equal((await post('catalog',{campaignId:c.id,revision:0,products:next})).status,400);
+  const second=await post('catalog',{campaignId:c.id,revision:ack.revision,products:next});assert.equal(second.status,200);assert.equal(second.data.catalog.revision,2);assert.equal(second.data.catalog.products.find(p=>p.id==='p').price,21);
+ }finally{await app?.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
+
+test('explicit character rosters constrain names without guessing absent roles or expanding casual notes',()=>{
+ const roster=characterRosterFromNote('仅识别文字。本期商品角色为Mon3tr、遥、重岳、黑键、凯尔希·思衡托。请保留原价');
+ assert.deepEqual(roster,['Mon3tr','遥','重岳','黑键','凯尔希·思衡托']);
+ assert.deepEqual(characterRosterFromNote('角色名单：Mon3tr，遥'),['Mon3tr','遥']);
+ assert.equal(characterRosterFromNote('这张图有黑键，请保留原价'),null);
+ const refs={characters:[{name:'缪尔赛思',aliases:[]},{name:'玛恩纳',aliases:[]},{name:'凯尔希',aliases:[]},{name:'Mon3tr',aliases:[]}]};
+ const result=constrainRecognitionCharacters({products:[
+  {id:'a',name:'挂件-MON3TR',character:'MON3TR',price:20,imageUrl:'keep'},
+  {id:'b',name:'立牌-凯尔希',character:'凯尔希',price:30},
+  {id:'c',name:'挂件-缪尔赛思',character:'缪尔赛思',price:20},
+  {id:'d',name:'立牌-玛恩纳',character:'Mon3tr',price:30},
+  {id:'e',name:'手提纸袋',character:'',price:null},
+  {id:'f',name:'角色徽章',character:'无法确认',price:20}
+ ]},roster,refs);
+ assert.deepEqual(result.products.map(p=>p.name),['挂件-Mon3tr','立牌-凯尔希·思衡托','手提纸袋']);
+ assert.equal(result.products[0].imageUrl,'keep');assert.equal(result.products[0].price,20);
+ assert.equal(result.questions.length,3);
+ const ambiguous=constrainRecognitionCharacters({products:[{name:'徽章-凯尔希',character:'凯尔希'}]},['凯尔希·思衡托','凯尔希·另一款'],refs);
+ assert.equal(ambiguous.products.length,0);
+ const custom=constrainRecognitionCharacters({products:[{name:'徽章-凯尔希',character:'凯尔希'}]},['凯尔希·思衡托'],{arknights:false});assert.equal(custom.products.length,0);
+});
+
+test('image recognition carries the explicit roster through box expansion, persistence and campaign isolation',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-role-scope-'));let task='';
+ const upstreamFetch=async(url,opts)=>{
+  if(url.endsWith('/models'))return Response.json({data:[{id:'deepseek-flash',input_modalities:['text','image']}]});
+  task=JSON.parse(opts.body).messages[1].content[0].text;
+  return Response.json({choices:[{message:{content:JSON.stringify({boxIds:['55.0'],products:[{name:'徽章-阿米娅',type:'单领',character:'阿米娅',price:20},{name:'挂件-凯尔希',type:'单领',character:'凯尔希',price:30},{name:'明信片',type:'特典',price:null}],questions:[]})}}]});
+ };
+ let app=await start({port:0,dataDir:dir,upstreamFetch});
+ const post=async(route,b)=>{const r=await fetch(app.url+'/api/'+route,{method:'POST',headers:{origin:app.url,'content-type':'application/json'},body:JSON.stringify(b)});return {status:r.status,data:await r.json()};};
+ try{
+  const {data:a}=await post('campaign',{name:'范围测试'}),{data:b}=await post('campaign',{name:'另一测试'});
+  await post('settings',{provider:'deepseek',model:'deepseek-flash',apiKey:'test-only-key'});
+  const recognize=(c,text='')=>post('recognize',{campaignId:c.id,mode:'image',image:'data:image/png;base64,eA==',text,textOnly:true});
+  let result=await recognize(a,'本期商品角色为凯尔希·思衡托');assert.equal(result.status,200,JSON.stringify(result.data));
+  assert.deepEqual(result.data.data.products.map(p=>p.name),['挂件-凯尔希·思衡托','明信片']);assert.ok(result.data.data.questions.some(q=>q.includes('阿米娅')));assert.match(task,/本期商品角色范围：凯尔希·思衡托/);
+  await app.shutdown();app=await start({port:0,dataDir:dir,upstreamFetch});
+  result=await recognize(a);assert.deepEqual(result.data.data.products.map(p=>p.name),['挂件-凯尔希·思衡托','明信片']);
+  result=await recognize(b);assert.ok(result.data.data.products.some(p=>p.name==='徽章-阿米娅'));assert.doesNotMatch(task,/管理员明确的本期商品角色范围/);
+  result=await recognize(a,'本期角色为阿米娅');assert.deepEqual(result.data.data.products.map(p=>p.name),['徽章-阿米娅','明信片']);
+  const state=await(await fetch(app.url+'/api/state')).json();assert.deepEqual(state.campaigns.find(c=>c.id===a.id).recognitionCharacters,['阿米娅']);assert.equal(state.campaigns.find(c=>c.id===b.id).recognitionCharacters,undefined);
+ }finally{await app.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
+
+test('saving a catalogue stores an explicit roster without inference and rejected saves do not replace it',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-catalog-roster-'));
+ let app=await start({port:0,dataDir:dir,credentialStore:{get:async()=>'',set:async()=>{}},upstreamFetch:async()=>{throw Error('No inference allowed');}});
+ const post=async(route,b)=>{const r=await fetch(app.url+'/api/'+route,{method:'POST',headers:{origin:app.url,'content-type':'application/json'},body:JSON.stringify(b)});return {status:r.status,data:await r.json()};};
+ try{
+  const {data:c}=await post('campaign',{name:'保存范围测试'}),products=[{id:'paper',name:'明信片',type:'单领',price:10}];
+  assert.equal((await post('catalog',{campaignId:c.id,revision:0,products,recognitionNote:'本期角色为Mon3tr、黑键'})).status,200);
+  assert.equal((await post('catalog',{campaignId:c.id,revision:0,products,recognitionNote:'本期角色为阿米娅'})).status,400);
+  assert.equal((await post('catalog',{campaignId:c.id,revision:1,products,recognitionNote:'请保留原价'})).status,200);
+  await app.shutdown();app=await start({port:0,dataDir:dir,credentialStore:{get:async()=>'',set:async()=>{}}});
+  const state=await(await fetch(app.url+'/api/state')).json();assert.deepEqual(state.campaigns[0].recognitionCharacters,['Mon3tr','黑键']);assert.equal(state.campaigns[0].recognitionNote,'本期角色为Mon3tr、黑键');
+ }finally{await app.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
 test('image box prices require explicit whole-box labels, retain non-350 prices and reject conflicts',async()=>{
  const ref=await loadReferences(root),entry=(boxId,price,priceText,status='clear')=>({boxId,price,priceText,status});
  const result=enrichRecognition(ref,{boxIds:['55.0'],products:[],boxPrices:[entry('通行证55.0',350,'350元/整盒'),entry('56.0',420,'整盒原价：420元'),entry('57.0',25,'25元/单抽 350元/整盒'),entry('58.0',350,'350元/整盒','uncertain'),entry('59.0',300,'300元/整盒'),entry('59.0',320,'320元/整盒')]});

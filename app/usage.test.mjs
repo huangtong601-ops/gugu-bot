@@ -72,7 +72,7 @@ test('QQ cost queries need a real mention, use event group and work without camp
  const options={usageReport:(group,period)=>{seen.push([group,period]);return {reply:'本群费用 '+period};}};
  for(const [command,period]of [['查询花费','all'],['查询本日花费','day'],['今日花费','day'],['查询本周消费','week'],['查询本月费用','month']]){const result=processQQEvent(db,say(command),options);assert.equal(result.readOnly,true);assert.equal(result.reply,'本群费用 '+period);}
  assert.ok(seen.every(([g])=>g==='11111'));assert.equal(JSON.stringify(db),before);
- assert.match(processQQEvent(db,{...say('查询花费'),message:[{type:'text',data:{text:'查询花费'}}]},options).reply,/@/);assert.equal(seen.length,5);
+ assert.equal(processQQEvent(db,{...say('查询花费'),message:[{type:'text',data:{text:'查询花费'}}]},options).ignored,true);assert.equal(seen.length,5);
 });
 
 test('all model attempts are billed to campaign group, including parse failures and HTTP errors; queries and models listing stay free',async()=>{

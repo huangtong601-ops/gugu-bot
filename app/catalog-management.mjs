@@ -1,11 +1,12 @@
 import {matchProduct} from './workflow.mjs';
 import {isGiftCategory} from './public/catalog-utils.js';
+import {validateBundleCatalog} from './bundles.mjs';
 const normalized=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/吧唧/g,'徽章').replace(/安洁丽娜/g,'安洁莉娜').replace(/[\s\p{P}\p{S}]/gu,'');
 export function searchProducts(c,query,{products=c.products,categoryId='',productIds}={}){
  query=String(query||'').trim();if(query.length>120)throw Error('搜索内容最多120字');
  let available=products.filter(p=>(!categoryId||(p.categoryId||p.type)===categoryId)&&(!productIds||productIds.includes(p.id)));
  if(!query)return available;
- const tokens=query.split(/\s+/u).map(normalized).filter(Boolean),fuzzy=new Set(matchProduct(query,available,500,{arknights:!c.botId||c.botId==='zhougu'}).map(p=>p.id)),q=normalized(query);
+ const tokens=query.split(/\s+/u).map(normalized).filter(Boolean),fuzzy=new Set(matchProduct(query,available,500,{arknights:!c.botId||c.botId==='zhougu',familyProducts:products}).map(p=>p.id)),q=normalized(query);
  return available.map((p,index)=>{const cat=c.categories.find(cat=>cat.id===(p.categoryId||p.type)),fields=[p.name,p.character,...(p.aliases||[]),cat?.name,...(cat?.aliases||[]),p.boxId].map(normalized),text=fields.join('');const direct=tokens.every(t=>text.includes(t));return {p,index,score:fields[0]===q?1000:direct?600:fuzzy.has(p.id)?400:0};}).filter(row=>row.score).sort((a,b)=>b.score-a.score||a.index-b.index).map(row=>row.p);
 }
 export function productDeletionReason(c,id,products=c.products){
@@ -26,6 +27,7 @@ export function categoryDeletionReason(c,db,id,products=c.products,remainingCoun
  return '';
 }
 export function validateCatalogChanges(c,db,products,categories){
+ validateBundleCatalog(c,products,categories);
  const ids=new Set(products.map(p=>p.id));
  for(const old of c.products)if(!ids.has(old.id)){const reason=productDeletionReason(c,old.id,products);if(reason)throw Error(old.name+'：'+reason);}
  for(const p of products)for(const id of p.giftComponents||[])if(!ids.has(id))throw Error(p.name+'的SET组成商品不存在');

@@ -1,8 +1,63 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs/promises';import path from 'node:path';import os from 'node:os';
-import {planOrders,purchasePool} from './order-planning.mjs';import {settlementSummary,settlementSettings,defaultGiftRevenue,applyAutomaticGroupPrices} from './settlement.mjs';import {tableData,workbook} from './tables.mjs';import {ensureGiftSet,mergeBoxPrices} from './public/product-merge.js';import {catalog} from './domain.mjs';import {start} from './server.mjs';
+import {planOrders,purchasePool} from './order-planning.mjs';import {settlementSummary,settlementSettings,defaultGiftRevenue,applyAutomaticGroupPrices} from './settlement.mjs';import {tableData,workbook} from './tables.mjs';import {ensureGiftSet,mergeBoxPrices} from './public/product-merge.js';import {giftTiers} from './public/gift-tiers.js';import {catalog} from './domain.mjs';import {start} from './server.mjs';
 import {parseComment,categories} from './workflow.mjs';
 const settings={tier1:100,tier2:400,objective:'tier2',rewardMode:'both',rule:'once'};
 const fromPrices=prices=>prices.map((price,i)=>({id:'p'+i,name:'商品'+i,price,quantity:1,unit:'件'}));
+test('single quantities follow new and reduced enrollment rather than saved zeroes, while box settings and manual prices remain intact',()=>{
+ const c={categories:[{id:'s',name:'单领',kind:'single'},{id:'g',name:'拼团',kind:'group',sets:2}],products:[{id:'a',name:'合成A',type:'单领',categoryId:'s',price:20},{id:'b',name:'合成B',type:'单领',categoryId:'s',price:30},{id:'box',name:'盒内角色',type:'通行证',categoryId:'g',price:50}],records:[{id:'ra',skuId:'a',quantity:2},{id:'rb',skuId:'b',quantity:1}],orderPlanning:{pool:[{id:'sku:a',quantity:0,demand:0,price:21},{id:'sku:b',quantity:8,demand:8,price:31},{id:'box:g|',quantity:5,price:360}],plan:{orders:[{id:'paid',actualPaid:100}]}}},before=structuredClone(c);
+ let pool=purchasePool(c);assert.equal(pool.find(p=>p.id==='sku:a').quantity,2);assert.equal(pool.find(p=>p.id==='sku:a').price,21);assert.equal(pool.find(p=>p.id==='sku:b').quantity,1);assert.equal(pool.find(p=>p.kind==='group').quantity,5);assert.equal(pool.find(p=>p.kind==='group').price,360);assert.deepEqual(c,before);
+ c.orderPlanning.pool[0]={id:'sku:a',quantity:3,demand:2,price:21};assert.equal(purchasePool(c).find(p=>p.id==='sku:a').quantity,3);assert.equal(purchasePool(c,{syncSingleDemand:true}).find(p=>p.id==='sku:a').quantity,2);
+ c.records=[];pool=purchasePool(c);assert.ok(pool.filter(p=>p.kind==='single').every(p=>p.quantity===0));delete c.orderPlanning.pool[0].demand;c.records=[{skuId:'a',quantity:4}];assert.equal(purchasePool(c).find(p=>p.id==='sku:a').quantity,4);
+});
+test('planning-state refresh includes newly enrolled existing SKUs with stale zero quantities and preserves stored paid orders',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-demand-refresh-'));let service;
+ try{
+  const c={id:'c',name:'合成排量同步',botId:'zhougu',revision:0,categories:[{id:'s',name:'单领',kind:'single'}],products:[{id:'a',name:'合成A',type:'单领',categoryId:'s',price:20},{id:'b',name:'合成B',type:'单领',categoryId:'s',price:30}],records:[{id:'r1',skuId:'a',member:'合成甲',quantity:1,createdAt:'2026-01-01T00:00:00Z'}]};const pool=purchasePool(c);c.orderPlanning={version:1,pool,plan:planOrders(pool,settings)};c.orderPlanning.plan.orders[0].actualPaid=10;const orders=structuredClone(c.orderPlanning.plan.orders);
+  await fs.writeFile(path.join(dir,'workspace.json'),JSON.stringify({campaigns:[c],settings:{provider:'custom',baseUrl:'https://example.test/v1',model:''}}));service=await start({port:0,dataDir:dir,credentialStore:{get:async()=>'',set:async()=>{}}});
+  const post=async(route,body={})=>{const r=await fetch(service.url+'/api/'+route,{method:'POST',headers:{origin:service.url,'content-type':'application/json'},body:JSON.stringify({campaignId:'c',...body})});assert.equal(r.status,200);return r.json();};
+  await post('enroll',{revision:0,skuId:'b',member:'合成乙',quantity:3,requestId:'newly-enrolled-existing-sku'});let view=await post('planning-state');assert.equal(view.pool.find(p=>p.id==='sku:b').quantity,3);assert.equal(view.pool.find(p=>p.id==='sku:b').demand,3);view=await post('planning-state',{syncSingles:true});assert.equal(view.pool.find(p=>p.id==='sku:b').quantity,3);assert.deepEqual(view.planning.plan.orders,orders);
+  const saved=JSON.parse(await fs.readFile(path.join(dir,'workspace.json'),'utf8')).campaigns[0];assert.equal(saved.orderPlanning.pool.find(p=>p.id==='sku:b').quantity,0);assert.deepEqual(saved.orderPlanning.plan.orders,orders);
+ }finally{await service?.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
+test('partial replan keeps saved payments and combines unpaid quantities with new demand',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'pingu-partial-plan-'));let app;
+ const config={tiers:[40],rule:'once',rewardMode:'both',leftoverStrategy:'fewerOrders'};
+ const sku=(id,price)=>({id,name:'模拟商品'+id,type:'单领',categoryId:'single',price});
+ const c={id:'c',name:'模拟期次',botId:'zhougu',revision:0,categories:[{id:'single',name:'单领',kind:'single'}],
+  products:[sku('a',50),sku('b',15),sku('c',25)],records:[{id:'a',skuId:'a',member:'模拟甲',quantity:2,createdAt:'2026-01-01T00:00:00Z'}]};
+ try{
+  await fs.writeFile(path.join(dir,'workspace.json'),JSON.stringify({campaigns:[c],settings:{provider:'custom',baseUrl:'https://example.test/v1',model:''}}));
+  app=await start({port:0,dataDir:dir,credentialStore:{get:async()=>''}});
+  const post=async(route,body={},status=200)=>{
+   const r=await fetch(app.url+'/api/'+route,{method:'POST',headers:{origin:app.url,'content-type':'application/json'},body:JSON.stringify({campaignId:'c',...body})});
+   const data=await r.json();assert.equal(r.status,status,JSON.stringify(data));return data;
+  };
+  const state=await post('planning-state');
+  const initial=await post('order-plan',{catalogRevision:0,version:0,pool:state.pool.map(p=>p.id==='sku:b'?{...p,quantity:1}:p),settings:config});
+  assert.equal(initial.planning.plan.orders.length,3);
+  const paid={...initial.planning.plan.orders[1],actualPaid:0};
+  await post('order-payment',{version:initial.planning.version,orderId:paid.id,actualPaid:0});
+  const stale=await post('planning-state');
+  await post('enroll',{revision:0,skuId:'c',member:'模拟乙',quantity:1,requestId:'added-demand'});
+  const request=view=>({catalogRevision:0,version:view.planning.version,expectedSource:view.sourceHash,pool:view.pool,settings:config});
+  assert.match((await post('order-plan',request(stale),400)).error,/排量或商品已变化/);
+  const view=await post('planning-state',{syncSingles:true});
+  assert.equal(view.replanUnpaid,true);
+  assert.deepEqual(view.pool.map(({id,quantity,purchased})=>[id,quantity,purchased]),[['sku:a',1,1],['sku:b',1,0],['sku:c',1,0]]);
+  const {planning}=await post('order-plan',request(view)),{orders,totalCents,giftCounts}=planning.plan;
+  assert.deepEqual(orders[0],paid);
+  assert.deepEqual(orders.map(o=>o.number),[2,3,4]);
+  assert.ok(orders.slice(1).every(o=>o.actualPaid===null));
+  assert.deepEqual(orders[2].lines.map(l=>l.id).sort(),['sku:b','sku:c']);
+  assert.equal(totalCents,14000);assert.deepEqual(giftCounts,[3]);
+  assert.deepEqual(planning.pool.map(({id,quantity})=>[id,quantity]),[['sku:a',2],['sku:b',1],['sku:c',1]]);
+  assert.match((await post('order-plan',request(view),400)).error,/下单规划已更新/);
+  const again=await post('planning-state');
+  const repeated=await post('order-plan',request(again));assert.equal(repeated.planning.plan.totalCents,14000);
+  const saved=JSON.parse(await fs.readFile(path.join(dir,'workspace.json'),'utf8')).campaigns[0];
+  assert.deepEqual(saved.orderPlanning.plan.orders[0],paid);assert.equal(saved.records.length,2);
+ }finally{await app?.shutdown();await fs.rm(dir,{recursive:true,force:true});}
+});
 test('three-tier remainder strategies prioritize highest tier, then either lower tiers or one remainder order',()=>{
  const pool=fromPrices([500,125,125,100,100]),config={tiers:[100,250,500],rewardMode:'both',rule:'once'};
  const more=planOrders(pool,{...config,leftoverStrategy:'moreGifts'}),few=planOrders(pool,{...config,leftoverStrategy:'fewerOrders'});
@@ -92,6 +147,16 @@ test('automatic averages import after settlement using a 50-yuan pair, and recal
 test('automatic pair average follows the confirmed box price rather than a hardcoded 25 or 50',()=>{
  const c=priced(),box=c.orderPlanning.plan.pool.find(p=>p.kind==='group');box.price=420;
  const s=applyAutomaticGroupPrices(c).summary,item=s.items.find(i=>i.skuId==='r0');assert.equal(item.originalCents,6000);assert.equal(item.averageCents,Math.round(6000*s.rate));
+});
+test('SET contains every gift tier, including tiers after two',()=>{
+ const products=[1,2,3,4,5].map(tier=>({id:'tier'+tier,name:'第'+tier+'档特典',type:'特典',categoryId:'gift',giftTier:tier,price:tier}));
+ products.push({id:'set',name:'特典SET',type:'特典',categoryId:'gift',giftTier:'set',giftComponents:['tier1','tier2'],price:25});
+ assert.equal(ensureGiftSet(products,()=> 'new'),1);
+ const set=products.find(p=>p.giftTier==='set');
+ assert.deepEqual(set.giftComponents,['tier1','tier2','tier3','tier4','tier5']);
+ assert.equal(products.filter(p=>p.giftTier==='set').length,1);
+ assert.deepEqual(giftTiers(set,products),[1,2,3,4,5]);
+ assert.equal(ensureGiftSet(products,()=> 'bad'),0);
 });
 test('SET has its own price, survives catalog and repeat recognition, and is excluded from purchase pool',()=>{const c=fixture();assert.equal(ensureGiftSet(c.products,()=> 'bad'),0);assert.equal(c.products.filter(p=>p.giftTier==='set').length,1);assert.equal(c.products.find(p=>p.id==='set').price,25);const clean=catalog(c.products,c.categories);assert.deepEqual(clean.find(p=>p.id==='set').giftComponents,['one','two']);assert.equal(purchasePool(c).some(p=>p.id==='sku:set'),false);});
 test('comments can enroll gift tiers and SET independently through tier aliases',()=>{const c=fixture();assert.deepEqual(parseComment('SET1一档2二档1',c.products).items,[{skuId:'set',quantity:1},{skuId:'one',quantity:2},{skuId:'two',quantity:1}]);});

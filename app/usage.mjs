@@ -15,7 +15,7 @@ export function readUsage(payload){
 export function parseCostCommand(text){
  const periods={'本日':'day','今日':'day','今天':'day','当天':'day','本周':'week','这周':'week','本星期':'week','这个星期':'week','本月':'month','这个月':'month','当月':'month'};
  const normalized=String(text||'').normalize('NFKC').replace(/\s+/g,'').replace(/[：:。！!？?]+$/,'');
- const m=normalized.match(/^(?:(?:查询|查看|查)(?:一下|下)?)?(本日|今日|今天|当天|本周|这周|本星期|这个星期|本月|这个月|当月)?的?(?:花费|费用|消费|开销)(本日|今日|今天|当天|本周|这周|本星期|这个星期|本月|这个月|当月)?$/);
+ const m=normalized.match(/^(?:(?:查询|查看|查阅|查)(?:一下|下)?)?(本日|今日|今天|当天|本周|这周|本星期|这个星期|本月|这个月|当月)?的?(?:花费|费用|消费|开销)(本日|今日|今天|当天|本周|这周|本星期|这个星期|本月|这个月|当月)?$/);
  return m&&!(m[1]&&m[2])?{period:periods[m[1]||m[2]]||'all'}:null;
 }
 export function periodStart(period,now=new Date()){

@@ -8,9 +8,9 @@
 dialog.app-dialog.category-manager{width:min(600px,calc(100vw - 48px));padding:0}.category-manager-list{padding:0 24px}.category-manager-status{margin:12px 24px}.category-manager-row input:disabled{opacity:.7}
 dialog.app-dialog.runtime-dialog{width:min(560px,calc(100vw - 48px));padding:0}.runtime-body{padding:12px 24px 0}
 .product-filters{flex-wrap:wrap}.product-filters>[data-type],.product-filters>#manageCategories{white-space:nowrap;flex:0 0 auto}.product-filters>.image-toggle{flex:0 0 auto}
-@media(min-width:761px) and (max-width:1050px){.toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;gap:12px}.toolbar>label{margin:0;min-width:0;display:flex;align-items:center;gap:8px}.toolbar>label select{min-width:0;max-width:100%;flex:1}.toolbar form{margin:0;max-width:100%}.toolbar form input{min-width:0;width:100%}.toolbar>#undoOperation{justify-self:end}}
+@media(min-width:761px) and (max-width:1050px){.toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;gap:12px}.toolbar>label{margin:0;min-width:0;display:flex;align-items:center;gap:8px}.toolbar>label select{min-width:0;max-width:100%;flex:1}.toolbar form{margin:0;max-width:100%}.toolbar form input{min-width:0;width:100%}}
 
-@media(min-width:761px) and (max-width:1050px){.toolbar{position:relative;padding-right:44px}.toolbar>#campaignPhase{justify-self:start}.toolbar>#undoOperation{position:absolute;right:0;bottom:0}}
+@media(min-width:761px) and (max-width:1050px){.toolbar{position:relative}.toolbar>#campaignPhase{justify-self:start}}
 
 .runtime-entry{width:100%;padding:8px 10px;margin-bottom:0;gap:10px}.runtime-entry-labels{display:grid;gap:2px;min-width:0;text-align:left}.runtime-entry .runtime-location{font-size:11px;font-weight:400;color:#8a8fa3;line-height:1.5}
 

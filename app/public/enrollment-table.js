@@ -1,15 +1,23 @@
+import {createBundleEditor} from './bundle-editor.js';
+import {createTransferEditor} from './transfer-editor.js';
 const $=id=>document.getElementById(id);
 const node=(tag,text='',className='')=>{const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;};
 const amount=n=>n==null?'待定价':(n/100).toFixed(2);
 const signed=n=>(n>0?'+':'')+(n/100).toFixed(2);
 const PAGE_SIZE=50;
 export function createEnrollmentTable({api,current,onChanged=async()=>{}}){
- let data=null,generation=0,requestedKey='',loadedKey='',campaignId='',editing=false,saving=false,orderNotice='';
+ let data=null,generation=0,requestedKey='',loadedKey='',campaignId='',editing=false,bundling=false,saving=false,orderNotice='';
  const selections=new Map(),pages=new Map();
  const selector=$('recordCategory'),host=$('records'),status=$('recordStatus');
  const edit=node('button','调整顺序','secondary queue-order-toggle');edit.type='button';edit.setAttribute('aria-pressed','false');selector.closest('.enrollment-category-bar').append(edit);
+ const bundleToggle=node('button','上捆 / 选捆','secondary bundle-toggle');bundleToggle.type='button';bundleToggle.setAttribute('aria-pressed','false');edit.after(bundleToggle);
+ const bundleEditor=createBundleEditor({api,current,onSaved:async result=>{generation++;requestedKey='';loadedKey='';if(result.view?.campaignId===current()?.id){data=result.view;orderNotice=result.message;draw();}await onChanged();}});
+ const transferEditor=createTransferEditor({api,current,onSaved:async result=>{generation++;requestedKey='';loadedKey='';if(result.view?.campaignId===current()?.id){data=result.view;orderNotice=result.message;draw();}await onChanged();}});
+ const editCN=(cn,key,label)=>{const button=node('button',cn,'queue-cn cn-edit');button.type='button';button.dataset.entryKey=key;button.title='更改商品或商品转单';button.setAttribute('aria-label','修改CN '+cn+' · '+label);button.onclick=()=>{bundleEditor.close();transferEditor.open({campaignId,entryKey:key});};return button;};
+ bundleToggle.onclick=()=>{bundling=!bundling;bundleToggle.setAttribute('aria-pressed',String(bundling));if(!bundling)bundleEditor.close();draw();};
  edit.onclick=()=>{editing=!editing;edit.textContent=editing?'完成调整':'调整顺序';edit.setAttribute('aria-pressed',String(editing));orderNotice='';draw();};
- selector.onchange=()=>{selections.set(campaignId,selector.value);orderNotice='';draw();};
+ selector.onchange=()=>{bundleEditor.close();transferEditor.close();selections.set(campaignId,selector.value);orderNotice='';draw();};
+ const bundleContext=block=>({campaignId,categoryId:selector.value,boxId:block.boxId||''});
  async function move(block,column,entryKey,direction){
   if(saving)return;const id=campaignId,categoryId=selector.value;saving=true;edit.disabled=true;
   for(const b of host.querySelectorAll('.queue-move,.queue-reset'))b.disabled=true;
@@ -22,8 +30,13 @@ export function createEnrollmentTable({api,current,onChanged=async()=>{}}){
  }
  function entryCell(value,index,column,block){
   const cell=node('td');if(!value)return cell;
-  cell.append(node('span',value.cn,'queue-cn'));
+  cell.append(editCN(value.cn,value.entryKey,column.label+' · 第'+(index+1)+'位'));
   if(value.fromSet){cell.append(node('small','SET','set-origin'));cell.title='来自特典SET';}
+  if(value.bundleGenerated||value.bundleLinked)cell.append(node('small','捆','bundle-origin'));
+  else if(column.bundleRule?.mode==='required'&&!value.fromSet){
+   const picked=node('small','已选 '+value.bundleCount+' / '+column.bundleRule.count,'bundle-count');cell.append(picked);
+   if(bundling){const choose=node('button',value.bundleCount?'修改选捆':'选捆','secondary bundle-pick');choose.type='button';choose.disabled=saving;choose.dataset.entryKey=value.entryKey;choose.setAttribute('aria-label',choose.textContent+' '+value.cn+' · '+column.label+' · 第'+(index+1)+'位');choose.onclick=()=>bundleEditor.pick({...bundleContext(block),entryKey:value.entryKey});cell.append(choose);}
+  }
   if(column.sets!==null&&index>=column.sets)cell.className='queue-overflow';
   if(editing){const tools=node('span','','queue-entry-actions');
    for(const [direction,icon,label,disabled]of [['up','↑','上移',index===0],['down','↓','下移',index===column.queue.length-1]]){
@@ -40,6 +53,11 @@ export function createEnrollmentTable({api,current,onChanged=async()=>{}}){
   if(!block.columns.length){section.append(node('p','本大类还没有商品。','empty'));return section;}
   const key=campaignId+'/'+selector.value+'/'+block.id,maxPage=Math.max(0,Math.ceil(block.positions/PAGE_SIZE)-1),page=Math.min(pages.get(key)||0,maxPage);pages.set(key,page);
   const start=page*PAGE_SIZE,end=Math.min(start+PAGE_SIZE,block.positions),{wrap,t,body}=table(['序号',...block.columns.map(c=>c.label)],'queue-grid');wrap.dataset.queueBlock=JSON.stringify([selector.value,block.id]);
+  block.columns.forEach((column,i)=>{
+   const header=t.tHead.rows[0].cells[i+1],rule=column.bundleRule;
+   if(rule?.mode==='required'||rule?.mode==='available')header.append(node('small',rule.mode==='required'?'需捆 '+rule.count:'可选捆','bundle-label '+rule.mode));
+   if(bundling&&column.bundleEditable){const menu=node('button','⋯','bundle-rule-menu');menu.type='button';menu.setAttribute('aria-label','标记 '+column.label);menu.onclick=()=>bundleEditor.rule(bundleContext(block),column,data.bundleVersion);header.append(menu);}
+  });
   if(editing)block.columns.forEach((column,i)=>{const reset=node('button','↺','queue-reset');reset.type='button';reset.title='恢复本列评论时间顺序';reset.setAttribute('aria-label','恢复 '+column.label+' 的评论时间顺序');reset.disabled=saving||!column.manualOrder;reset.onclick=()=>move(block,column,'','reset');t.tHead.rows[0].cells[i+1].append(reset);});
   {
    const price=node('tr','','queue-prices');price.append(node('th',!block.gift&&block.pricingMode!=='fixed'?'调价':'实际价格'));
@@ -63,8 +81,8 @@ export function createEnrollmentTable({api,current,onChanged=async()=>{}}){
   const section=node('section','','enrollment-details');
   const {wrap,t,body}=table(headers,'enrollment-detail-grid');
   for(const person of cat.people)person.items.forEach((item,i)=>{
-   const row=node('tr');if(i===0){const cn=node('td',person.cn,'person-cell');cn.rowSpan=person.items.length;row.append(cn);}
-   row.append(node('td',item.name,'product-cell'));
+   const row=node('tr');if(i===0){const cn=node('td','','person-cell');cn.append(editCN(person.cn,item.entryKey,item.name));cn.rowSpan=person.items.length;row.append(cn);}
+   const product=node('td',item.name,'product-cell'),change=node('button','✎','transfer-item');change.type='button';change.dataset.entryKey=item.entryKey;change.title='转让这一份商品';change.setAttribute('aria-label','转让 '+person.cn+' · '+item.name+' · 第'+(i+1)+'项');change.onclick=()=>transferEditor.open({campaignId,entryKey:item.entryKey});product.append(change);row.append(product);
    row.append(node('td',amount(item.originalCents),item.originalCents===null?'unknown-price':'money-cell'));body.append(row);
   });
   if(!cat.people.length){const row=node('tr'),cell=node('td','本大类还没有排表记录。','empty');cell.colSpan=headers.length;row.append(cell);body.append(row);}t.append(body);section.append(wrap);return section;
@@ -72,7 +90,7 @@ export function createEnrollmentTable({api,current,onChanged=async()=>{}}){
  function draw(){
   const scroll=new Map([...host.querySelectorAll('[data-queue-block]')].map(w=>[w.dataset.queueBlock,{top:w.scrollTop,left:w.scrollLeft}]));
   const focus=document.activeElement?.dataset?.entryKey,direction=document.activeElement?.dataset?.direction,focusScope=document.activeElement?.dataset?.scope;
-  host.replaceChildren();const cat=data?.categories.find(c=>c.id===selector.value);edit.hidden=!cat?.queues.length;
+  host.replaceChildren();const cat=data?.categories.find(c=>c.id===selector.value);edit.hidden=bundleToggle.hidden=!cat?.queues.length;
 
   if(!cat){host.append(node('p','请先在商品建档中创建大类和商品。','empty'));return;}
   status.textContent=cat.productCount+' 种制品'+(orderNotice?' · '+orderNotice:'');
@@ -83,11 +101,11 @@ export function createEnrollmentTable({api,current,onChanged=async()=>{}}){
  }
  return {async render(c,active=true,{force=false}={}){
   if(!active)return;
-  if(!c){edit.hidden=true;generation++;data=null;campaignId='';requestedKey='';loadedKey='';selector.replaceChildren();selector.disabled=true;status.textContent='';draw();return;}
-  const key=JSON.stringify([c.id,c.revision,c.categories,c.products.map(p=>[p.id,p.name,p.character,p.type,p.categoryId,p.boxId,p.price,p.averagePrice,p.adjustment,p.giftTier,p.giftComponents]),c.records,c.queueOrder,c.orderPlanning?.plan?.giftCounts,c.orderPlanning?.plan?.tier1,c.orderPlanning?.plan?.tier2]);
+  if(!c){bundleEditor.close();transferEditor.close();edit.hidden=bundleToggle.hidden=true;generation++;data=null;campaignId='';requestedKey='';loadedKey='';selector.replaceChildren();selector.disabled=true;status.textContent='';draw();return;}
+  const key=JSON.stringify([c.id,c.revision,c.categories,c.products.map(p=>[p.id,p.name,p.character,p.type,p.categoryId,p.boxId,p.price,p.averagePrice,p.adjustment,p.giftTier,p.giftComponents]),c.records,c.queueOrder,c.bundleRules,c.bundleLinks,c.orderPlanning?.version,c.orderLifecycle?.version,c.orderPlanning?.plan?.giftCounts,c.orderPlanning?.plan?.tier1,c.orderPlanning?.plan?.tier2]);
   if(!force&&(key===loadedKey||key===requestedKey))return;
   const ticket=++generation;requestedKey=key;
-  if(campaignId!==c.id){orderNotice='';editing=false;edit.textContent='调整顺序';edit.setAttribute('aria-pressed','false');campaignId=c.id;data=null;host.replaceChildren(node('p','正在读取排表…','empty'));selector.disabled=true;}status.textContent='正在更新…';
+  if(campaignId!==c.id){bundleEditor.close();transferEditor.close();orderNotice='';editing=bundling=false;bundleToggle.setAttribute('aria-pressed','false');edit.textContent='调整顺序';edit.setAttribute('aria-pressed','false');campaignId=c.id;data=null;host.replaceChildren(node('p','正在读取排表…','empty'));selector.disabled=true;}status.textContent='正在更新…';
   try{
    const result=await api('enrollment-view',{campaignId:c.id});
    if(ticket!==generation||current()?.id!==c.id)return false;

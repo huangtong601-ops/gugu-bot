@@ -6,14 +6,14 @@ test('unbound groups cannot enter business processing; binding affects only that
 test('explicit test group confines group operations even when other albums are bound',()=>{const db={qqTestGroup:{id:'90000003'},albums:[{groupId:'456'}]};assert.equal(canHandleQQEvent(db,{group_id:90000003}),true);assert.equal(canHandleQQEvent(db,{group_id:456}),false);assert.equal(canHandleQQEvent(db,{user_id:123}),true);});
 test('one manual multi-item submission retains its textual order',()=>{const records=[{id:'z',requestId:'batch',itemIndex:0,createdAt:'2026-10-23T01:00:00Z'},{id:'a',requestId:'batch',itemIndex:1,createdAt:'2026-10-23T01:00:00Z'}];assert.deepEqual(orderedRecords({records}).map(r=>r.id),['z','a']);});
 const products=()=>catalog([{id:'a',name:'通行证-予愿安洁莉娜',type:'通行证',boxId:'55.0',averagePrice:30,adjustment:40},{id:'b',name:'通行证-克莱门莎',type:'通行证',boxId:'55.0',averagePrice:30,adjustment:20},{id:'s',name:'双闪徽章-酒神（真我自扼）',type:'单领',price:20}]);
-test('multi-item aliases resolve only within campaign; duplicate CN is rejected',()=>{const db={};registerCN(db,'12345','示例用户J');assert.throws(()=>registerCN(db,'54321','示例用户J'));assert.deepEqual(parseComment('洁哥通行证2克莱门莎通行证1',products()).items,[{skuId:'a',quantity:2},{skuId:'b',quantity:1}]);assert.equal(parseComment('酒神皮肤吧唧1',products()).items[0].skuId,'s');assert.deepEqual(parseComment('吧唧',products()).items,[{skuId:'s',quantity:1}]);});
-test('late comments retain source order, quantities expand and duplicate events are idempotent',()=>{const db={};registerCN(db,'12345','示例用户J');registerCN(db,'54321','示例用户L');const c={products:products(),categories:defaultCategories(),records:[]};c.categories[2].sets=5;addComment(db,c,{id:'2',qq:'54321',at:'2026-10-23T02:00:00Z',text:'洁哥通行证2克莱门莎通行证1'});addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'});assert.deepEqual(summary(c)[0].queue,['示例用户J','示例用户J','示例用户J','示例用户L','示例用户L']);assert.equal(summary(c)[1].remaining,4);assert.equal(addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'}).duplicate,true);const sheets=tableData(c,db),kidney=sheets.find(s=>s.name==='肾表');assert.equal(kidney.rows.length,4);assert.equal(kidney.rows[1][2],210);assert.equal(kidney.rows[2][2],190);assert.deepEqual(kidney.merges,['A3:A4','C3:C4']);assert.equal(kidney.rows[1][1],'通行证-予愿安洁莉娜 ×3对');assert.equal(workbook(c,db).readUInt32LE(0),0x04034b50);});
+test('multi-item aliases resolve only within campaign; duplicate CN is rejected',()=>{const db={};registerCN(db,'12345','示例用户O');assert.throws(()=>registerCN(db,'54321','示例用户O'));assert.deepEqual(parseComment('洁哥通行证2克莱门莎通行证1',products()).items,[{skuId:'a',quantity:2},{skuId:'b',quantity:1}]);assert.equal(parseComment('酒神皮肤吧唧1',products()).items[0].skuId,'s');assert.deepEqual(parseComment('吧唧',products()).items,[{skuId:'s',quantity:1}]);});
+test('late comments retain source order, quantities expand and duplicate events are idempotent',()=>{const db={};registerCN(db,'12345','示例用户O');registerCN(db,'54321','示例用户Q');const c={products:products(),categories:defaultCategories(),records:[]};c.categories[2].sets=5;addComment(db,c,{id:'2',qq:'54321',at:'2026-10-23T02:00:00Z',text:'洁哥通行证2克莱门莎通行证1'});addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'});assert.deepEqual(summary(c)[0].queue,['示例用户O','示例用户O','示例用户O','示例用户Q','示例用户Q']);assert.equal(summary(c)[1].remaining,4);assert.equal(addComment(db,c,{id:'1',qq:'12345',at:'2026-10-23T01:00:00Z',text:'洁哥通行证3'}).duplicate,true);const sheets=tableData(c,db),kidney=sheets.find(s=>s.name==='肾表');assert.equal(kidney.rows.length,4);assert.equal(kidney.rows[1][2],210);assert.equal(kidney.rows[2][2],190);assert.deepEqual(kidney.merges,['A3:A4','C3:C4']);assert.equal(kidney.rows[1][1],'通行证-予愿安洁莉娜 ×3对');assert.equal(workbook(c,db).readUInt32LE(0),0x04034b50);});
 test('fixed group prices and custom single categories survive catalog validation',()=>{const cats=[{id:'g',name:'人事部简历',kind:'group',pricingMode:'fixed'},{id:'x',name:'其他',kind:'single'}];const p=catalog([{id:'a',categoryId:'g',name:'简历-阿米娅',type:'单领',price:12},{id:'b',categoryId:'x',name:'立牌',type:'单领',price:30}],cats);assert.equal(p[0].price,12);assert.equal(p[0].pricingMode,'fixed');assert.equal(p[1].categoryId,'x');});
 test('position matching refuses overlapping and missing anchors',()=>{const a={skuId:'a',bounds:{x:0,y:0,width:.5,height:.5}},b={x:.1,y:.1,width:.1,height:.1};assert.equal(positionMatch([a],b).skuId,'a');assert.equal(positionMatch([a,a],b),null);assert.equal(positionMatch([a],null),null);});
-test('QQ command requires actual mention and uses sender identity',()=>{const db={campaigns:[]};assert.equal(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'今天吃啥'}}]}).ignored,true);assert.match(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'cn 示例用户J'}}]}).reply,/@/);const result=processQQEvent(db,{group_id:1,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:' cn 示例用户J'}}]});assert.match(result.reply,/已录入/);assert.equal(memberName(db,'12345','1'),'示例用户J');});
+test('QQ command requires actual mention and uses sender identity',()=>{const db={campaigns:[]};assert.equal(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'今天吃啥'}}]}).ignored,true);assert.equal(processQQEvent(db,{group_id:1,message:[{type:'text',data:{text:'cn 示例用户O'}}]}).ignored,true);const result=processQQEvent(db,{group_id:1,user_id:12345,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:' cn 示例用户O'}}]});assert.match(result.reply,/已录入/);assert.equal(memberName(db,'12345','1'),'示例用户O');});
 
 test('album-style parsing drops @ mentions, skips commands and keeps structured questions',()=>{
- const db={};registerCN(db,'12345','示例用户J');
+ const db={};registerCN(db,'12345','示例用户O');
  assert.equal(parseComment('@{uin:1,nick:小谷} 查询余量',products()).status,'skip');
  assert.equal(parseComment('@{uin:1,nick:小谷} 洁哥通行证1',products()).items.length,1);
  const ambiguous=parseComment('通行证1',products());
@@ -30,12 +30,12 @@ test('albums cannot be bound to a campaign that belongs to another group',()=>{
 });
 test('CN is scoped per group with a global fallback',()=>{
  const db={};
- registerCN(db,'12345','示例用户J','111111');
- assert.equal(memberName(db,'12345','111111'),'示例用户J');
+ registerCN(db,'12345','示例用户O','111111');
+ assert.equal(memberName(db,'12345','111111'),'示例用户O');
  assert.equal(memberName(db,'12345','222222'),'');
- registerCN(db,'54321','示例用户J','222222');
- assert.equal(memberName(db,'54321','222222'),'示例用户J');
- assert.throws(()=>registerCN(db,'99999','示例用户J','111111'),/本群/);
+ registerCN(db,'54321','示例用户O','222222');
+ assert.equal(memberName(db,'54321','222222'),'示例用户O');
+ assert.throws(()=>registerCN(db,'99999','示例用户O','111111'),/本群/);
  registerCN(db,'77777','全局名');
  assert.equal(memberName(db,'77777','333333'),'全局名');
 });
@@ -50,7 +50,7 @@ test('quantity overrides from pending resolution replace parsed and default valu
  const p=products();
  assert.deepEqual(parseComment('洁哥',p,'',{quantities:{'洁哥':3}}).items,[{skuId:'a',quantity:3}]);
  assert.deepEqual(parseComment('洁哥2',p,'',{quantities:{'洁哥':4}}).items,[{skuId:'a',quantity:4}]);
- const db={};registerCN(db,'12345','示例用户J');
+ const db={};registerCN(db,'12345','示例用户O');
  const c={products:p,categories:defaultCategories(),records:[]};
  addComment(db,c,{id:'q1',qq:'12345',at:'2026-10-25T01:00:00Z',text:'洁哥',quantities:{'洁哥':2}});
  assert.equal(c.records[0].quantity,2);
@@ -174,4 +174,86 @@ test('Arknights community aliases stay off for other imported Bots while explici
  p[0].aliases=['自定义小羊'];assert.equal(matchProduct('自定义小羊',p,6,{arknights:false})[0].id,'sheep');
  const c={botId:'imported-example',products:p,records:[]},db={members:{12345:{cn:'测试甲'}}};
  assert.throws(()=>addComment(db,c,{id:'one',qq:'12345',at:'2026-10-25T01:00:00Z',text:'银老板1'}),/未匹配/);assert.equal(c.records.length,0);
+});
+
+test('m3 and Mon3tr protect name digits, share a trailing merchandise kind and keep unrelated quantities',()=>{
+ const p=['凯尔希','Mon3tr','遥'].flatMap((character,i)=>['亚克力立牌','双闪徽章','杯垫','果冻包'].map((kind,j)=>({id:i+'-'+j,name:kind+'-'+character,character,type:'单领'})));
+ for(const alias of ['m3','M3','Mon3tr','MON3TR'])assert.deepEqual(parseComment(alias+'立牌2',p).items,[{skuId:'1-0',quantity:2}],alias);
+ assert.equal(parseComment('m3',p).questions[0].quantity,1);assert.equal(parseComment('m3 3个',p).questions[0].quantity,3);
+ assert.deepEqual(parseComment('凯尔希 m3 遥 立牌各一',p).items,['0-0','1-0','2-0'].map(skuId=>({skuId,quantity:1})));
+ assert.deepEqual(parseComment('凯尔希、m3、遥立牌各2',p).items,['0-0','1-0','2-0'].map(skuId=>({skuId,quantity:2})));
+ assert.equal(parseComment('m3立牌1',p,'',{arknights:false}).items.length,0);
+});
+
+test('review candidate sets are complete and entry-specific edits do not overwrite repeated phrases',()=>{
+ const p=Array.from({length:20},(_,i)=>({id:'k'+i,name:(i===19?'亚克力立牌':'商品'+i)+'-凯尔希',character:'凯尔希',type:'单领'}));
+ const parsed=parseComment('凯尔希1 凯尔希2',p);assert.equal(parsed.questions.length,2);assert.equal(parsed.questions[0].candidates.length,20);assert.ok(parsed.questions[0].candidates.some(x=>x.id==='k19'));
+ const [a,b]=parsed.lines.map(x=>x.entryKey),resolutions={[a]:'k19',[b]:'k1'},quantities={[a]:3,[b]:4};
+ assert.deepEqual(parseComment('凯尔希1 凯尔希2',p,'',{resolutions,quantities}).items,[{skuId:'k19',quantity:3},{skuId:'k1',quantity:4}]);
+ assert.deepEqual(parseComment('凯尔希1 凯尔希2',p,'',{resolutions,quantities,ignoredItems:[b]}).items,[{skuId:'k19',quantity:3}]);
+});
+
+test('shared quantities preserve full and abbreviated merchandise families instead of inventing descriptor items',()=>{
+ const families=['海星体毛绒挂件','毛绒挂件','亚克力挂件','Q版挂件'];
+ const p=['艾雅法拉','德克萨斯'].flatMap((character,i)=>families.map((family,j)=>({id:i+'-'+j,name:family+'-'+character,type:'单领'})));
+ for(const text of ['小羊 德狗 海星体毛绒挂件各2','艾雅法拉、德克萨斯海星体毛绒挂件各二','小羊 德狗 海星体挂件各2']){
+  const result=parseComment(text,p);assert.equal(result.status,'resolved',JSON.stringify(result.questions));assert.deepEqual(result.items,[{skuId:'0-0',quantity:2},{skuId:'1-0',quantity:2}],text);assert.equal(result.lines.length,2);
+ }
+ assert.deepEqual(matchProduct('德狗海星体挂件',p).map(p=>p.id),['1-0']);
+ assert.deepEqual(matchProduct('艾雅法拉毛绒挂件',p).map(p=>p.id),['0-1']);
+ assert.equal(parseComment('小羊 德狗 挂件各1',p).status,'ambiguous');
+ assert.equal(parseComment('小羊 德狗 海星体挂件各2',p.filter(p=>!p.id.endsWith('-0')),'',{allProducts:p}).status,'ambiguous');
+ const variant=[...p,{id:'skin',name:'海星体毛绒挂件-艾雅法拉（特别版）',type:'单领'}];
+ assert.equal(parseComment('小羊海星体挂件1',variant).status,'ambiguous');
+ const custom=['模拟甲','模拟乙'].flatMap((character,i)=>families.map((family,j)=>({id:i+'-'+j,name:family+'-'+character,aliases:[character+family],type:'单领'})));
+ assert.deepEqual(parseComment('模拟甲 模拟乙 海星体毛绒挂件各3',custom,'',{arknights:false}).items,[{skuId:'0-0',quantity:3},{skuId:'1-0',quantity:3}]);
+});
+
+test('catalogue-driven compound names retain all qualifiers across unknown kinds, punctuation and shared roles',()=>{
+ const families=['海星体毛绒挂件','毛绒挂件','挂件','流沙亚克力挂件','亚克力挂件','藏书票相卡套组','相卡套组','套组','立体冰箱贴','冰箱贴','毛绒耳机包','耳机包','水晶镭射票根','票根','透明文件夹','文件夹','贴纸包（Q版角色款）','贴纸包（角色款）','贴纸包'];
+ const p=['艾雅法拉','德克萨斯'].flatMap((character,i)=>families.map((family,j)=>({id:i+':'+j,name:family+'-'+character,type:'单领'})));
+ const generic=new Set(['挂件','套组']);
+ for(const [j,family]of families.entries()){
+  assert.deepEqual(matchProduct(family+'-艾雅法拉',p).map(p=>p.id),['0:'+j],family+' literal SKU');
+  if(generic.has(family))continue;
+  for(const text of ['小羊'+family+'1',family+'小羊1'])assert.deepEqual(parseComment(text,p).items,[{skuId:'0:'+j,quantity:1}],text);
+  for(const separator of [' ','、','和']){
+   const text='小羊'+separator+'德狗'+separator+family+'各2',r=parseComment(text,p);
+   assert.equal(r.status,'resolved',text+' '+JSON.stringify(r.questions));assert.deepEqual(r.items,[{skuId:'0:'+j,quantity:2},{skuId:'1:'+j,quantity:2}],text);assert.equal(r.lines.length,2,text);
+  }
+ }
+ for(const [phrase,j]of [['海星体挂件',0],['流沙挂件',3],['藏书票套组',5],['立体贴',8],['镭射票根',12],['Q版贴纸包',16]]){
+  const r=parseComment('小羊 德狗 '+phrase+'各3',p);assert.equal(r.status,'resolved',phrase+' '+JSON.stringify(r.questions));assert.deepEqual(r.items,[{skuId:'0:'+j,quantity:3},{skuId:'1:'+j,quantity:3}],phrase);
+ }
+ const spaced=parseComment('小羊 德狗 海 星体毛绒 挂件各1',p);assert.deepEqual(spaced.items,[{skuId:'0:0',quantity:1},{skuId:'1:0',quantity:1}]);
+ for(const text of ['小羊 德狗 挂件各1','小羊 德狗 套组各1']){const r=parseComment(text,p);assert.equal(r.status,'ambiguous');assert.equal(r.items.length,0);assert.equal(r.questions.length,2);}
+ assert.equal(parseComment('小羊未知海星体挂件1',p).items.length,0);
+});
+
+test('long product names never fall back to an in-scope shorter SKU and editions remain separate',()=>{
+ const p=[{id:'long',name:'立体冰箱贴-艾雅法拉',type:'单领'},{id:'short',name:'冰箱贴-艾雅法拉',type:'单领'},{id:'q',name:'贴纸包（Q版角色款）-德克萨斯',type:'单领'},{id:'normal',name:'贴纸包（角色款）-德克萨斯',type:'单领'}];
+ for(const text of ['小羊立体冰箱贴1','立体冰箱贴-艾雅法拉1']){
+  const r=parseComment(text,[p[1]],'',{allProducts:p});assert.equal(r.items.length,0);assert.equal(r.questions[0].code,'outside');assert.deepEqual(r.questions[0].candidates.map(p=>p.id),['long']);
+ }
+ const roleOnly=parseComment('小羊1',p);assert.equal(roleOnly.status,'ambiguous');assert.equal(roleOnly.questions[0].candidates.length,2);
+ assert.deepEqual(parseComment('德狗贴纸包（Q版角色款）2',p).items,[{skuId:'q',quantity:2}]);
+ assert.deepEqual(parseComment('德狗贴纸包(角色款)2',p).items,[{skuId:'normal',quantity:2}]);
+ assert.equal(parseComment('德狗贴纸包2',p).status,'ambiguous');
+ const expansion=parseComment('贴纸包（Q版角色款）一款各1',p);assert.deepEqual(expansion.items,[{skuId:'q',quantity:1}]);
+});
+
+test('a leading family scopes one or multiple roles, default and explicit quantities, aliases and independent review edits',()=>{
+ const p=['凯尔希·思衡托','Mon3tr','遥'].flatMap((character,i)=>['透明文件夹','文件夹','立牌'].map((family,j)=>({id:i+'-'+j,name:family+'-'+character,type:'单领'})));
+ for(const source of ['透明文件夹 凯 m3 瑶','透明文件夹 凯、m3、瑶','透明文件夹 凯和m3和瑶']){
+  const r=parseComment(source,p);assert.equal(r.status,'resolved',JSON.stringify(r.questions));assert.deepEqual(r.items,['0-0','1-0','2-0'].map(skuId=>({skuId,quantity:1})));assert.equal(r.lines.length,3);
+ }
+ assert.deepEqual(parseComment('透明文件夹 凯1 m3 2 瑶3',p).items,[{skuId:'0-0',quantity:1},{skuId:'1-0',quantity:2},{skuId:'2-0',quantity:3}]);
+ assert.deepEqual(parseComment('透明文件夹 凯 m3 瑶各2',p).items,['0-0','1-0','2-0'].map(skuId=>({skuId,quantity:2})));
+ assert.deepEqual(parseComment('透明文件夹 m3',p).items,[{skuId:'1-0',quantity:1}]);
+ const r=parseComment('透明文件夹 凯 m3 瑶',p),key=r.lines[1].entryKey;
+ assert.deepEqual(parseComment('透明文件夹 凯 m3 瑶',p,'',{ignoredItems:[key]}).items,[{skuId:'0-0',quantity:1},{skuId:'2-0',quantity:1}]);
+ assert.equal(parseComment('透明文件夹 凯 m3 瑶',p,'',{quantities:{[key]:4}}).items[1].quantity,4);
+ const scoped=parseComment('透明文件夹 凯 m3 瑶',p.filter(p=>!p.id.endsWith('-0')),'',{allProducts:p});assert.equal(scoped.items.length,0);assert.equal(scoped.questions.length,3);assert.ok(scoped.questions.every(q=>q.code==='outside'));
+ const unknown=parseComment('透明文件夹 m3 未知昵称',p);assert.deepEqual(unknown.items,[{skuId:'1-0',quantity:1}]);assert.equal(unknown.questions.length,1);
+ const otherBot=parseComment('透明文件夹 凯 瑶',p,'',{arknights:false});assert.ok(!otherBot.items.some(p=>p.skuId==='2-0'));assert.ok(otherBot.questions.some(q=>q.phrase.endsWith('瑶')&&q.code==='unknown'));
 });

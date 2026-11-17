@@ -1,5 +1,7 @@
 # 分盒与角色资料来源
 
+2026-11-03新增终末地中英文名称及部分称呼：`endfield-characters.json`，以[终末地官方网站·干员情报](https://endfield.hypergryph.com/operator)当天的35个展示项为名称依据，仅整理名称对应，不复制角色档案、技能或图像。两位管理员用商品性别标识区分；这不是对官方代号改名。42、小羊、洁哥的终末地用法参考[姬游攻略组配队文章](https://news.17173.com/content/01222026/202923846.shtml)，庄天师参考[庄方宜档案](https://warfarin.wiki/cn/operators/zhuang-fangyi)，男管/女管参考[社区用法示例](https://www.bilibili.com/video/BV1NbUZB8EUR/)，逐项来源写在JSON。与前作同外号时保留歧义，不声称是前作异格关系。塔→塔露拉、内卫→国度、皇帝/小皇帝→冻河为用户当日直接确认，来源编号session；正式名称另核对PRTS[塔露拉](https://prts.wiki/w/塔露拉)、[国度](https://prts.wiki/w/国度)、[冻河](https://prts.wiki/w/冻河)。不代表所有新角色外号均已收录，后续增补须保留来源。
+
 商品中英文印字对照：`character-labels.json` 提取自 [ArknightsGameData character_table.json](https://github.com/Kengxxiao/ArknightsGameData/blob/master/zh_CN/gamedata/excel/character_table.json)，核对日期2026-10-23，仅保留游戏数据的name与appellation字段，用于角色名称匹配，不含调价或图片位置规则。游戏资料版权属于各自权利人。
 
 快照日期：2026-10-23。数据来源：[awadwd/ArknightsAuthorization_Series-mirror](https://github.com/awadwd/ArknightsAuthorization_Series-mirror)，commit `0611d6d26aa3630e79b03b9c1d21af2aafa17a6a`（2026-10-19）。该库 README 的统计尚写93盒，实际 Box_Id.json 有94盒，常规1.0–55.0；本项目按数据文件记录，不把README旧统计当作完整性证明。

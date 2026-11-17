@@ -1,6 +1,7 @@
 import {cleanComment,memberName,matchProduct,compareCommentTime} from './workflow.mjs';
 import {isCompleted} from './campaign-lifecycle.mjs';
 import {selectQueueProducts} from './queue-query.mjs';
+import {hasBundleLinks} from './bundles.mjs';
 
 export const withdrawalTarget=text=>cleanComment(text).match(/^撤排\s*[:：]?\s*(.*)$/u)?.[1];
 
@@ -19,7 +20,7 @@ export function withdrawAlbumComment(db,c,binding,event,productIds){
   if(!target)throw Error('请评论「撤排 制品名称」，撤掉本人该制品的全部排量。');
   if(!productIds.length)throw Error('这张图片对应的大类尚未确认，请联系管理员确认后重新评论撤排。');
   const products=c.products.filter(p=>productIds.includes(p.id));
-  const selected=selectQueueProducts({...c,products},target),found=selected.products;
+  const selected=selectQueueProducts({...c,products},target,{familyProducts:c.products}),found=selected.products;
   if(selected.bulk)throw Error('请填写具体制品名称，不能一次撤掉整个大类。');
   if(found.length!==1)throw Error(found.length?'对应多个商品，请补充款式或盒号后重新评论撤排。':'未找到图片范围内的这个制品，不能撤排。');
   const p=found[0];
@@ -29,6 +30,7 @@ export function withdrawAlbumComment(db,c,binding,event,productIds){
   if(!literal&&quantity&&!(p.boxId&&target.includes(p.boxId))&&matchProduct(quantity[1],products,6,{arknights:!c.botId||c.botId==='zhougu'}).length)throw Error('撤排会撤掉该制品全部数量，请只填写制品名称，不要附数量。');
   const rows=c.records.filter(r=>String(r.qq||'')===String(event.qq)&&!r.proxyFor&&r.skuId===p.id&&compareCommentTime(r,event)<=0);
   if(!rows.length)throw Error('你没有排过这个制品，不能撤排；代排及未绑定QQ的记录请联系管理员处理。');
+  if(hasBundleLinks(c,rows))throw Error('该排位有关联选捆，请联系管理员先解除选捆后再撤排。');
   const ids=new Set(rows.map(r=>r.id));
   log.skuId=p.id;log.removed=rows;log.quantity=rows.reduce((n,r)=>n+r.quantity,0);log.success=true;
   c.records=c.records.filter(r=>!ids.has(r.id));

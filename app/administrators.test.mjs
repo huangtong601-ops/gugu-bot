@@ -20,9 +20,9 @@ test('administrator list preserves legacy identity, uses an explicit empty list 
 test('every configured administrator sees export help and can export; removal immediately revokes the real sender',()=>{
  const db={qqAdmin:'123456',qqAdmins:['123456','234567'],campaigns:[{id:'c',name:'测试期次',groupId:'11111',products:[],records:[]}]};
  const say=(qq,text)=>({group_id:11111,user_id:qq,self_id:99999,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text}}]});
- for(const qq of [123456,234567]){assert.match(processQQEvent(db,say(qq,'help')).reply,/导出指定期次肾表/);assert.equal(processQQEvent(db,say(qq,'肾表')).exportCampaignId,'c');}
+ for(const qq of [123456,234567]){assert.match(processQQEvent(db,say(qq,'help')).reply,/导出肾表 期次名/);assert.equal(processQQEvent(db,say(qq,'肾表')).exportCampaignId,'c');assert.equal(processQQEvent(db,say(qq,'导出肾表')).groupBillCampaignId,'c');}
  assert.throws(()=>processQQEvent(db,say(345678,'肾表')),/仅已配置的管理员/);
- updateAdministrator(db,{qqAdmin:'123456',action:'remove'});assert.doesNotMatch(processQQEvent(db,say(123456,'help')).reply,/导出指定期次肾表/);assert.throws(()=>processQQEvent(db,say(123456,'肾表')),/仅已配置的管理员/);assert.equal(processQQEvent(db,say(234567,'肾表')).exportCampaignId,'c');
+ updateAdministrator(db,{qqAdmin:'123456',action:'remove'});assert.doesNotMatch(processQQEvent(db,say(123456,'help')).reply,/导出肾表/);assert.throws(()=>processQQEvent(db,say(123456,'肾表')),/仅已配置的管理员/);assert.throws(()=>processQQEvent(db,say(123456,'导出肾表')),/仅已配置的管理员/);assert.equal(processQQEvent(db,say(234567,'肾表')).exportCampaignId,'c');
  updateAdministrator(db,{qqAdmin:'234567',action:'remove'});assert.throws(()=>processQQEvent(db,say(234567,'肾表')),/仅已配置的管理员/);
 });
 

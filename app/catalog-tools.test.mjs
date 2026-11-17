@@ -13,6 +13,14 @@ import {purchasePool} from './order-planning.mjs';
 import {tableData} from './tables.mjs';
 import {runtimeSummary,createQQHealthProbe} from './runtime-status.mjs';
 const fixture=()=>({id:'c',botId:'zhougu',name:'模拟期次',groupId:'11111',revision:0,categories:[{id:'s',name:'单领',kind:'single'},{id:'g',name:'通行证',kind:'group',setsByBox:{'55.0':1}},{id:'gift',name:'特典',kind:'single'},{id:'empty',name:'预留',kind:'single'}],products:[{id:'badge',name:'双闪徽章-酒神（真我自扼）',categoryId:'s',type:'单领',price:20,unit:'件'},{id:'a',name:'毛绒延展扣-Miss.Christine A款',categoryId:'s',type:'单领',price:35,unit:'件'},{id:'b',name:'通行证-予愿安洁莉娜',character:'予愿安洁莉娜',categoryId:'g',type:'通行证',boxId:'55.0',averagePrice:20,adjustment:5,price:25,unit:'对'}],records:[{id:'r',skuId:'badge',member:'模拟甲',quantity:1,createdAt:'2026-01-01T00:00:00Z'}]});
+
+test('search and queue queries share compound merchandise identity without shortening outside a box',()=>{
+ const c=fixture();c.products=[{id:'long',name:'水晶镭射票根-德克萨斯',type:'单领',categoryId:'s'},{id:'short',name:'票根-德克萨斯',type:'单领',categoryId:'s'},{id:'box-long',name:'立体冰箱贴-艾雅法拉',type:'单领',categoryId:'g',boxId:'56.0'},{id:'box-short',name:'冰箱贴-艾雅法拉',type:'单领',categoryId:'g',boxId:'55.0'}];
+ assert.deepEqual(searchProducts(c,'德狗镭射票根').map(p=>p.id),['long']);
+ assert.deepEqual(selectQueueProducts(c,'德狗水晶镭射票根').products.map(p=>p.id),['long']);
+ assert.deepEqual(selectQueueProducts(c,'小羊立体冰箱贴55.0').products,[]);
+ assert.deepEqual(selectQueueProducts(c,'小羊立体冰箱贴56.0').products.map(p=>p.id),['box-long']);
+});
 test('catalogue search supports aliases, partial names, category/box keywords and current scope without guessing identity',()=>{
  const c=fixture();assert.deepEqual(searchProducts(c,'洁哥').map(p=>p.id),['b']);assert.deepEqual(searchProducts(c,'酒神 吧唧').map(p=>p.id),['badge']);assert.deepEqual(searchProducts(c,'毛绒延展扣A').map(p=>p.id),['a']);assert.deepEqual(searchProducts(c,'通行证 55.0').map(p=>p.id),['b']);assert.equal(searchProducts(c,'洁哥',{categoryId:'s'}).length,0);assert.equal(searchProducts(c,'洁哥',{productIds:['a']}).length,0);assert.equal(searchProducts({...c,botId:'custom'},'洁哥').length,0);assert.throws(()=>searchProducts(c,'长'.repeat(121)),/120/);
 });

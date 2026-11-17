@@ -18,7 +18,9 @@ import {createQQConnection} from './qq-connection.js';
 import {createWorkspaceTools} from './workspace-tools.js';
 const $=id=>document.getElementById(id);
 let state,currentId='',groupId='',botId='zhougu',images=[],pending=null,dirty=false,currentPage='workspace',imageGeneration=0;let groupCandidates=[];const uiPrefs={};let uiRestored=false;
+let catalogSaving=false,imageRecognizing=false;
 const drafts=new Map();const manualSelections=new Map();let qqPresentation=null,workspaceTools=null,runtimeStatus=null,catalogFeedback=null;const undoClient=crypto.randomUUID();
+const recognitionNotes=new Map();let recognitionNoteOwner='';
 const setupGuide=createSetupGuide({api,refresh,getState:()=>state,onEnter:()=>page('settings'),onVisibility:()=>qqPresentation?.sync(state)});
 const albumPicker=createAlbumPicker({api,action,notice,current,activeGroup:()=>groupId,bindings:()=>state?.albums||[],refresh});
 async function api(route,body){const r=await fetch('/api/'+route,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...body,undoClient})}:{});const d=await r.json();if(!r.ok)throw Error(d.error);workspaceTools?.maintenance(d.maintenance);workspaceTools?.saved(route,body,d.undo);return d;}
@@ -58,8 +60,8 @@ const editor=createProductEditor({api,notice,getCampaign:current,prefs:uiPrefs,o
 document.addEventListener('wheel',e=>{const t=e.target;if(t instanceof HTMLInputElement&&t.type==='number'&&document.activeElement===t){e.preventDefault();t.blur();}},{passive:false});
 const orderWorkspaces=createOrderWorkspaces({api,notice,action,current,refresh,onDraftChange:entry=>workspaceTools?.local(entry),hasCatalogDrafts:()=>dirty});
 const enrollmentTable=createEnrollmentTable({api,current,onChanged:()=>refresh()});
-const settingsPage=createSettingsPage({api,notice,refresh,onWorkspaceChange:()=>runtimeStatus?.workspaceChanged(),beforeSwitch:()=>{if(dirty||[...drafts].some(([id,d])=>state?.campaigns.some(c=>c.id===id&&c.revision===d.revision))||pending||orderWorkspaces.hasUnsaved?.())throw Error('请先保存建档、下单或折算编辑，并处理当前识别结果，再切换工作区');clearTimeout(prefTimer);}});
-workspaceTools=createWorkspaceTools({api,notice,refresh,hasUnsaved:()=>dirty||pending||[...drafts.values()].length>0||orderWorkspaces.hasUnsaved(),onUndo:async()=>{await refresh();loadCampaign();await orderWorkspaces.reset(current());},onRestore:async()=>{drafts.clear();dirty=false;clearPending();await refresh();loadCampaign();await orderWorkspaces.reset(current());}});
+const settingsPage=createSettingsPage({api,notice,refresh,onWorkspaceChange:()=>runtimeStatus?.workspaceChanged(),beforeSwitch:()=>{if(catalogSaving||imageRecognizing||dirty||[...drafts].some(([id,d])=>state?.campaigns.some(c=>c.id===id&&c.revision===d.revision))||pending||orderWorkspaces.hasUnsaved?.()||hasPendingReviewDrafts())throw Error('请先保存建档、下单或折算编辑，并处理当前识别结果，再切换工作区');clearTimeout(prefTimer);}});
+workspaceTools=createWorkspaceTools({api,notice,refresh,hasUnsaved:()=>catalogSaving||imageRecognizing||dirty||pending||[...drafts.values()].length>0||orderWorkspaces.hasUnsaved()||hasPendingReviewDrafts(),onUndo:async()=>{await refresh();loadCampaign();await orderWorkspaces.reset(current());},onRestore:async()=>{drafts.clear();dirty=false;clearPending();await refresh();loadCampaign();await orderWorkspaces.reset(current());}});
 qqPresentation=createQQConnection({api,isSetup:()=>setupGuide.isOpen(),isQQSetup:()=>setupGuide.isQQ()});
 const manualFinder=createProductFinder({id:'manualProductSearch',mode:'manual',api,getCampaign:current,getProducts:()=>current()?.products||[],onError:notice,onPick:(p,quantity)=>action(async()=>{
  const c=current();if(!c||c.orderLifecycle?.status==='completed')throw Error('本期已结束，请先开启补单');
@@ -71,15 +73,36 @@ catalogFeedback=createCatalogFeedback({getCampaign:current,getProductCount:()=>e
  const c=current(),source=c?.lastRecognition;if(!source?.result?.products?.length)throw Error('没有可恢复的识别结果');if(editor.snapshot().length)throw Error('当前已有商品，请先核对现有草稿');
  const data=structuredClone(source.result);let original='';if(!source.textOnly&&source.imageUrl){const r=await fetch(source.imageUrl);if(!r.ok)throw Error('原图片读取失败，暂时无法恢复商品图片');original=await fileData(await r.blob());}
  for(const p of data.products){if(p.textOnly||source.textOnly){p.textOnly=true;p.imageUrl='';p.portraitUrl='';}else if(!p.imageUrl){const crop=original?await cropProduct(original,p.cropBounds):null;p.imageUrl=crop?(await api('upload',{image:crop})).url:source.imageUrl||'';}delete p.cropBounds;}
- if(current()?.id!==c.id)throw Error('期次已切换，请回到原期次恢复');const stats=editor.append(data.products,data.boxPrices,data.categories);notice('已恢复最近一张图片的识别结果，共'+stats.added+'种商品，请核对后保存。');
+ if(current()?.id!==c.id)throw Error('期次已切换，请回到原期次恢复');editor.append(data.products,data.boxPrices,data.categories);await saveCatalog({automatic:true});
 })});
 
 
 function preserveDraft(){if(currentId&&dirty)drafts.set(currentId,{products:editor.snapshot(),categories:editor.categories(),review:catalogFeedback.snapshot(),revision:current()?.revision});}
+function catalogInput(){return {products:editor.snapshot(),categories:editor.categories(),catalogReview:catalogFeedback.snapshot(),recognitionNote:$('recognitionNote').value};}
+async function saveCatalog({automatic=false}={}){
+ const c=current();if(!c)throw Error('请先新建期次');if(catalogSaving)throw Error('商品正在保存，请稍候');
+ const id=c.id,input=catalogInput(),signature=JSON.stringify(input);catalogSaving=true;$('publish').disabled=true;catalogFeedback.saveState('saving',automatic?'正在自动保存商品…':'正在保存商品…');
+ let result;
+ try{result=await api('catalog',{campaignId:id,botId,revision:c.revision,...input});}
+ catch(error){if(currentId===id){dirty=true;preserveDraft();catalogFeedback.saveState('error',(automatic?'自动保存失败：':'商品未保存：')+error.message+'。当前草稿仍保留，可点击“保存商品”重试。');$('publish').textContent='保存失败，重试';}throw error;}
+ finally{catalogSaving=false;$('publish').disabled=imageRecognizing;}
+ const saved=state.campaigns.find(x=>x.id===id),ack=result.catalog||{revision:c.revision+1,products:input.products,categories:input.categories,catalogReview:input.catalogReview};if(saved)Object.assign(saved,ack);
+ const cached=drafts.get(id);if(cached){const value={products:cached.products,categories:cached.categories,catalogReview:cached.review,recognitionNote:recognitionNotes.get(id)??input.recognitionNote};if(JSON.stringify(value)===signature)drafts.delete(id);else cached.revision=ack.revision;}
+ if(currentId===id){
+  const unchanged=JSON.stringify(catalogInput())===signature;
+  dirty=!unchanged;if(unchanged){drafts.delete(id);editor.load(ack.products,ack.categories);$('publish').textContent='保存商品';}else{preserveDraft();$('publish').textContent='保存商品 *';}
+  catalogFeedback.saveState('saved',(automatic?'商品已自动保存':'商品已保存')+' · '+ack.products.length+'种商品'+(unchanged?'':' · 后续修改待保存'));
+ }
+ const message=(automatic?'商品已自动保存。':'商品已保存。')+(result.updatedRecords?`已更新 ${result.updatedRecords} 条报名金额。`:'');
+ try{await refresh();notice(message);}catch(error){notice(message+'界面刷新失败：'+error.message);}
+ return result;
+}
 function resetImage(){imageGeneration++;images=[];$('image').value='';$('preview').hidden=true;$('preview').replaceChildren();$('imageResult').textContent='';}
 function loadCampaign(){manualSelections.clear();const maps=current()?.positionMaps||[];$("positionMap").replaceChildren(new Option("重新识别角色",""),...maps.map((m,i)=>new Option("同版式参照 "+(i+1),m.id)));
+  if(recognitionNoteOwner)recognitionNotes.set(recognitionNoteOwner,$('recognitionNote').value);
   const c=current(),cached=drafts.get(currentId);dirty=!!cached&&cached.revision===c?.revision;
-  editor.load(dirty?cached.products:c?.products||[],dirty?cached.categories:c?.categories);$('publish').textContent=dirty?'保存商品 *':'保存商品';catalogFeedback.load(c);if(dirty&&cached.review)catalogFeedback.set(cached.review);clearPending();$('parsed').textContent='识别结果将在这里显示。';resetImage();renderRecords();
+  recognitionNoteOwner=c?.id||'';$('recognitionNote').value=recognitionNotes.get(recognitionNoteOwner)??c?.recognitionNote??'';
+  editor.load(dirty?cached.products:c?.products||[],dirty?cached.categories:c?.categories);$('publish').textContent=dirty?'保存商品 *':'保存商品';$('publish').disabled=catalogSaving||imageRecognizing;catalogFeedback.load(c);if(dirty&&cached.review)catalogFeedback.set(cached.review);clearPending();$('parsed').textContent='识别结果将在这里显示。';resetImage();renderRecords();
 }
 function renderBot(){const bot=state.bots.find(b=>b.id===botId);$('activeBotName').textContent=bot.name;}
 function renderGroupSelect(){const groups=state?.qqGroups||[];if(!groupId||!groups.some(g=>String(g.id)===String(groupId)))groupId=groups[0]?.id||'';const options=groups.map(g=>new Option(g.name+' · '+g.id,g.id));if((state?.campaigns||[]).some(c=>!c.groupId))options.push(new Option('未分配群',''));$('group').replaceChildren(...options);$('group').value=groupId;}
@@ -94,12 +117,21 @@ function renderRecords({table=true}={}){
   albumPicker.render(currentPage==='enrollment');renderAlbumSync();manualFinder.refresh();
   void orderWorkspaces.render(c);
 }
-let albumRenderKey='';const albumScopeDrafts=new Map();
+let albumRenderKey='';const albumScopeDrafts=new Map(),pendingReviewDrafts=new Map();
+const pendingReviewKey=(c,b,item)=>JSON.stringify([c.id,b.groupId,b.albumId,item.commentId]);
+function hasPendingReviewDrafts(){return [...pendingReviewDrafts.values()].some(d=>d.dirty);}
 function pendingChip(text,type){const span=document.createElement('span');span.className='issue-chip '+type;span.textContent=text;return span;}
 function renderPending(c,binding){
   const host=$('albumPending');if(!host)return;host.replaceChildren();
   const pending=binding?.pending||[];host.hidden=!pending.length;
+  if(c&&binding)for(const key of pendingReviewDrafts.keys()){const [campaign,group,album,comment]=JSON.parse(key);if(campaign===c.id&&group===binding.groupId&&album===binding.albumId&&!pending.some(p=>p.commentId===comment))pendingReviewDrafts.delete(key);}
   for(const item of pending){
+    const draftKey=pendingReviewKey(c,binding,item);if(!pendingReviewDrafts.has(draftKey))pendingReviewDrafts.set(draftKey,{picks:new Map(),dirty:false});
+    const draft=pendingReviewDrafts.get(draftKey),picks=draft.picks,issues=item.issues||[],entries=[...(item.preview||[]),...issues];
+    const entryId=x=>x.entryKey||JSON.stringify(['legacy',x.phrase||x.name||'']);
+    for(const key of picks.keys())if(!entries.some(x=>entryId(x)===key))picks.delete(key);
+    const choice=x=>{const key=entryId(x);if(!picks.has(key))picks.set(key,{skuId:x.skuId||(x.code==='outside'&&x.candidates?.length===1?x.candidates[0].id:''),quantity:String(x.quantity>=1?x.quantity:1)});return picks.get(key);};
+    const quantityInput=x=>{const qty=document.createElement('input');qty.type='number';qty.min='1';qty.max='999';qty.step='1';qty.className='issue-qty';qty.value=choice(x).quantity;qty.setAttribute('aria-label','为「'+(x.phrase||x.name)+'」填写数量');qty.oninput=()=>{choice(x).quantity=qty.value;draft.dirty=true;};return qty;};
     const card=document.createElement('div');card.className='pending-card';
     const head=document.createElement('div');head.className='pending-head';
     const who=document.createElement('strong');who.textContent=memberOf(item.qq)||item.qq||'未知';
@@ -107,15 +139,14 @@ function renderPending(c,binding){
     head.append(who,when);card.append(head);
     const text=document.createElement('p');text.className='pending-text';text.textContent=item.text;card.append(text);
     const removeEntry=key=>action(async()=>{await api('album-comment-item-delete',{campaignId:c.id,commentId:item.commentId,entryKey:key});await refresh();notice('已删除此条目');});
-    for(const x of item.preview||[]){const row=document.createElement('div');row.className='recognized-entry';const text=document.createElement('span');text.textContent=x.name+' ×'+x.quantity;row.append(text);if(x.entryKey)row.append(itemMenu(()=>removeEntry(x.entryKey)));card.append(row);}
-    const issues=item.issues||[],picks=new Map();
+    for(const x of item.preview||[]){const row=document.createElement('div');row.className='recognized-entry pending-preview-entry';row.dataset.entryKey=entryId(x);const text=document.createElement('span');text.textContent=x.name;const fields=document.createElement('div');fields.className='issue-fields';fields.append(quantityInput(x));row.append(text,fields);if(x.entryKey)row.append(itemMenu(()=>removeEntry(x.entryKey)));card.append(row);}
     const already=new Map();for(const r of c.records||[])if(String(r.qq)===String(item.qq))already.set(r.skuId,(already.get(r.skuId)||0)+r.quantity);
     const label=p=>p.name+(p.boxId?' ['+p.boxId+']':'')+(already.get(p.id)?'（已排'+already.get(p.id)+'）':'');
     const canRetry=(issues.length>0||item.preview?.length>0)&&!issues.some(x=>['proxy','group'].includes(x.code));
     if(issues.length){
       const list=document.createElement('div');list.className='pending-issues';
       issues.forEach((issue,index)=>{
-        const row=document.createElement('div');row.className='pending-issue recognized-entry';if(issue.entryKey)row.append(itemMenu(()=>removeEntry(issue.entryKey)));
+        const row=document.createElement('div');row.className='pending-issue recognized-entry';row.dataset.entryKey=entryId(issue);if(issue.entryKey)row.append(itemMenu(()=>removeEntry(issue.entryKey)));
         const main=document.createElement('div');main.className='issue-main';
         const phrase=document.createElement('span');phrase.className='issue-phrase';phrase.textContent=issue.phrase;
         main.append(phrase);
@@ -129,16 +160,11 @@ function renderPending(c,binding){
           if(issue.candidates?.length)for(const cand of issue.candidates)select.add(new Option(label(cand),cand.id));
           const rest=c.products.filter(p=>!issue.candidates?.some(x=>x.id===p.id));
           if(rest.length){const group=document.createElement('optgroup');group.label='全部商品';for(const p of rest)group.append(new Option(label(p),p.id));select.append(group);}
-          select.onchange=()=>{const cur=picks.get(index)||{};if(select.value)cur.skuId=select.value;else delete cur.skuId;picks.set(index,cur);};
-          if(issue.code==='outside'&&issue.candidates?.length===1){select.value=issue.candidates[0].id;picks.set(index,{skuId:issue.candidates[0].id});}
+          select.value=choice(issue).skuId;
+          select.onchange=()=>{choice(issue).skuId=select.value;draft.dirty=true;};
           fields.append(select);
         }
-        if(!['proxy','group'].includes(issue.code)&&(issue.code==='quantity'||!(issue.quantity>=1))){
-          const qty=document.createElement('input');qty.type='number';qty.min='1';qty.step='1';qty.className='issue-qty';qty.value=String(issue.quantity>=1?issue.quantity:1);qty.setAttribute('aria-label','为「'+issue.phrase+'」填写数量');
-          qty.oninput=()=>{const cur=picks.get(index)||{};const n=Number(qty.value);if(Number.isInteger(n)&&n>=1)cur.quantity=n;else delete cur.quantity;picks.set(index,cur);};
-          const cur=picks.get(index)||{};cur.quantity=Number(qty.value);picks.set(index,cur);
-          fields.append(qty);
-        }
+        if(!['proxy','group'].includes(issue.code))fields.append(quantityInput(issue));
         if(fields.childNodes.length)row.append(main,fields);else row.append(main);
         list.append(row);
       });
@@ -149,9 +175,9 @@ function renderPending(c,binding){
       const retry=document.createElement('button');retry.textContent='保存并重试';
       retry.onclick=()=>action(async()=>{
         const missing=[];
-        issues.forEach((x,i)=>{const cur=picks.get(i)||{};if(!x.skuId&&!cur.skuId)missing.push('「'+x.phrase+'」的商品');if((x.code==='quantity'||!(x.quantity>=1))&&!(cur.quantity>=1))missing.push('「'+x.phrase+'」的数量');});
+        entries.forEach(x=>{const cur=choice(x),q=Number(cur.quantity);if(!c.products.some(p=>p.id===(x.skuId||cur.skuId)))missing.push('「'+x.phrase+'」的商品');if(!Number.isInteger(q)||q<1||q>999)missing.push('「'+x.phrase+'」的数量（1至999）');});
         if(missing.length)throw Error('还缺少：'+[...new Set(missing)].join('、'));
-        const resolutions=issues.map((x,i)=>{const cur=picks.get(i)||{};return {phrase:x.phrase,skuId:x.skuId||cur.skuId||'',quantity:cur.quantity};}).filter(r=>r.skuId||r.quantity);
+        const resolutions=entries.map(x=>{const cur=choice(x);return {entryKey:x.entryKey,phrase:x.phrase,skuId:x.skuId||cur.skuId||'',quantity:Number(cur.quantity)};});
         const r=await api('album-comment-resolve',{campaignId:c.id,commentId:item.commentId,resolutions});
         await refresh();notice(r.message||'已重新入表');
       });
@@ -217,6 +243,7 @@ $('image').onchange=()=>action(async()=>{
 });
 async function recognize(mode){
   const campaignId=currentId,selectedBot=botId,token=imageGeneration;if(!campaignId)throw Error('请先新建期次');if(mode==='image'&&!images.length)throw Error('请先上传商品图');
+  if(catalogSaving)throw Error('请等待商品保存完成再识别');let imageSummaryReady=false;if(mode==='image'){imageRecognizing=true;$('publish').disabled=true;}
   clearPending();const buttons=['recognizeImage','parse'];buttons.forEach(id=>$(id).disabled=true);$('image').disabled=true;
   try{
     if(mode==='image'){
@@ -241,6 +268,10 @@ async function recognize(mode){
       });
       const review=[...new Set(questions)];await refresh();if(!isCurrent())throw Error('图片或期次已更换，请重新识别');catalogFeedback.result(review,result.failures,current()?.lastRecognition?.at||'');
       $('imageResult').textContent=[`已处理 ${result.completed}/${images.length} 张图片`,`新增${result.added} 补图${result.updated} 调价${result.adjusted} 去重${result.duplicates}`,(review.length||result.failures.length)?`待复核 ${review.length} 项 · 失败 ${result.failures.length} 张`:'识别完成'].join('\n');
+      imageSummaryReady=true;
+      if(result.completed&&editor.snapshot().length)await saveCatalog({automatic:true});
+      else catalogFeedback.saveState('error',result.completed?'未识别到可保存的商品，请查看待复核。':'图片均未识别成功，未自动保存；请核对后重试。');
+      if(!isCurrent())return;
       $('recognitionDoneTitle').textContent='已完成';
       $('recognitionDone').showModal();
       return;
@@ -253,12 +284,12 @@ async function recognize(mode){
     {
       pending={...response.data,botId:selectedBot,campaignId,revision:response.revision,requestId:crypto.randomUUID(),source:$('message').value};renderManualResult();
     }
-  }catch(e){if(mode==='image'&&currentId===campaignId&&token===imageGeneration)$('imageResult').textContent='';throw e;}finally{buttons.forEach(id=>$(id).disabled=false);$('image').disabled=false;}
+  }catch(e){if(mode==='image'&&currentId===campaignId&&token===imageGeneration&&!imageSummaryReady)$('imageResult').textContent='';throw e;}finally{if(mode==='image')imageRecognizing=false;buttons.forEach(id=>$(id).disabled=false);$('image').disabled=false;$('publish').disabled=catalogSaving;}
 }
 $('recognizeImage').onclick=()=>action(()=>recognize('image'));$('parse').onclick=()=>action(()=>recognize('enrollment'));
 $('recognitionDoneClose').onclick=()=>$('recognitionDone').close();
 $('addProduct').onclick=()=>action(async()=>{if(!current())throw Error('请先新建期次');editor.add();});
-$('publish').onclick=()=>action(async()=>{const c=current();if(!c)throw Error('请先新建期次');const id=c.id;$('publish').disabled=true;catalogFeedback.saveState('saving','正在保存商品…');try{const result=await api('catalog',{campaignId:id,botId,revision:c.revision,products:editor.snapshot(),categories:editor.categories(),catalogReview:catalogFeedback.snapshot()});drafts.delete(id);if(currentId===id){dirty=false;$('publish').textContent='保存商品';await refresh();editor.load(current().products,current().categories);catalogFeedback.saveState('saved','商品已保存 · '+current().products.length+'种商品');}notice('商品已保存。'+(result.updatedRecords?`已更新 ${result.updatedRecords} 条报名金额。`:''));}catch(error){if(currentId===id){catalogFeedback.saveState('error','商品未保存：'+error.message+'。当前草稿仍保留，请修改后重试。');$('publish').textContent='保存失败，重试';}throw error;}finally{$('publish').disabled=false;}});
+$('publish').onclick=()=>action(()=>saveCatalog());
 $('message').oninput=()=>{clearPending();for(const phrase of manualSelections.keys())if(!$('message').value.includes(phrase))manualSelections.delete(phrase);};
 function updateManualBinding(){$('bindCN').disabled=!/^\d{5,12}$/.test($('memberQQ').value.trim())||!$('member').value.trim();}
 for(const id of ['memberQQ','member'])$(id).oninput=()=>{clearPending();updateManualBinding();};
@@ -277,7 +308,7 @@ $('refreshRecords').onclick=()=>action(async()=>{
 $('bindCN').onclick=()=>action(async()=>{const r=await api('cn',{campaignId:currentId,groupId:String(current()?.groupId||groupId||''),qq:$('memberQQ').value.trim(),cn:$('member').value.trim()});clearPending();await refresh();notice(r.message);});
 
 $('syncAlbum').onclick=()=>action(async()=>{$('syncAlbum').disabled=true;try{await api('qq-album-comments',{});await refresh();notice('已完成');}finally{$('syncAlbum').disabled=false;}});
-setInterval(()=>{if(!dirty)refresh().catch(e=>notice(e.message));},5000);
+setInterval(()=>{if(!dirty&&!catalogSaving&&!imageRecognizing)refresh().catch(e=>notice(e.message));},5000);
 action(async()=>{await settingsPage.load();try{await refresh(true);loadCampaign();if(!settingsPage.isRemote())setupGuide.start();}catch(e){page('settings');settingsPage.select('server');throw e;}});
 
 $('recognitionDoneX').onclick=()=>$('recognitionDone').close();

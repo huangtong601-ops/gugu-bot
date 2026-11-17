@@ -13,9 +13,21 @@ export function mergeBoxPrices(categories,products,observations=[]){
 }
 export function ensureGiftSet(products,newId){
  const gifts=products.filter(p=>p.type==='特典'&&p.giftTier!=='set'&&!/特典\s*set/i.test(p.name));
- const first=gifts.find(p=>p.giftTier===1),second=gifts.find(p=>p.giftTier===2),pair=first&&second?[first,second]:gifts.length===2&&gifts.every(p=>!p.giftTier)?gifts:null;
- if(!pair)return 0;const ids=pair.map(p=>p.id).sort();if(products.some(p=>p.giftTier==='set'&&(p.giftComponents||[]).slice().sort().join('|')===ids.join('|')))return 0;
- products.push({id:newId(),name:'特典SET',recognitionName:'特典SET',type:'特典',categoryId:pair[0].categoryId||'特典',giftTier:'set',giftComponents:ids,price:null,unit:'套',textOnly:true,imageUrl:'',aliases:['特典set','特典套装','一二档特典SET']});return 1;
+ const tiered=gifts
+  .filter(p=>Number.isInteger(p.giftTier)&&p.giftTier>0&&p.giftTier<=5)
+  .sort((a,b)=>a.giftTier-b.giftTier);
+ const selection=tiered.length>=2?tiered:gifts.length===2&&gifts.every(p=>!p.giftTier)?gifts:null;
+ if(!selection)return 0;
+ const ids=selection.map(p=>p.id).sort();
+ const existing=products.find(p=>p.giftTier==='set'||/特典\s*set/i.test(p.name||''));
+ if(existing){
+  if((existing.giftComponents||[]).slice().sort().join('|')===ids.join('|'))return 0;
+  existing.giftComponents=ids;
+  existing.aliases=[...new Set([...(existing.aliases||[]),'特典set','特典套装','全档特典SET'])];
+  existing.categoryId??=selection[0].categoryId||'特典';
+  return 1;
+ }
+ products.push({id:newId(),name:'特典SET',recognitionName:'特典SET',type:'特典',categoryId:selection[0].categoryId||'特典',giftTier:'set',giftComponents:ids,price:null,unit:'套',textOnly:true,imageUrl:'',aliases:['特典set','特典套装','全档特典SET']});return 1;
 }
 function sameProduct(a,b){
   if((a.type||'单领')!==(b.type||'单领'))return false;

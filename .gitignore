@@ -9,6 +9,8 @@ tables/
 runtime/
 vendor/
 logs/
+插件/
+plugins/
 .env
 .env.*
 !.env.example

@@ -1,19 +1,6 @@
 import {addComment,memberName,parseComment,compareCommentTime} from './workflow.mjs';
 import {withdrawalTarget,withdrawAlbumComment} from './album-withdrawal.mjs';
-import {isCompleted,endedMessage} from './campaign-lifecycle.mjs';
-
-// Closure notices are authorized by the administrator's explicit "下单完成" action.
-// They never reuse the disabled missing-CN reminder and never derive recipients from text.
-export async function remindCompletedComments(db,binding,{send,persist,allowed=()=>true,now=()=>Date.now()}={}){
- const c=db.campaigns.find(c=>c.id===binding.campaignId);if(!isCompleted(c)||!/^\d{5,12}$/.test(String(binding.groupId))||c.groupId&&String(c.groupId)!==String(binding.groupId)||!allowed())return;
- const recipients=new Map();for(const n of binding.closedNotices||[])if((!n.phase||n.phase===c.orderLifecycle.completedAt)&&!n.sentAt&&(n.attempts||0)<3&&Number(n.retryAt||0)<=now()){
-  if(!/^\d{5,12}$/.test(n.qq))continue;if(!recipients.has(n.qq))recipients.set(n.qq,[]);recipients.get(n.qq).push(n);
- }
- for(const [qq,notices]of recipients){if(!allowed()||!isCompleted(c))return;for(const n of notices){n.attempts=(n.attempts||0)+1;n.retryAt=now()+30000*2**(n.attempts-1);}await persist();if(!allowed()||!isCompleted(c))return;
-  try{await send({group_id:Number(binding.groupId),message:[{type:'at',data:{qq}},{type:'text',data:{text:' '+endedMessage(c)}}]});for(const n of notices){n.sentAt=new Date(now()).toISOString();delete n.error;}await persist();}
-  catch{for(const n of notices)n.error='结束提醒发送失败，请检查机器人连接或群发言权限';await persist();}
- }
-}
+import {isCompleted,planningIssues,purchaseSource} from './campaign-lifecycle.mjs';
 
 // Run before image classification so missing-CN notices are not delayed by model calls.
 // The album reader supplies the sender QQ; never derive an @ target from comment text.
@@ -39,7 +26,7 @@ export async function remindMissingCN(db,binding,{comments=[]},{send,persist,now
   await persist();
   if(!allowed()||memberName(db,qq,group))continue;
   try{
-   await send({group_id:Number(group),message:[{type:'at',data:{qq}},{type:'text',data:{text:' 你还没有录入CN，排谷评论已保留，暂未入表。请在本群 @机器人 后发送「cn 你的CN」，例如「cn 示例用户J」。录入成功后会自动重试原评论。'}}]});
+   await send({group_id:Number(group),message:[{type:'at',data:{qq}},{type:'text',data:{text:' 你还没有录入CN，排谷评论已保留，暂未入表。请在本群 @机器人 后发送「cn 你的CN」，例如「cn 示例用户O」。录入成功后会自动重试原评论。'}}]});
   }catch{
    for(const n of notices)n.error='CN提醒发送失败，请检查机器人连接或群发言权限';failed++;await persist();continue;
   }
@@ -135,32 +122,49 @@ export function deriveBatchScopes(binding){
  return binding.batchScopes;
 }
 
-export function applyAlbumComments(db,binding,{photos,comments,captions=[]}){
+function replayableClosedComment(c,binding,event,prior){
+ if(prior?.closed!==true||prior.dismissed||prior.withdrawal)return false;
+ const group=String(binding.groupId||''),album=String(binding.albumId||'');
+ return !!group&&!!album&&String(event.groupId)===group&&String(event.albumId)===album&&
+  (!c.groupId||String(c.groupId)===group)&&String(prior.id).startsWith(group+'/'+album+'/')&&
+  String(prior.qq)===String(event.qq)&&Date.parse(prior.at)===Date.parse(event.at)&&
+  !c.records.some(r=>r.sourceId===prior.id||String(r.requestId||'').startsWith('comment:'+prior.id+':'));
+}
+export function albumCommentHandled(c,binding,event){
+ const prior=c.commentEvents?.find(e=>e.id===event.id);
+ return !!prior&&!replayableClosedComment(c,binding,event,prior);
+}
+function addAlbumComment(db,c,binding,event){
+ const planning=c.orderPlanning,verified=isCompleted(c)&&planning?.source&&!planningIssues(c).length;
+ const prior=c.commentEvents?.find(e=>e.id===event.id);
+ const result=addComment(db,c,event,{albumEnrollment:true,replayClosed:replayableClosedComment(c,binding,event,prior)});
+ if(verified&&result.count){
+  const source=purchaseSource(c);
+  if(JSON.stringify(source)!==JSON.stringify(planning.source)&&!planningIssues({...c,orderPlanning:{...planning,source}}).length){
+   planning.source=source;planning.version=(planning.version||0)+1;
+  }
+ }
+ return result;
+}
+
+export function applyAlbumComments(db,binding,{photos,comments,captions=[],commentReadError=''}){
  const c=db.campaigns.find(c=>c.id===binding.campaignId);if(!c)throw Error('相册绑定期次不存在');
  reconcileAlbumPhotos(binding,photos,captions);binding.pending??=[];let imported=0,duplicates=0,skipped=0;
  for(const event of [...comments].sort(compareCommentTime)){
   if(!event.photoIds?.some(id=>photos.some(p=>p.id===id))){skipped++;continue;}
-  if(c.commentEvents?.some(e=>e.id===event.id)){duplicates++;binding.pending=binding.pending.filter(p=>p.id!==event.id);continue;}
+  if(albumCommentHandled(c,binding,event)){duplicates++;binding.pending=binding.pending.filter(p=>p.id!==event.id);continue;}
   if(withdrawalTarget(event.text)!==undefined){withdrawAlbumComment(db,c,binding,event,commentProducts(c,binding,event));continue;}
-  if(isCompleted(c)){
-   // QQ timestamps have second precision; a comment just after completion can share its second.
-   if(Date.parse(event.at)>=Math.floor(Date.parse(c.orderLifecycle.completedAt)/1000)*1000&&!binding.pending.some(p=>p.id===event.id)&&event.id&&/^\d{5,12}$/.test(String(event.qq))&&String(event.groupId)===String(binding.groupId)&&String(event.albumId)===String(binding.albumId)){
-    c.commentEvents??=[];c.commentEvents.push({id:String(event.id),qq:String(event.qq),at:event.at,text:String(event.text),closed:true});
-    binding.closedNotices??=[];binding.closedNotices.push({id:String(event.id),qq:String(event.qq),attempts:0,phase:c.orderLifecycle.completedAt});binding.pending=binding.pending.filter(p=>p.id!==event.id);
-   }
-   skipped++;continue;
-  }
   if(commentIgnored(binding,event)){skipped++;binding.pending=binding.pending.filter(p=>p.id!==event.id);continue;}
   try{
    if(!event.photoIds.length)throw Error('评论对应的图片尚未确定');
    const productIds=commentProducts(c,binding,event);
    if(!productIds.length)throw Error(c.products?.length?'这次上传还没有确认大类，请在上方图片分组里选择后重试':'本期还没有保存商品，请先在商品建档保存商品');
-   const result=addComment(db,c,{...event,productIds,ignoredItems:binding.itemExclusions?.[event.id]||[]});
+   const result=addAlbumComment(db,c,binding,{...event,productIds,ignoredItems:binding.itemExclusions?.[event.id]||[]});
    if(result.skipped){skipped++;binding.pending=binding.pending.filter(p=>p.id!==event.id);continue;}
    imported+=result.count||0;binding.pending=binding.pending.filter(p=>p.id!==event.id);
   }catch(e){const item={...event,reason:e.message,issues:e.questions||[],preview:pendingPreview(c,e)};const i=binding.pending.findIndex(p=>p.id===event.id);if(i<0)binding.pending.push(item);else binding.pending[i]=item;}
  }
- binding.sync={at:new Date().toISOString(),error:'',comments:comments.length,imported,pending:binding.pending.length,skipped};
+ binding.sync={at:new Date().toISOString(),error:commentReadError,comments:comments.length,imported,pending:binding.pending.length,skipped};
  return {...binding.sync,duplicates};
 }
 
@@ -169,7 +173,7 @@ export function retryPending(db,binding,commentId,resolutions={},quantities={}){
  const item=(binding.pending||[]).find(p=>String(p.commentId)===String(commentId));if(!item)throw Error('待核对评论不存在或已处理');
  const productIds=commentProducts(c,binding,item);
  if(!productIds.length)throw Error('这条评论对应的图片范围尚未确认，请先在图片列表里确认范围');
- const result=addComment(db,c,{...item,productIds,resolutions,quantities,ignoredItems:binding.itemExclusions?.[item.id]||[]});
+ const result=addAlbumComment(db,c,binding,{...item,productIds,resolutions,quantities,ignoredItems:binding.itemExclusions?.[item.id]||[]});
  if(result.skipped)throw Error(result.message);
  binding.pending=binding.pending.filter(p=>p!==item);
  const sync=binding.sync||{};
@@ -180,6 +184,17 @@ export function retryPending(db,binding,commentId,resolutions={},quantities={}){
 function pendingPreview(c,parsed){
  const invalid=new Set((parsed.questions||[]).map(q=>q.entryKey));
  return (parsed.lines||[]).filter(l=>l.skuId&&!invalid.has(l.entryKey)).map(l=>({...l,name:c.products.find(p=>p.id===l.skuId)?.name||''}));
+}
+
+// Derive review rows from the current parser/catalog without enrolling or rewriting comments.
+const reviewCache=new WeakMap();
+export function pendingReviewView(db,binding,item){
+ const c=db.campaigns.find(c=>c.id===binding.campaignId);if(!c)return item;
+ const productIds=commentProducts(c,binding,item);if(!productIds.length)return item;
+ const cn=memberName(db,item.qq,binding.groupId),ignoredItems=binding.itemExclusions?.[item.id]||[];
+ const key=JSON.stringify([c.revision,cn,item.text,productIds,ignoredItems]);const cached=reviewCache.get(item);if(cached?.key===key&&cached.products===c.products)return cached.value;
+ const parsed=parseComment(item.text,c.products.filter(p=>productIds.includes(p.id)),cn,{allProducts:c.products,ignoredItems,arknights:!c.botId||c.botId==='zhougu'});
+ const value={...item,issues:parsed.questions,preview:pendingPreview(c,parsed),reason:!cn?'请先 @bot cn 你的CN':parsed.questions.map(q=>q.message).join('；')};reviewCache.set(item,{key,products:c.products,value});return value;
 }
 
 // Exclusions live on the binding, not a transient pending card; polling/restart must keep them.
@@ -205,7 +220,13 @@ export function deletePendingItem(db,binding,commentId,entryKey){
 export function dismissPending(db,binding,commentId){
  const c=db.campaigns.find(x=>x.id===binding.campaignId);
  const item=(binding.pending||[]).find(p=>String(p.commentId)===String(commentId));if(!item)throw Error('待核对评论不存在或已处理');
- if(c){c.commentEvents??=[];if(!c.commentEvents.some(e=>e.id===item.id))c.commentEvents.push({id:String(item.id),qq:String(item.qq),at:item.at,text:String(item.text),albumId:item.albumId||'',photoIds:item.photoIds||[],feedId:item.feedId||'',dismissed:true});}
+ if(c){
+  c.commentEvents??=[];
+  const index=c.commentEvents.findIndex(e=>e.id===item.id);
+  const log={id:String(item.id),qq:String(item.qq),at:item.at,text:String(item.text),albumId:item.albumId||'',photoIds:item.photoIds||[],feedId:item.feedId||'',dismissed:true};
+  if(index<0)c.commentEvents.push(log);
+  else if(replayableClosedComment(c,binding,item,c.commentEvents[index]))c.commentEvents[index]=log;
+ }
  binding.pending=binding.pending.filter(p=>p!==item);
  binding.dismissed??=[];binding.dismissed.push({commentId:String(item.commentId),at:new Date().toISOString()});
  binding.sync={...(binding.sync||{}),at:new Date().toISOString(),pending:binding.pending.length};

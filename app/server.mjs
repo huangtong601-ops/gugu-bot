@@ -10,13 +10,19 @@ import {normalizeKey,upstreamError,modelHttpError} from './api-config.mjs';
 import {originalBounds} from './public/image-geometry.js';
 import {providers,providerConfig,modelOptions,inferenceRequest,responseText} from './providers.mjs';
 import {createBotRegistry,importedRecognition} from './bots.mjs';
+import {characterRosterFromNote,characterRosterHint,constrainRecognitionCharacters} from './recognition-roster.mjs';
 import {createGlossaryStore} from './glossary.mjs';
 import {loadReferences,expandBox,enrichRecognition,verifyPrts,boxRosterHint,adjustmentRetryBoxes,replaceBoxObservations} from './pass-reference.mjs';
 import {saveImage,readImage,mediaFilename,mimeFor} from './media.mjs';
 import {defaultCategories,categories,registerCN,memberName,qqForCN,recordMember,parseComment,addComment,bindAlbum,summary,orderedRecords,positionMatch} from './workflow.mjs';
 import {workbook} from './tables.mjs';
+import {personalBillPages,groupBillPages,tableImagePages} from './table-images.mjs';
+import {isAdministrator} from './administrators.mjs';
 import {enrollmentView,reorderQueue} from './enrollment-view.mjs';
-import {processQQEvent,canHandleQQEvent,isMentioned,messageText,SCOPE_HINT} from './qq-commands.mjs';
+import {setBundleRule,bundleOptions,assignBundle,hasBundleLinks} from './bundles.mjs';
+import {transferPreview,transferEnrollment} from './enrollment-transfer.mjs';
+import {productChangeOptions,changeEnrollmentProduct} from './enrollment-product-change.mjs';
+import {processQQEvent,canHandleQQEvent,ignoredGroupMessage,isMentioned,messageText,SCOPE_HINT} from './qq-commands.mjs';
 import {connectOneBot} from './onebot.mjs';
 import {createNapcatLogin} from './napcat-login.mjs';
 import qqRuntime from './qq-runtime.cjs';
@@ -25,18 +31,19 @@ import {queryQueue} from './queue-query.mjs';
 import {createUsageStore} from './usage.mjs';
 import {validateSetup} from './public/setup-state.js';
 import {createPrivacyGuard,trustedLocalRequest,textMessage} from './security.mjs';
+import {loadLocalPlugins,pluginDirectory} from './local-plugins.mjs';
 import {createServerConnection,connectionRoute} from './server-connection.mjs';
 import {administratorList,updateAdministrator} from './administrators.mjs';
 import {purchasePool,normalizePool,planOrders,cents} from './order-planning.mjs';
 import {settlementSettings,settlementSummary,creditTypes,applyAutomaticGroupPrices} from './settlement.mjs';
 import {ensureGiftSet} from './public/product-merge.js';
-import {isCompleted,requireEnrollmentOpen,planningIssues,purchaseSource,sourceHash,completeCampaign,openSupplement,supplementaryPool,appendSupplement,validatePurchasedCatalog} from './campaign-lifecycle.mjs';
+import {isCompleted,requireEnrollmentOpen,planningIssues,purchaseSource,sourceHash,completeCampaign,openSupplement,supplementaryPool,canReplanUnpaid,remainingPurchasePool,mergeOrderPlan,validatePurchasedCatalog} from './campaign-lifecycle.mjs';
 import {businessState,businessDiff,createOperationHistory,applyInverse} from './operation-history.mjs';
 import {createWorkspaceBackups} from './workspace-backups.mjs';
 import {searchProducts,productDeletionReason,categoryDeletionReason,validateCatalogChanges} from './catalog-management.mjs';
 import {createQQHealthProbe,runtimeSummary} from './runtime-status.mjs';
 import {sendWithdrawalNotices} from './album-withdrawal.mjs';
-import {applyAlbumComments,remindCompletedComments,createAlbumPoller,scopedProducts,scopeFromCaption,retryPending,dismissPending,deletePendingItem,deriveBatchScopes,batchPhotos,IGNORE_SCOPE,albumScope,reconcileAlbumPhotos} from './album-sync.mjs';
+import {applyAlbumComments,albumCommentHandled,createAlbumPoller,scopedProducts,scopeFromCaption,retryPending,dismissPending,deletePendingItem,pendingReviewView,deriveBatchScopes,batchPhotos,IGNORE_SCOPE,albumScope,reconcileAlbumPhotos} from './album-sync.mjs';
 const root=path.dirname(fileURLToPath(import.meta.url));
 async function listenLocal(server,port){
   const bind=value=>new Promise((resolve,reject)=>{const fail=e=>{server.removeListener('listening',ready);reject(e);},ready=()=>{server.removeListener('error',fail);resolve();};server.once('error',fail);server.once('listening',ready);server.listen(value,'127.0.0.1');});
@@ -46,6 +53,8 @@ async function listenLocal(server,port){
 }
 export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFetch=fetch,referenceFetch=fetch,credentialStore=createCredentialStore(dataDir),desktopActions={},qqConnector=connectOneBot,usageClock=()=>new Date(),remoteFetch=fetch,allowServerConnection=true,napcatRuntimeDir='',qqConfig=null}={}) {
   const privacy=createPrivacyGuard(),vault=credentialStore;
+  const plugins=await loadLocalPlugins(pluginDirectory(root));
+  const startedPlugins=[];
   credentialStore={async get(config){const value=await vault.get(config);privacy.remember(value);return value;},async set(config,value){privacy.remember(value);return vault.set(config,value);}};
   await fs.mkdir(dataDir,{recursive:true});
   let localRequests=0,backendSuspended=false;const localEvents=new Set();
@@ -127,7 +136,9 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
   const albumReads=new WeakMap();
   async function readBoundAlbum(binding){
     const ticket={mediaRefreshed:false};albumReads.set(binding,ticket);
-    try{const result=await readAlbumFeeds((action,params)=>qqConnection.call(action,params),binding.groupId,binding.albumId,{onPhotos:async photos=>{if(albumReads.get(binding)!==ticket||backendSuspended||connection?.remote)return;const before=JSON.stringify(binding);reconcileAlbumPhotos(binding,photos);if(JSON.stringify(binding)!==before)await save();ticket.mediaRefreshed=true;}});return albumReads.get(binding)===ticket?result:null;}
+    const c=db.campaigns.find(c=>c.id===binding.campaignId),prefix=binding.groupId+'/'+binding.albumId+'/';
+    const recoverCommentIds=new Set((c?.commentEvents||[]).filter(e=>e.closed===true&&e.id.startsWith(prefix)).map(e=>e.id));
+    try{const result=await readAlbumFeeds((action,params)=>qqConnection.call(action,params),binding.groupId,binding.albumId,{recoverCommentIds,onPhotos:async photos=>{if(albumReads.get(binding)!==ticket||backendSuspended||connection?.remote)return;const before=JSON.stringify(binding);reconcileAlbumPhotos(binding,photos);if(JSON.stringify(binding)!==before)await save();ticket.mediaRefreshed=true;}});return albumReads.get(binding)===ticket?result:null;}
     catch(error){if(albumReads.get(binding)!==ticket)return null;error.albumPhotosRefreshed=ticket.mediaRefreshed;throw error;}
   }
   async function identifyAlbumPhotos(binding,result){
@@ -139,7 +150,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
     for(const [digest,scope]of Object.entries(binding.imageScopes||{}))if(scope.source==='图片识别'&&scope.recognizerVersion!==2)delete binding.imageScopes[digest];
     // A per-photo caption takes precedence over an upload-batch caption.
     for(const photo of result.photos){if(binding.photoScopes[photo.id]?.source==='人工确认')continue;const candidates=(result.captions||[]).filter(x=>x.photoIds.includes(photo.id)).sort((a,b)=>a.photoIds.length-b.photoIds.length);if(candidates.length){const scope=scopeFromCaption(candidates[0].text,c);if(scope){try{scopedProducts(c,scope);binding.photoScopes[photo.id]={...scope,feedId:candidates[0].feedId};delete binding.photoErrors[photo.id];}catch(e){binding.photoErrors[photo.id]=privacy.error(e);}}}}
-    const ids=new Set(result.comments.filter(e=>!c.commentEvents?.some(x=>x.id===e.id)).flatMap(e=>e.photoIds));
+    const ids=new Set(result.comments.filter(e=>!albumCommentHandled(c,binding,e)).flatMap(e=>e.photoIds));
     binding.photoAttempts??={};
     for(const photo of result.photos.filter(p=>ids.has(p.id)&&!binding.photoScopes[p.id]&&(binding.photoAttempts[p.id]?.recognizerVersion!==2||binding.photoAttempts[p.id]?.revision!==c.revision||Date.now()>(binding.photoAttempts[p.id]?.retryAt||0)))){
       try{
@@ -175,16 +186,43 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
       try{const result=await readBoundAlbum(binding);if(!result)continue;const ticket=albumReads.get(binding);
         // 2026-10-25 用户要求：后台读相册不得主动@人；缺CN的评论只保留在待核对里，等本人来登记CN后再自动补录。
         if(backendSuspended||connection?.remote)continue;
-        if(!isCompleted(db.campaigns.find(c=>c.id===binding.campaignId)))await identifyAlbumPhotos(binding,result);
+        await identifyAlbumPhotos(binding,result);
         if(backendSuspended||connection?.remote)continue;if(albumReads.get(binding)!==ticket){reconcileAlbumPhotos(binding,binding.photos);continue;}
         results.push({albumId:binding.albumId,...applyAlbumComments(db,binding,result)});
-        await sendWithdrawalNotices(db,binding,{send:params=>qqConnection.call('send_group_msg',params),persist:save,allowed:()=>!backendSuspended&&!connection?.remote&&qqConnection?.status()==='已连接'&&canHandleQQEvent(db,{group_id:binding.groupId})});
-        await remindCompletedComments(db,binding,{send:params=>qqConnection.call('send_group_msg',params),persist:save,allowed:()=>!backendSuspended&&!connection?.remote&&qqConnection?.status()==='已连接'&&canHandleQQEvent(db,{group_id:binding.groupId})});}
+        await sendWithdrawalNotices(db,binding,{send:params=>qqConnection.call('send_group_msg',params),persist:save,allowed:()=>!backendSuspended&&!connection?.remote&&qqConnection?.status()==='已连接'&&canHandleQQEvent(db,{group_id:binding.groupId})});}
       catch(e){binding.sync={...binding.sync,at:new Date().toISOString(),error:privacy.error(e)};results.push({albumId:binding.albumId,error:privacy.error(e)});}
     }
     if(results.length)await save();return results;
   }});
   const napcat=createNapcatLogin({runtimeDir:()=>napcatRuntimeDir||qqRuntime.runtimePaths(root,dataDir).configRoot});
+  const tableImageJobs=new Set(),tableImageMessages=new Map();
+  const billState=c=>JSON.stringify([c.revision,c.records,c.orderPlanning?.version,c.settlement?.version,c.orderLifecycle?.version]);
+  async function sendTableImages(result,e,send){
+    const group=String(e.group_id||''),qq=String(e.user_id||''),personal=!!result.personalBillCampaignId;
+    const billCampaignId=result.personalBillCampaignId||result.groupBillCampaignId;
+    const campaignId=billCampaignId||result.tableCampaignId,campaign=db.campaigns.find(c=>c.id===campaignId);
+    const allowed=()=>{const live=db.campaigns.find(c=>c.id===campaignId);return (personal||isAdministrator(db,qq))&&canHandleQQEvent(db,e)&&live&&(live.groupId?String(live.groupId)===group:(db.albums||[]).some(a=>a.campaignId===live.id&&String(a.groupId)===group));};
+    if(!group||!allowed())throw Error('当前群或管理员权限已变化，请重新发送指令');
+    if(!desktopActions.renderTableImages)throw Error('当前运行环境未配置排表图片渲染，请使用桌面程序或配置服务器渲染器');
+    const messageId=String(e.message_id||''),dedupe=group+'|'+messageId;
+    if(messageId&&tableImageMessages.has(dedupe)&&Date.now()-tableImageMessages.get(dedupe)<300000)return {duplicate:true,count:0};
+    if(tableImageJobs.has(group)||tableImageJobs.size>=2)throw Error('排表图片仍在生成，请稍后再试');
+    tableImageJobs.add(group);let sent=0;
+    try{
+      const snapshot=billCampaignId?billState(campaign):null,c=privacy.clean(structuredClone(campaign)),cleanDb=privacy.clean(db);
+      const pages=personal?personalBillPages(c,cleanDb,qq):billCampaignId?groupBillPages(c,cleanDb):tableImagePages(c,cleanDb,result.tableCategoryIds);
+      const images=await desktopActions.renderTableImages(pages);
+      if(!Array.isArray(images)||images.length!==pages.length||images.some(b=>!Buffer.isBuffer(b)||b.length<8||b.length>8*1024*1024||b.readUInt32BE(0)!==0x89504e47))throw Error('排表图片生成结果无效');
+      for(let i=0;i<images.length;i++){
+        if(backendSuspended||connection?.remote||!allowed())throw Error('当前群或管理员权限已变化，已停止发送');
+        if(billCampaignId&&billState(db.campaigns.find(c=>c.id===campaignId))!==snapshot)throw Error('肾表数据已更新，请重新发送指令');
+        const page=pages[i],label=[page.title,page.category,page.section].filter(Boolean).join(' · ');
+        await send({group_id:e.group_id,message:[{type:'text',data:{text:label+(page.parts>1?'（'+page.part+'/'+page.parts+'）':'')}},{type:'image',data:{file:'base64://'+images[i].toString('base64')}}]});sent++;
+      }
+      if(messageId){tableImageMessages.set(dedupe,Date.now());while(tableImageMessages.size>100)tableImageMessages.delete(tableImageMessages.keys().next().value);}
+      return {count:sent};
+    }catch(error){if(sent)throw Error('已发送'+sent+'张，后续发送失败：'+privacy.error(error));throw error;}finally{tableImageJobs.delete(group);}
+  }
   async function openQQ(){
     if(backendSuspended||connection?.remote)return;
     qqConnection?.close();const token=await credentialStore.get({provider:'qq',baseUrl:db.qqSettings.url});
@@ -195,12 +233,19 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
       if(e.post_type==='message'){qqLastInbound=entry;const previous=qqActivity.get(entry.groupId)||{};qqActivity.set(entry.groupId,{...previous,inbound:entry});if(qqActivity.size>100)qqActivity.delete(qqActivity.keys().next().value);}
       const done=outcome=>{entry.outcome=privacy.text(outcome);qqEvents.unshift(entry);if(qqEvents.length>20)qqEvents.pop();qqActivity.set(entry.groupId,{...qqActivity.get(entry.groupId),outcome:entry});};
       if(e.post_type!=='message'&&e.kind!=='album_comment')return;
+      const ignored=ignoredGroupMessage(e);if(ignored)return done('已忽略：'+ignored.reason);
       if(!canHandleQQEvent(db,e)){
         // Staying silent outside the bound scope looked like a broken bot; answer an addressed group once.
         if(e.post_type==='message'&&e.group_id&&isMentioned(e)){try{await qqConnection.call('send_group_msg',{group_id:e.group_id,message:textMessage(SCOPE_HINT)});return done('群不在处理范围，已回复提示');}catch(error){entry.error=privacy.error(error);return done('群不在处理范围，提示发送失败');}}
         return done('群不在处理范围');
       }
-      let result;try{result=processQQEvent(db,e,await commandOptions(messageText(e.message)));if(result.ignored)return done('已忽略：'+(result.reason||'无需处理'));if(!result.readOnly)await save();}catch(error){result={reply:'操作失败：'+privacy.error(error)};entry.error=privacy.error(error);}
+      let result;try{result=processQQEvent(db,e,{...await commandOptions(messageText(e.message)),plugins});if(result.ignored)return done('已忽略：'+(result.reason||'无需处理'));if(!result.readOnly)await save();}catch(error){result={reply:'操作失败：'+privacy.error(error)};entry.error=privacy.error(error);}
+      if(result.pluginRequest){const plugin=plugins.find(p=>p.id===result.pluginRequest);if(plugin){try{result.reply=String(await plugin.reply({text:messageText(e.message),event:e,db}));}catch(error){entry.error=privacy.error(error);result.reply=plugin.errorReply||'插件执行失败，请稍后再试。';}}}
+      if(result.tableCampaignId||result.personalBillCampaignId||result.groupBillCampaignId){
+        const label=result.personalBillCampaignId?'个人肾表图片':result.groupBillCampaignId?'全团肾表图片':'排表图片';
+        try{const imageResult=await sendTableImages(result,e,params=>qqConnection.call('send_group_msg',params));return done(imageResult.duplicate?'重复指令，未重复发送':'已发送'+label+' '+imageResult.count+' 张');}
+        catch(error){entry.error=privacy.error(error);result.reply=label+'暂无法发送：'+privacy.error(error);}
+      }
       if(result.exportCampaignId){try{const campaign=db.campaigns.find(c=>c.id===result.exportCampaignId);const target=path.join(dataDir,'tables',campaign.id+'-肾表.xlsx');await fs.writeFile(target,workbook(privacy.clean(campaign),privacy.clean(db),{kind:'settlement'}));await qqConnection.call('upload_group_file',{group_id:e.group_id,file:target,name:'肾表.xlsx'});}catch(error){entry.error=privacy.error(error);result.reply='肾表暂无法导出：'+privacy.error(error);}}
       if(!result.reply)return done('无需回复');
       result.reply=privacy.text(result.reply);
@@ -210,6 +255,25 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
     }});
   }
   if(db.qqSettings?.url)try{await openQQ();}catch{}
+  for(const plugin of plugins){
+    if(typeof plugin.start!=='function')continue;
+    try{
+      await plugin.start({
+        dir:plugin.dir,
+        id:plugin.id,
+        sendGroup:async(groupId,text)=>{
+          if(!qqConnection)throw Error('QQ 未连接');
+          await qqConnection.call('send_group_msg',{group_id:String(groupId),message:textMessage(String(text))});
+        },
+        isAdmin:qq=>isAdministrator(db,qq),
+        groupIds:()=>(db.qqGroups||[]).filter(group=>group.enabled!==false).map(group=>String(group.id)),
+        log:(...args)=>console.log('[插件]',...args)
+      });
+      startedPlugins.push(plugin);
+    }catch(error){
+      console.warn(`[插件] ${plugin.id} 启动失败：${error.message}`);
+    }
+  }
   async function settleLocalOperations(){
     const deadline=Date.now()+5000;
     while(localRequests>1){if(Date.now()>deadline)throw Error('还有操作正在处理，请稍后重试');await new Promise(resolve=>setTimeout(resolve,20));}
@@ -246,7 +310,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
       if(connection?.remote&&(url.pathname.startsWith('/api/')||url.pathname.startsWith('/media/')))return await connection.forward(req,res);
       if(url.pathname.startsWith('/api/')||url.pathname.startsWith('/media/')){localRequests++;localWork=true;}
       if(req.method==='GET'&&url.pathname==='/api/export'){const c=db.campaigns.find(c=>c.id===url.searchParams.get('campaignId'));if(!c)throw Error('期次不存在');if(url.searchParams.get('kind')==='settlement'){const calculated=applyAutomaticGroupPrices(c,db);if(calculated.updated)await save();}const output=workbook(privacy.clean(c),privacy.clean(db),{kind:url.searchParams.get('kind')==='settlement'?'settlement':'enrollment'});res.writeHead(200,{'content-type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','content-disposition':"attachment; filename*=UTF-8''"+encodeURIComponent(c.name+(url.searchParams.get('kind')==='settlement'?'-肾表.xlsx':'-排表.xlsx'))});return res.end(output);}
-      if(req.method==='GET' && url.pathname==='/api/state')return reply(200,{...db,bots:registry.bots,providers,models:knownModels,hasKey:!!apiKey,skill:{name:'arknights-pingu',version:'0.2.0'},references:{...refs.meta,boxes:refs.boxes.map(b=>({id:b.id,count:b.characters.length}))},qq:{connected:qqConnection?.status()==='已连接',status:qqConnection?.status()||'未连接'}});
+      if(req.method==='GET' && url.pathname==='/api/state')return reply(200,{...db,albums:(db.albums||[]).map(binding=>({...binding,pending:(binding.pending||[]).map(item=>pendingReviewView(db,binding,item))})),bots:registry.bots,providers,models:knownModels,hasKey:!!apiKey,skill:{name:'arknights-pingu',version:'0.2.0'},references:{...refs.meta,boxes:refs.boxes.map(b=>({id:b.id,count:b.characters.length}))},qq:{connected:qqConnection?.status()==='已连接',status:qqConnection?.status()||'未连接'}});
       if(req.method==='GET'&&url.pathname==='/api/usage-config')return reply(200,usage.configuration(db.settings));
       if(req.method==='GET'&&url.pathname==='/api/qq-runtime')return reply(200,desktopActions.qqRuntimeInfo?await desktopActions.qqRuntimeInfo():{supported:false,available:false});
       if(req.method==='GET'&&url.pathname==='/api/glossary')return reply(200,{...(await glossary.read()),file:glossary.file});
@@ -320,7 +384,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
         if(url.pathname==='/api/skill-import'){const bot=await registry.importSkill(b.text,b.name);return reply(200,{bot});}
         if(url.pathname==='/api/glossary-entry'){const data=await glossary.update(b);return reply(200,{...data,file:glossary.file});}
         if(url.pathname==='/api/qq-album-comments'){if(db.albumSyncPaused)throw Error('备份已恢复，相册自动同步暂已暂停；请先点击“恢复相册同步”');if(qqConnection?.status()!=='已连接')throw Error('QQ尚未连接');return reply(200,{results:await albumPoller.run()});}
-        if(url.pathname==='/api/qq-album-photos'){if(qqConnection?.status()!=='已连接')throw Error('QQ尚未连接');const binding=db.albums?.find(a=>a.groupId===String(b.groupId)&&a.albumId===b.albumId);if(!binding||!canHandleQQEvent(db,{group_id:binding.groupId}))throw Error('相册不在当前绑定范围');let result;try{result=await readBoundAlbum(binding);}catch(error){if(!error.albumPhotosRefreshed)throw error;binding.sync={...binding.sync,error:'图片已刷新，评论读取失败：'+privacy.error(error)};await save();return reply(200,{photos:binding.photos,comments:[],warning:binding.sync.error});}if(result){reconcileAlbumPhotos(binding,result.photos,result.captions);await save();}return reply(200,{photos:binding.photos,comments:result?.comments||[]});}
+        if(url.pathname==='/api/qq-album-photos'){if(qqConnection?.status()!=='已连接')throw Error('QQ尚未连接');const binding=db.albums?.find(a=>a.groupId===String(b.groupId)&&a.albumId===b.albumId);if(!binding||!canHandleQQEvent(db,{group_id:binding.groupId}))throw Error('相册不在当前绑定范围');let result;try{result=await readBoundAlbum(binding);}catch(error){if(!error.albumPhotosRefreshed)throw error;binding.sync={...binding.sync,error:'图片已刷新，评论读取失败：'+privacy.error(error)};await save();return reply(200,{photos:binding.photos,comments:[],warning:binding.sync.error});}if(result){reconcileAlbumPhotos(binding,result.photos,result.captions);if(result.commentReadError)binding.sync={...binding.sync,error:result.commentReadError};await save();}return reply(200,{photos:binding.photos,comments:result?.comments||[],...(result?.commentReadError?{warning:result.commentReadError}:{})});}
         if(url.pathname==='/api/album-photo-scope'){
           const binding=db.albums?.find(a=>a.groupId===String(b.groupId)&&a.albumId===b.albumId);if(!binding||!canHandleQQEvent(db,{group_id:binding.groupId}))throw Error('相册不在当前绑定范围');
           const c=db.campaigns.find(c=>c.id===binding.campaignId);if(!binding.photos?.some(p=>p.id===b.photoId))throw Error('请先读取相册图片');
@@ -328,7 +392,9 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
         }
         if(url.pathname==='/api/album-comment-resolve'){
           const binding=db.albums?.find(a=>a.campaignId===b.campaignId);if(!binding)throw Error('该期次还没有绑定相册');
-          const resolutions={},quantities={};for(const r of Array.isArray(b.resolutions)?b.resolutions:[]){if(!r?.phrase)continue;if(r.skuId)resolutions[String(r.phrase)]=String(r.skuId);const q=Number(r.quantity);if(Number.isInteger(q)&&q>=1&&q<=999)quantities[String(r.phrase)]=q;}
+          if(!Array.isArray(b.resolutions)||b.resolutions.length>1000)throw Error('评论核对信息无效');
+          const resolutions=Object.create(null),quantities=Object.create(null),seen=new Set();
+          for(const r of b.resolutions){const key=r?.entryKey||r?.phrase;if(typeof key!=='string'||!key||key.length>1000||seen.has(key))throw Error('评论条目已变化，请刷新后核对');seen.add(key);if(r.skuId)resolutions[key]=String(r.skuId);if(r.quantity!==undefined){const q=Number(r.quantity);if(!Number.isInteger(q)||q<1||q>999)throw Error('核对数量须为1至999的整数');quantities[key]=q;}}
           const result=retryPending(db,binding,b.commentId,resolutions,quantities);operationResult=await save(op('核对评论入表'));return reply(200,{ok:true,message:result.message,count:result.count});
         }
         if(url.pathname==='/api/album-comment-item-delete'){
@@ -343,14 +409,16 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
           const binding=db.albums?.find(a=>a.groupId===String(b.groupId)&&a.albumId===String(b.albumId));if(!binding||!canHandleQQEvent(db,{group_id:binding.groupId}))throw Error('相册不在当前绑定范围');
           const photos=batchPhotos(binding,b.batchId);if(!photos.length)throw Error('没有找到这次上传的图片');
           const c=db.campaigns.find(c=>c.id===binding.campaignId);
-          requireEnrollmentOpen(c);
           if(b.ignored===true||String(b.categoryId)===IGNORE_SCOPE){
+            requireEnrollmentOpen(c);
             const ignored={ignored:true,boxId:'',source:'人工确认'};
-            binding.batchScopes??={};binding.batchScopes[String(b.batchId)]={...ignored};
-            binding.photoScopes??={};for(const photo of photos)binding.photoScopes[photo.id]={...ignored};
             const photoIds=new Set(photos.map(p=>p.id)),commentIds=new Set();
             for(const e of c.commentEvents||[])if((e.photoIds||[]).some(id=>photoIds.has(id)))commentIds.add(String(e.id));
             for(const p of binding.pending||[])if((p.photoIds||[]).some(id=>photoIds.has(id)))commentIds.add(String(p.id));
+            const affected=(c.records||[]).filter(r=>[...commentIds].some(id=>String(r.requestId||'').startsWith('comment:'+id+':')));
+            if(hasBundleLinks(c,affected))throw Error('这次上传的排量仍有关联选捆，请先解除后再忽略图片');
+            binding.batchScopes??={};binding.batchScopes[String(b.batchId)]={...ignored};
+            binding.photoScopes??={};for(const photo of photos)binding.photoScopes[photo.id]={...ignored};
             binding.pending=(binding.pending||[]).filter(p=>!(p.photoIds||[]).some(id=>photoIds.has(id)));
             if(commentIds.size){c.records=(c.records||[]).filter(r=>![...commentIds].some(id=>String(r.requestId||'').startsWith('comment:'+id+':')));c.commentEvents=(c.commentEvents||[]).filter(e=>!commentIds.has(String(e.id)));}
             operationResult=await save(op('确认图片大类'));return reply(200,{ok:true,scope:binding.batchScopes[String(b.batchId)]});
@@ -390,7 +458,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
           if(changed)await save();return reply(200,{groupId:group,albums});
         }
         if(url.pathname==='/api/qq-album-media'){if(!qqConnection)throw Error('请先连接QQ网关');return reply(200,{data:await qqConnection.call('get_group_album_media_list',{group_id:String(b.groupId),album_id:String(b.albumId),attach_info:String(b.attachInfo||'')})});}
-        if(url.pathname==='/api/qq-event'){try{if(!canHandleQQEvent(db,b))throw Error('该群不在当前处理范围');const result=processQQEvent(db,b,await commandOptions(messageText(b.message)));if(!result.readOnly)await save();return reply(200,result);}catch(e){return reply(400,{error:privacy.error(e),reply:'操作失败：'+privacy.error(e)});}}
+        if(url.pathname==='/api/qq-event'){try{const ignored=ignoredGroupMessage(b);if(ignored)return reply(200,ignored);if(!canHandleQQEvent(db,b))throw Error('该群不在当前处理范围');const result=processQQEvent(db,b,{...await commandOptions(messageText(b.message)),plugins});if(!result.readOnly)await save();if(result.pluginRequest){const plugin=plugins.find(p=>p.id===result.pluginRequest);if(plugin){try{result.reply=String(await plugin.reply({text:messageText(b.message),event:b,db}));}catch(error){result.reply=plugin.errorReply||'插件执行失败，请稍后再试。';}}}return reply(200,result);}catch(e){return reply(400,{error:privacy.error(e),reply:'操作失败：'+privacy.error(e)});}}
         if(url.pathname==='/api/upload')return reply(200,{url:await saveImage(dataDir,b.image)});
         if(url.pathname==='/api/prts')return reply(200,{characters:await verifyPrts(b.names,referenceFetch)});
         if(url.pathname==='/api/box')return reply(200,expandBox(refs,b.boxId));
@@ -449,8 +517,26 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
         if(url.pathname==='/api/queue-reorder'){
           const result=reorderQueue(c,db,b);if(result.changed)operationResult=await save(op('调整排表顺序'));return reply(200,{...result,view:enrollmentView(c,db)});
         }
+        if(url.pathname==='/api/bundle-options')return reply(200,bundleOptions(c,db,b));
+        if(url.pathname==='/api/transfer-preview')return reply(200,transferPreview(c,db,b));
+        if(url.pathname==='/api/enrollment-product-options')return reply(200,productChangeOptions(c,db,b));
+        if(url.pathname==='/api/enrollment-product-change'){
+          const result=changeEnrollmentProduct(c,db,b);operationResult=await save(op('更改排表商品'));return reply(200,{...result,view:enrollmentView(c,db)});
+        }
+        if(url.pathname==='/api/enrollment-transfer'){
+          const result=transferEnrollment(c,db,b);operationResult=await save(op('转让排量'));return reply(200,{...result,view:enrollmentView(c,db)});
+        }
+        if(url.pathname==='/api/bundle-rule'){
+          const result=setBundleRule(c,b);operationResult=await save(op('修改上捆标记'));return reply(200,{...result,view:enrollmentView(c,db)});
+        }
+        if(url.pathname==='/api/bundle-assign'){
+          const result=assignBundle(c,db,b);operationResult=await save(op(b.items?.length||b.existing?.length?'保存选捆':'解除选捆'));return reply(200,{...result,view:enrollmentView(c,db)});
+        }
         if(url.pathname==='/api/summary')return reply(200,{products:summary(c),records:orderedRecords(c)});
-        if(url.pathname==='/api/planning-state')return reply(200,{pool:c.orderPlanning?.supplementOpen?supplementaryPool(c):purchasePool(c),planning:c.orderPlanning||{},settlement:c.settlement||{},summary:settlementSummary(c,db),creditTypes,lifecycle:c.orderLifecycle||{status:'open',version:0},sourceHash:sourceHash(c),issues:planningIssues(c)});
+        if(url.pathname==='/api/planning-state'){
+          const replanUnpaid=canReplanUnpaid(c),pool=replanUnpaid?remainingPurchasePool(c):c.orderPlanning?.supplementOpen?supplementaryPool(c):purchasePool(c,{syncSingleDemand:b.syncSingles===true});
+          return reply(200,{pool,replanUnpaid,planning:c.orderPlanning||{},settlement:c.settlement||{},summary:settlementSummary(c,db),creditTypes,lifecycle:c.orderLifecycle||{status:'open',version:0},sourceHash:sourceHash(c),issues:planningIssues(c)});
+        }
         if(url.pathname==='/api/campaign-complete'){
           await backups.create(db,'下单完成前备份');
           const before=businessState(db),result=completeCampaign(c,b);operationResult=await save({...op('下单完成'),before});return reply(200,result);
@@ -469,12 +555,12 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
           if(isCompleted(c))throw Error('本期已结束，请先点击“开启补单”');
           if(b.catalogRevision!==c.revision)throw Error('商品已更新，请刷新购买清单');
           if(b.version!==(c.orderPlanning?.version||0))throw Error('下单规划已更新，请刷新后重试');
-          if(!c.orderPlanning?.supplementOpen&&c.orderPlanning?.plan?.orders.some(o=>o.actualPaid!==null))throw Error('当前方案已有实付记录，不可直接重新拆单；请保留原订单');
-          let pool;
-          if(c.orderPlanning?.supplementOpen){const available=supplementaryPool(c);if(!Array.isArray(b.pool)||b.pool.length!==available.length||new Set(b.pool.map(x=>x.id)).size!==available.length)throw Error('补单清单已变化，请刷新后重试');pool=available.map(row=>{const item=b.pool.find(x=>x.id===row.id);if(!item||!Number.isInteger(item.quantity)||item.quantity<0||item.quantity>999)throw Error('补单数量须为0到999的整数');return {...row,quantity:item.quantity,price:item.price==null?null:cents(item.price)/100};});}
-          else pool=normalizePool(c,b.pool);
-          const plan=planOrders(pool,b.settings);
-          if(c.orderPlanning?.supplementOpen)appendSupplement(c,plan,pool);
+          const replanUnpaid=canReplanUnpaid(c),supplement=c.orderPlanning?.supplementOpen;
+          if(replanUnpaid&&b.expectedSource!==sourceHash(c))throw Error('排量或商品已变化，请刷新后重新规划待下单商品');
+          if(!replanUnpaid&&!supplement&&c.orderPlanning?.plan?.orders.some(o=>o.actualPaid!=null))throw Error('订单实付已全部保存；请通过补单追加商品');
+          const available=replanUnpaid?remainingPurchasePool(c):supplement?supplementaryPool(c):purchasePool(c);
+          const pool=normalizePool(c,b.pool,available),plan=planOrders(pool,b.settings,{allowEmpty:replanUnpaid});
+          if(replanUnpaid||supplement)mergeOrderPlan(c,plan,{replaceUnpaid:replanUnpaid});
           else c.orderPlanning={version:(c.orderPlanning?.version||0)+1,pool,settings:plan.settings,plan,source:purchaseSource(c)};
           operationResult=await save(op('生成下单方案'));return reply(200,{ok:true,planning:c.orderPlanning});
         }
@@ -513,6 +599,7 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
         }
         if(url.pathname==='/api/catalog'){
           if(b.revision!==undefined&&b.revision!==c.revision)throw new Error('商品目录已更新，请重新加载后修改');
+          const catalogRoster=characterRosterFromNote(b.recognitionNote);
           const nextCategories=categories(b.categories||c.categories||defaultCategories());
           let catalogReview;if(b.catalogReview!==undefined){const review=b.catalogReview;if(!review||typeof review.sourceAt!=='string'||!Array.isArray(review.items)||review.items.length>1000||review.items.some(x=>!x||typeof x.message!=='string'||x.message.length>4000||typeof x.done!=='boolean'))throw Error('识别复核信息无效');catalogReview={sourceAt:review.sourceAt.slice(0,40),items:review.items.map(x=>({message:x.message,done:x.done}))};}
           const products=catalog(b.products,nextCategories);if(c.records.some(r=>!products.some(p=>p.id===r.skuId)))throw new Error('已有报名的商品不能删除');
@@ -523,10 +610,11 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
           for(const r of c.records){const next=products.find(p=>p.id===r.skuId);const cents=next?.price==null?null:Math.round(next.price*100);if(['暂估','待定价'].includes(r.status)&&next&&(r.name!==next.name||r.unitCents!==cents)){r.history=[...(r.history||[]),{name:r.name,unitCents:r.unitCents,at:new Date().toISOString()}];r.name=next.name;r.unitCents=cents;r.status=cents===null?'待定价':'暂估';updatedRecords++;}}
           if(catalogReview)c.catalogReview=catalogReview;
           c.categories=nextCategories;c.products=products;
+          if(catalogRoster){c.recognitionCharacters=catalogRoster;c.recognitionNote=String(b.recognitionNote).slice(0,1500);}
           for(const map of c.positionMaps||[])map.anchors=(map.anchors||[]).filter(a=>products.some(p=>p.id===a.skuId));c.positionMaps=(c.positionMaps||[]).filter(map=>map.anchors.length);
           c.settlement??={};c.settlement.groupPricing??={};for(const cat of nextCategories)if(cat.kind==='group')for(const [box,mode]of Object.entries(cat.averageModesByBox||{}))c.settlement.groupPricing[cat.id+'|'+box]=mode==='auto'?'auto':'current';
           for(const imageUrl of new Set(products.map(p=>p.positionAnchor?.imageUrl).filter(Boolean))){const anchors=products.filter(p=>p.positionAnchor?.imageUrl===imageUrl).map(p=>({skuId:p.id,bounds:p.positionAnchor.bounds}));c.positionMaps??=[];const previous=c.positionMaps.find(m=>m.imageUrl===imageUrl);if(previous)previous.anchors=anchors;else c.positionMaps.push({id:randomUUID(),imageUrl,anchors});}
-          c.revision++;operationResult=await save(op('保存商品'));return reply(200,{ok:true,updatedRecords});
+          c.revision++;operationResult=await save(op('保存商品'));return reply(200,{ok:true,updatedRecords,catalog:{revision:c.revision,products:c.products,categories:c.categories,catalogReview:c.catalogReview}});
         }
         if(url.pathname==='/api/enroll'){requireEnrollmentOpen(c);if(c.revision!==b.revision)throw new Error('商品目录已变化，请重新识别');if(c.records.some(x=>x.requestId===b.requestId))return reply(200,{ok:true,duplicate:true});if(!b.requestId)throw new Error('缺少请求编号');const record=enrollment(b,c.products);c.records.push({...record,id:randomUUID(),requestId:b.requestId,source:String(b.source||''),createdAt:new Date().toISOString()});operationResult=await save(op('录入排表'));return reply(200,{ok:true});}
         if(url.pathname==='/api/recognize'){
@@ -542,6 +630,9 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
           if(b.mode==='image'&&selected?.vision===false)throw new Error('所选模型不支持图片，请在连接设置中选择支持图片的模型版本');
           if(!['image','enrollment','term'].includes(b.mode))throw new Error('未知识别任务');
           let content,imageParts=[];
+          const declaredRoster=b.mode==='image'?characterRosterFromNote(b.text):null;
+          const recognitionRoster=declaredRoster||c.recognitionCharacters||[];
+          const constrain=data=>constrainRecognitionCharacters(data,recognitionRoster,{characters:bot.imported?[]:refs.characters,arknights:!bot.imported});
           if(b.mode==='image') {
             if(b.images!==undefined){
               if(!Array.isArray(b.images)||!b.images.length||b.images.length>32)throw Error('图片分片数量不正确');
@@ -553,9 +644,10 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
             content=[{type:'text',text:guide},...imageParts.flatMap((p,i)=>[{type:'text',text:`分片 ${i}`},{type:'image_url',image_url:{url:p.image}}])];
           }
           else content=`任务：${b.mode}。当前期次：${c.name}。商品目录：${JSON.stringify(c.products)}。用户原文：${String(b.text||'').slice(0,8000)}。报名任务返回 JSON：{"status":"resolved或ambiguous或unknown","skuId":"目录中的编号或null","quantity":整数或null,"candidates":[],"question":"需要追问的内容"}。只处理单商品新增，修改撤销或多商品请返回 ambiguous 并说明。术语任务返回 {"answer":"解释"}。`;
-          if(b.mode==='image'&&!bot.imported)content[0].text+=' 必须读取每个分盒明确标注的整盒原价并返回boxPrices，与盒号一一关联；350只是可能的价格，不能固定使用。无清楚整盒标注时不返回价格；不把25元/单抽、一对均价或角色调价当整盒价，不乘单抽数量推算。即使只返回boxIds展开角色，也必须单独返回boxPrices；仅识别文字模式同样读取。 特典请读取档次并在商品上额外返回giftTier正整数（1为一档、2为二档、3为三档，以此类推），无法确定留null。特典售价由用户填写，不要用门槛代替售价。已有一、二档时应用会另建特典SET供用户单独定价，不要把SET价格猜成一、二档售价之和。';
+          if(b.mode==='image'&&!bot.imported)content[0].text+=' 必须读取每个分盒明确标注的整盒原价并返回boxPrices，与盒号一一关联；350只是可能的价格，不能固定使用。无清楚整盒标注时不返回价格；不把25元/单抽、一对均价或角色调价当整盒价，不乘单抽数量推算。即使只返回boxIds展开角色，也必须单独返回boxPrices；仅识别文字模式同样读取。 特典请读取档次并在商品上额外返回giftTier正整数（1为一档、2为二档、3为三档，以此类推），无法确定留null。特典售价由用户填写，不要用门槛代替售价。已有特典档位时应用会另建包含全部档位的特典SET供用户单独定价，不要把SET价格猜成各档售价之和。';
           if(b.mode==='image'&&!bot.imported)content[0].text+=' 另返回groups数组，每项为{"id":"组内关联标识","title":"图上含盲盒的原始商品标题","boxId":"明确系列/盒号，无则空字符串","boxPrice":数字或null,"priceText":"原始整盒/端盒价标注","priceStatus":"clear或uncertain"}。含盲盒的非通行证商品独立建拼团大类：例如立体冰箱贴盲盒，groups.title为立体冰箱贴盲盒，products为每一角色/款式各一条，附groupId对应groups.id、character真实名称、type单领、unit件、averagePrice:null、price:null。同图甜品碟共5款但无盲盒字样仍是单领，不加入groups。不要返回整组占位商品，也不凭款数推算整盒价；195元/端盒可导入195，39元/抽不是整盒价。未能确认的角色/款式在questions说明，不编造。';
           if(b.mode==='image'&&b.textOnly===true)content[0].text+=' 当前为仅识别文字模式：只依据图片中可读文字提取商品名、类型、价格和单位，不根据商品外观猜测名称或角色，不定位商品图片，所有cropBounds返回null，不返回任何图片地址。看不清的文字列入questions待复核。';
+          if(b.mode==='image')content[0].text+=characterRosterHint(recognitionRoster);
           const positionMap=b.positionMapId?c.positionMaps?.find(m=>m.id===b.positionMapId):null;
           if(b.positionMapId&&!positionMap)throw Error('参照位置图不存在，请重新选择');
           if(positionMap&&b.mode==='image')content[0].text+='\n当前是同版式调价导入。逐个读取加减价并返回标注中心周围的小区域cropBounds及imageIndex，角色可以留空，由系统根据已确认参照位置关联。不要把多个位置合成一个框。';
@@ -574,18 +666,18 @@ export async function start({port=3218,dataDir=path.join(root,'data'),upstreamFe
             if(Array.isArray(data.products))for(const p of data.products){const index=Number.isInteger(p.imageIndex)?p.imageIndex:imageParts.length===1?0:-1;p.cropBounds=originalBounds(p.cropBounds,imageParts[index]?.region);delete p.imageIndex;}
             if(positionMap){for(const p of data.products||[]){const anchor=positionMatch(positionMap.anchors,p.cropBounds);const target=anchor&&c.products.find(x=>x.id===anchor.skuId);if(target){p.type='通行证';p.character=target.character;p.boxId=target.boxId;p.name=target.name;}else if(p.adjustmentText){p.adjustmentStatus='uncertain';data.questions??=[];data.questions.push('调价标注未能唯一匹配参照位置，请复核');}}}
             else for(const p of data.products||[])if(p.cropBounds)p.positionAnchor={imageUrl:b.imageUrl,bounds:p.cropBounds};
-            const modelResult=structuredClone(data);data=bot.imported?importedRecognition(data):enrichRecognition(refs,data);if(b.textOnly===true)for(const p of data.products){p.textOnly=true;p.imageUrl='';p.portraitUrl='';p.cropBounds=null;}c.lastRecognition={at:new Date().toISOString(),imageUrl:b.imageUrl||'',textOnly:b.textOnly===true,model:db.settings.model,imageCount:imageParts.length,modelAttempts,modelResult,result:data};c.recognitionReviews=[...(c.recognitionReviews||[]).filter(x=>x.imageUrl!==b.imageUrl),{at:c.lastRecognition.at,imageUrl:b.imageUrl||'',questions:(data.questions||[]).map(String)}].slice(-10);await save();
+            const modelResult=structuredClone(data);data=constrain(data);data=bot.imported?importedRecognition(data):enrichRecognition(refs,data);data=constrain(data);if(b.textOnly===true)for(const p of data.products){p.textOnly=true;p.imageUrl='';p.portraitUrl='';p.cropBounds=null;}if(declaredRoster){c.recognitionCharacters=declaredRoster;c.recognitionNote=String(b.text).slice(0,1500);}c.lastRecognition={at:new Date().toISOString(),imageUrl:b.imageUrl||'',textOnly:b.textOnly===true,model:db.settings.model,note:String(b.text||'').slice(0,1500),characterRoster:recognitionRoster,imageCount:imageParts.length,modelAttempts,modelResult,result:data};c.recognitionReviews=[...(c.recognitionReviews||[]).filter(x=>x.imageUrl!==b.imageUrl),{at:c.lastRecognition.at,imageUrl:b.imageUrl||'',questions:(data.questions||[]).map(String)}].slice(-10);await save();
           }return reply(200,{data,revision:c.revision});
         }
         return reply(404,{error:'接口不存在'});
       }
       if(req.method!=='GET')return reply(405,{error:'不支持此操作'});
       const brandingFiles={'/app-logo.svg':['app-logo.svg','image/svg+xml'],'/favicon.ico':['favicon.ico','image/x-icon']};const branding=brandingFiles[url.pathname];if(branding){res.writeHead(200,{'content-type':branding[1],'content-security-policy':"default-src 'none'; style-src 'unsafe-inline'; sandbox"});return res.end(await fs.readFile(path.join(root,'public',branding[0])));}
-      const files={'/update-settings.js':'update-settings.js','/album-scope-picker.js':'album-scope-picker.js','/catalog-feedback.js':'catalog-feedback.js','/recognition-categories.js':'recognition-categories.js','/product-finder.js':'product-finder.js','/category-manager.js':'category-manager.js','/catalog-utils.js':'catalog-utils.js','/runtime-status.js':'runtime-status.js','/catalog-management.css':'catalog-management.css','/workspace-tools.js':'workspace-tools.js','/qq-connection.js':'qq-connection.js','/settings-page.js':'settings-page.js','/settings.css':'settings.css','/':'index.html','/app.js':'app.js','/album-picker.js':'album-picker.js','/model-picker.js':'model-picker.js','/skill-settings.js':'skill-settings.js','/setup-guide.js':'setup-guide.js','/runtime-picker.js':'runtime-picker.js','/usage-settings.js':'usage-settings.js','/setup-state.js':'setup-state.js','/product-editor.js':'product-editor.js','/image-geometry.js':'image-geometry.js','/image-input.js':'image-input.js','/image-batch.js':'image-batch.js','/product-merge.js':'product-merge.js','/style.css':'style.css','/gift-tiers.js':'gift-tiers.js','/enrollment-people.js':'enrollment-people.js','/enrollment-table.js':'enrollment-table.js','/enrollment-table.css':'enrollment-table.css','/order-workspaces.js':'order-workspaces.js','/order-workspaces.css':'order-workspaces.css'};const file=files[url.pathname];if(!file)return reply(404,{error:'页面不存在'});
+      const files={'/transfer-editor.js':'transfer-editor.js','/bundle-editor.js':'bundle-editor.js','/update-settings.js':'update-settings.js','/album-scope-picker.js':'album-scope-picker.js','/catalog-feedback.js':'catalog-feedback.js','/recognition-categories.js':'recognition-categories.js','/product-finder.js':'product-finder.js','/category-manager.js':'category-manager.js','/catalog-utils.js':'catalog-utils.js','/runtime-status.js':'runtime-status.js','/catalog-management.css':'catalog-management.css','/workspace-tools.js':'workspace-tools.js','/qq-connection.js':'qq-connection.js','/settings-page.js':'settings-page.js','/settings.css':'settings.css','/':'index.html','/app.js':'app.js','/album-picker.js':'album-picker.js','/model-picker.js':'model-picker.js','/skill-settings.js':'skill-settings.js','/setup-guide.js':'setup-guide.js','/runtime-picker.js':'runtime-picker.js','/usage-settings.js':'usage-settings.js','/setup-state.js':'setup-state.js','/product-editor.js':'product-editor.js','/image-geometry.js':'image-geometry.js','/image-input.js':'image-input.js','/image-batch.js':'image-batch.js','/product-merge.js':'product-merge.js','/style.css':'style.css','/gift-tiers.js':'gift-tiers.js','/enrollment-people.js':'enrollment-people.js','/enrollment-table.js':'enrollment-table.js','/enrollment-table.css':'enrollment-table.css','/order-workspaces.js':'order-workspaces.js','/order-workspaces.css':'order-workspaces.css'};const file=files[url.pathname];if(!file)return reply(404,{error:'页面不存在'});
       res.writeHead(200,{'content-type':file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8','content-security-policy':"default-src 'self'; img-src 'self' data: https:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'none'; object-src 'none'"});res.end(await fs.readFile(path.join(root,'public',file)));
     }catch(e){reply(400,{error:privacy.error(e)});}finally{if(localWork)localRequests--;}
   });
   server.once('close',()=>{albumPoller.close();qqConnection?.close();});
-  await listenLocal(server,port);const backupTimer=setInterval(()=>{backups.automatic(durable).catch(error=>{backupError='自动备份失败：'+privacy.error(error);});},60000);backupTimer.unref?.();server.once('close',()=>clearInterval(backupTimer));return {server,url:`http://127.0.0.1:${server.address().port}`,status:()=>({qq:connection?.remote?'服务器模式':qqConnection?.status()||'未连接',campaigns:db.campaigns.length,events:qqEvents.length}),isRemote:()=>connection?.remote===true,async shutdown(){backendSuspended=true;albumPoller.close();qqConnection?.close();await albumPoller.idle();await Promise.allSettled([...localEvents]);await queue.catch(()=>{});await backups.idle();if(server.listening)await new Promise(resolve=>server.close(resolve));}};
+  await listenLocal(server,port);const backupTimer=setInterval(()=>{backups.automatic(durable).catch(error=>{backupError='自动备份失败：'+privacy.error(error);});},60000);backupTimer.unref?.();server.once('close',()=>clearInterval(backupTimer));return {server,url:`http://127.0.0.1:${server.address().port}`,status:()=>({qq:connection?.remote?'服务器模式':qqConnection?.status()||'未连接',campaigns:db.campaigns.length,events:qqEvents.length}),isRemote:()=>connection?.remote===true,async shutdown(){backendSuspended=true;for(const plugin of startedPlugins)try{await plugin.stop?.();}catch{}albumPoller.close();qqConnection?.close();await albumPoller.idle();await Promise.allSettled([...localEvents]);await queue.catch(()=>{});await backups.idle();if(server.listening)await new Promise(resolve=>server.close(resolve));}};
 }
 if(process.argv[1] && path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const s=await start();console.log('谷谷bot '+s.url);}

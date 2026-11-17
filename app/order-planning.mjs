@@ -4,13 +4,13 @@ import {groupCapacity} from './workflow.mjs';
 import {MAX_GIFT_TIERS,tierLabel} from './public/gift-tiers.js';
 export const cents=(v,label='金额')=>{if(typeof v!=='number'||!Number.isFinite(v)||v<0||Math.abs(v*100-Math.round(v*100))>1e-6)throw Error(label+'须为非负金额，最多两位小数');return Math.round(v*100);};
 export const isGift=(p,c)=>p.type==='特典'||isGiftCategory(c.categories.find(x=>x.id===(p.categoryId||p.type)));
-export function purchasePool(c){
+export function purchasePool(c,{syncSingleDemand=false}={}){
  const rows=[],groups=new Map();
  for(const p of c.products){if(isGift(p,c))continue;const cat=c.categories.find(x=>x.id===(p.categoryId||p.type)),demand=c.records.filter(r=>r.skuId===p.id).reduce((n,r)=>n+r.quantity,0);
   if(cat?.kind==='group'){const key=cat.id+'|'+(p.boxId||'');let g=groups.get(key);if(!g){g={id:'box:'+key,name:cat.name+(p.boxId?' '+p.boxId:'')+'（整盒）',categoryId:cat.id,boxId:p.boxId||'',kind:'group',unit:'盒',quantity:groupCapacity(cat,p.boxId||'')??0,price:cat.boxPrices?.[p.boxId||'']??null,demand:0};groups.set(key,g);rows.push(g);}g.demand=Math.max(g.demand,demand);}
   else rows.push({id:'sku:'+p.id,skuId:p.id,name:p.name,categoryId:cat?.id||p.type,kind:'single',unit:p.unit||'件',quantity:demand,price:p.price,demand});
  }
- return rows.map(r=>{const saved=c.orderPlanning?.pool?.find(x=>x.id===r.id);return {...r,quantity:saved?.quantity??r.quantity,price:saved?.price??r.price};});
+ return rows.map(r=>{const saved=c.orderPlanning?.pool?.find(x=>x.id===r.id),followDemand=r.kind==='single'&&(syncSingleDemand||saved&&saved.demand!==r.demand);return {...r,quantity:followDemand?r.quantity:saved?.quantity??r.quantity,price:saved?.price??r.price};});
 }
 export function planningSettings(b){
  const raw=Array.isArray(b.tiers)?b.tiers:[b.tier1,...(b.tier2==null?[]:[b.tier2])];
@@ -21,9 +21,9 @@ export function planningSettings(b){
  if(!['moreGifts','fewerOrders'].includes(leftoverStrategy)||!['total','tier2'].includes(objective)||!['both','highest'].includes(b.rewardMode)||!['once','stack'].includes(b.rule))throw Error('请选择特典规则和剩余商品处理方式');
  return {tiers,tier1:tiers[0],tier2:tiers[1]??null,objective,rewardMode:b.rewardMode,rule:b.rule,leftoverStrategy};
 }
-export function normalizePool(c,input){
- const available=purchasePool(c);if(!Array.isArray(input)||input.length!==available.length||new Set(input.map(x=>x.id)).size!==input.length)throw Error('购买清单已变化，请刷新后重试');
- return available.map(row=>{const item=input.find(x=>x.id===row.id);if(!item)throw Error('购买商品已变化');if(!Number.isSafeInteger(item.quantity)||item.quantity<0||item.quantity>999)throw Error('数量须为0到999的整数');const price=item.price==null?null:cents(item.price,row.name+'原价')/100;if(item.quantity&&price===null)throw Error('请填写'+row.name+'原价');return {...row,quantity:item.quantity,price};});
+export function normalizePool(c,input,available=purchasePool(c)){
+ if(!Array.isArray(input)||input.length!==available.length||new Set(input.map(x=>x?.id)).size!==input.length)throw Error('购买清单已变化，请刷新后重试');
+ return available.map(row=>{const item=input.find(x=>x?.id===row.id);if(!item)throw Error('购买商品已变化');if(!Number.isSafeInteger(item.quantity)||item.quantity<0||item.quantity>999)throw Error('数量须为0到999的整数');const price=item.price==null?null:cents(item.price,row.name+'原价')/100;if(item.quantity&&price===null)throw Error('请填写'+row.name+'原价');return {...row,quantity:item.quantity,price};});
 }
 export function rewards(sum,s){
  const tiers=s.tiers||[s.tier1,...(s.tier2==null?[]:[s.tier2])];
@@ -38,12 +38,12 @@ function better(a,b,s){
  for(let i=last;i>=0;i--)if(av[i]!==bv[i])return av[i]-bv[i];
  return 0;
 }
-export function planOrders(pool,settings,{budgetMs=1800}={}){
+export function planOrders(pool,settings,{budgetMs=1800,allowEmpty=false}={}){
  const s=planningSettings(settings),items=[];
  for(const row of pool){if(!Number.isSafeInteger(row.quantity)||row.quantity<0||row.quantity>999)throw Error('购买数量须为0到999的整数');if(!row.quantity)continue;const value=cents(row.price,row.name+'原价');if(!value)throw Error('下单商品原价须大于0');for(let i=0;i<row.quantity;i++)items.push({id:row.id,name:row.name,unit:row.unit||'件',cents:value});}
- if(!items.length)throw Error('请先填写购买商品和数量');if(items.length>1000)throw Error('单次规划最多1000件商品，请分批规划');
+ if(!items.length&&!allowEmpty)throw Error('请先填写购买商品和数量');if(items.length>1000)throw Error('单次规划最多1000件商品，请分批规划');
  let bins=[],proven=true;const deadline=Date.now()+budgetMs;
- if(s.rule==='stack')bins=[items];
+ if(s.rule==='stack')bins=items.length?[items]:[];
  else{
   const top=s.tiers.at(-1),minimum=s.leftoverStrategy==='fewerOrders'?top:s.tiers[0],small=items.filter(x=>x.cents<top);bins=items.filter(x=>x.cents>=top).map(x=>[x]);
   const prices=[...new Set(small.map(x=>x.cents))].sort((a,b)=>b-a),counts=prices.map(p=>small.filter(x=>x.cents===p).length),patterns=[];

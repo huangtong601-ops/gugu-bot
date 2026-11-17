@@ -43,6 +43,7 @@ app.whenReady().then(async () => {
   let loginWindow;
   const updater=await require('./app-update-desktop.cjs')({app,dialog,window:()=>win,shutdown:()=>service?.shutdown()});
   const desktopActions={
+    renderTableImages:require('./table-image-renderer.cjs')({BrowserWindow}),
     async appUpdate(action){if(!['snapshot','check','download','install'].includes(action))throw Error('更新操作无效');return updater[action]();},
     async openNapcatDownload(){await shell.openExternal('https://github.com/NapNeko/NapCatQQ/releases/latest');},
     async qqRuntimeInfo(){try{const runtime=runtimePaths(__dirname,dataDir);return {supported:true,available:runtime.kind==='node'||fs.existsSync(path.join(runtime.root,'napimain.exe')),root:runtime.root,kind:runtime.kind,source:runtime.source};}catch(e){return {supported:true,available:false,root:'',error:e.message};}},

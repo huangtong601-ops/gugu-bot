@@ -18,10 +18,10 @@ export function queryPersonalQueue(campaigns,qq,cn=''){
 const sameBox=(a,b)=>compact(a)===compact(b)||(/^\d+(?:\.\d+)?$/.test(a)&&/^\d+(?:\.\d+)?$/.test(b)&&Number(a)===Number(b));
 const categoryOf=(c,p)=>c.categories.find(x=>x.id===(p.categoryId||p.type));
 export function parseQueueCommand(text){
- const match=String(text||'').trim().match(/^(?:查询\s*)?(排量|余量)\s*[:：]?\s*(.*)$/s);
+ const match=String(text||'').trim().match(/^(?:(?:查询|查看|查阅)\s*)?(排量|余量)\s*[:：]?\s*(.*)$/s);
  return match?{kind:match[1],target:match[2].trim()}:null;
 }
-export function selectQueueProducts(c,target){
+export function selectQueueProducts(c,target,{familyProducts=c.products}={}){
  const q=compact(target);if(!q)return {products:c.products,label:'全部商品',bulk:true};
  // Exact category names take precedence over category + box parsing.
  const actualNames=new Set(c.categories.map(cat=>compact(cat.name))),names=cat=>[cat.name,...(cat.aliases||[]).filter(a=>!actualNames.has(compact(a)))];
@@ -35,7 +35,7 @@ export function selectQueueProducts(c,target){
  }
  let candidates=c.products,phrase=String(target).normalize('NFKC');
  const box=phrase.match(/\d+\.\d+/)?.[0];if(box){candidates=candidates.filter(p=>sameBox(p.boxId||'',box));phrase=phrase.replace(box,'');}
- const found=matchProduct(phrase,candidates,6,{arknights:!c.botId||c.botId==='zhougu'});
+ const found=matchProduct(phrase,candidates,6,{arknights:!c.botId||c.botId==='zhougu',familyProducts});
  if(found.length>1){const error=Error('匹配到多个商品，请补充大类、款式或盒号：'+found.slice(0,8).map(p=>p.name+(p.boxId?' ['+p.boxId+']':'')).join('、'));error.code='AMBIGUOUS_QUEUE_PRODUCT';throw error;}
  return {products:found,label:target,bulk:false};
 }

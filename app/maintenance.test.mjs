@@ -7,8 +7,8 @@ import {randomUUID} from 'node:crypto';
 import {start} from './server.mjs';
 import {purchasePool,planOrders} from './order-planning.mjs';
 import {settlementSummary} from './settlement.mjs';
-import {purchaseSource,sourceHash,completeCampaign,openSupplement,appendSupplement,supplementaryPool,validatePurchasedCatalog} from './campaign-lifecycle.mjs';
-import {applyAlbumComments,remindCompletedComments,retryPending} from './album-sync.mjs';
+import {purchaseSource,sourceHash,completeCampaign,openSupplement,mergeOrderPlan,supplementaryPool,validatePurchasedCatalog} from './campaign-lifecycle.mjs';
+import {applyAlbumComments,dismissPending,retryPending} from './album-sync.mjs';
 import {addComment} from './workflow.mjs';
 import {processQQEvent} from './qq-commands.mjs';
 import {businessState,businessDiff,createOperationHistory} from './operation-history.mjs';
@@ -28,19 +28,44 @@ test('stale demand and price changes stop settlement instead of silently using a
 });
 test('supplemental orders preserve paid orders, use only extra demand and can be completed repeatedly',()=>{
  const {campaigns:[c]}=fixture();finish(c);const old=structuredClone(c.orderPlanning.plan.orders);openSupplement(c,{version:1});assert.equal(supplementaryPool(c)[0].quantity,0);finish(c);assert.equal(c.orderLifecycle.status,'completed');openSupplement(c,{version:3});c.records.push({...c.records[0],id:'r2'});c.products[0].price=20;
- const pool=supplementaryPool(c);assert.equal(pool[0].quantity,1);const extra=planOrders(pool,settings);appendSupplement(c,extra,pool);assert.deepEqual(c.orderPlanning.plan.orders[0],old[0]);assert.notEqual(c.orderPlanning.plan.orders[0].id,c.orderPlanning.plan.orders[1].id);assert.equal(c.orderPlanning.plan.totalCents,3000);assert.equal(c.orderPlanning.plan.giftCounts[0],2);assert.throws(()=>finish(c),/全部订单/);c.orderPlanning.plan.orders[1].actualPaid=20;finish(c);assert.equal(settlementSummary(c).originalCents,3000);assert.equal(settlementSummary(c).receivableCents,2904);openSupplement(c,{version:5});assert.equal(c.orderLifecycle.purchasedOrderIds.length,2);
+ const pool=supplementaryPool(c);assert.equal(pool[0].quantity,1);const extra=planOrders(pool,settings);mergeOrderPlan(c,extra);assert.deepEqual(c.orderPlanning.plan.orders[0],old[0]);assert.notEqual(c.orderPlanning.plan.orders[0].id,c.orderPlanning.plan.orders[1].id);assert.equal(c.orderPlanning.plan.totalCents,3000);assert.equal(c.orderPlanning.plan.giftCounts[0],2);assert.throws(()=>finish(c),/全部订单/);c.orderPlanning.plan.orders[1].actualPaid=20;finish(c);assert.equal(settlementSummary(c).originalCents,3000);assert.equal(settlementSummary(c).receivableCents,2904);openSupplement(c,{version:5});assert.equal(c.orderLifecycle.purchasedOrderIds.length,2);
 });
-test('closed album comments never import, notify real senders once, and do not reappear after supplement',async()=>{
+test('closed albums import new comments once while keeping purchases locked and excess demand visible',()=>{
  const db=fixture(),c=db.campaigns[0];finish(c);const binding={groupId:'11111',albumId:'album',campaignId:'c',photoScopes:{photo:{categoryId:'single'}},pending:[]};db.albums=[binding];const event={id:'e',commentId:'e',groupId:'11111',albumId:'album',qq:'123456',text:'测试徽章2',at:new Date(Date.now()+1000).toISOString(),photoIds:['photo']},result={photos:[{id:'photo'}],comments:[event]};
- applyAlbumComments(db,binding,result);assert.equal(c.records.length,1);assert.throws(()=>addComment(db,c,{...event,id:'direct'}),/已经结束/);let sent=[],writes=0;const options={send:async p=>sent.push(p),persist:async()=>{writes++;}};await remindCompletedComments(db,binding,options);applyAlbumComments(db,binding,result);await remindCompletedComments(db,binding,options);assert.equal(sent.length,1);assert.equal(sent[0].message[0].data.qq,'123456');assert.match(sent[0].message[1].data.text,/本期已经结束/);assert.ok(writes>=2);
- openSupplement(c,{version:1});applyAlbumComments(db,binding,result);assert.equal(c.records.length,1);applyAlbumComments(db,binding,{...result,comments:[{...event,id:'e2',commentId:'e2'}]});assert.equal(c.records.length,2);assert.equal(c.records[1].quantity,2);
+ const orders=structuredClone(c.orderPlanning.plan.orders);
+ assert.throws(()=>addComment(db,c,{...event,id:'direct'}),/已经结束/);
+ assert.equal(applyAlbumComments(db,binding,result).imported,1);
+ assert.equal(applyAlbumComments(db,binding,result).duplicates,1);
+ assert.equal(c.records.length,2);assert.equal(c.records[1].quantity,2);
+ assert.equal(c.orderLifecycle.status,'completed');assert.deepEqual(c.orderPlanning.plan.orders,orders);
+ assert.match(settlementSummary(c).missing.join('；'),/超过已规划购买数量/);
+ assert.equal(binding.closedNotices,undefined);
 });
-test('closed pending review and @ enrollment both reject writes while queries and CN remain available',()=>{
+test('previously rejected comments can be reviewed or dismissed while @ enrollment remains closed',()=>{
  const db=fixture(),c=db.campaigns[0];finish(c);db.qqEnrollmentEnabled=true;const event={post_type:'message',self_id:99999,group_id:11111,user_id:123456,message_id:1,time:Date.now()/1000,message:[{type:'at',data:{qq:'99999'}},{type:'text',data:{text:'排谷 测试徽章1'}}]};assert.match(processQQEvent(db,event).reply,/已经结束/);assert.equal(c.records.length,1);event.message[1].data.text='查询排量 测试徽章';assert.match(processQQEvent(db,event).reply,/测试徽章/);
- const binding={groupId:'11111',albumId:'a',campaignId:'c',photoScopes:{photo:{categoryId:'single'}},pending:[{id:'old',commentId:'old',qq:'123456',text:'测试徽章1',at:'2026-01-01T01:00:00Z',photoIds:['photo']}]};assert.throws(()=>retryPending(db,binding,'old'),/已经结束/);
+ const old={id:'11111/a/old/123456/1',commentId:'old',qq:'123456',groupId:'11111',albumId:'a',text:'测试徽章1',at:'2026-01-01T01:00:00Z',photoIds:['photo']};
+ const ignored={...old,id:'11111/a/ignore/123456/1',commentId:'ignore'};
+ c.commentEvents=[old,ignored].map(({id,qq,at,text})=>({id,qq,at,text,closed:true}));
+ const binding={groupId:'11111',albumId:'a',campaignId:'c',photoScopes:{photo:{categoryId:'single'}},pending:[old,ignored]};
+ dismissPending(db,binding,'ignore');
+ assert.equal(retryPending(db,binding,'old').count,1);assert.equal(binding.pending.length,0);
+ assert.equal(applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments:[old,ignored]}).duplicates,2);
+ assert.equal(c.records.length,2);
 });
-test('closed notices handle QQ second precision while preserving earlier pending comments',()=>{
- const db=fixture(),c=db.campaigns[0];finish(c);c.orderLifecycle.completedAt='2026-10-25T12:00:00.800Z';const old={id:'old',qq:'123456',groupId:'11111',albumId:'a',at:'2026-10-25T12:00:00Z',text:'测试徽章1',photoIds:['photo']},binding={campaignId:'c',groupId:'11111',albumId:'a',pending:[old]};applyAlbumComments(db,binding,{photos:[{id:'photo'}],comments:[old,{...old,id:'new'}]});assert.equal(binding.closedNotices.length,1);assert.equal(binding.closedNotices[0].id,'new');assert.equal(binding.pending[0].id,'old');assert.equal(c.records.length,1);
+test('recovered comments use the original scope and time, and covered purchases remain settled',()=>{
+ const db=fixture(),c=db.campaigns[0];
+ const pool=purchasePool(c).map(row=>({...row,quantity:2})),plan=planOrders(pool,settings);
+ for(const order of plan.orders)order.actualPaid=order.subtotal/100;
+ c.orderPlanning={pool,plan,version:1,source:purchaseSource(c)};finish(c);
+ const old={id:'11111/a/old/123456/1',qq:'123456',groupId:'11111',albumId:'a',at:'2026-10-25T12:00:00Z',text:'测试徽章1',photoIds:['photo']};
+ const {id,qq,at,text}=old;c.commentEvents=[{id,qq,at,text,closed:true}];
+ const binding={campaignId:'c',groupId:'11111',albumId:'a',photoScopes:{photo:{categoryId:'single'}}};
+ const photos=[{id:'photo'}];
+ assert.equal(applyAlbumComments(db,binding,{photos,comments:[{...old,albumId:'wrong'}]}).duplicates,1);
+ const result=applyAlbumComments(db,binding,{photos,comments:[old,old]});
+ assert.equal(result.duplicates,1);assert.equal(result.imported,1);assert.equal(c.records.length,2);
+ assert.equal(Date.parse(c.records[1].sourceAt),Date.parse(old.at));assert.equal(c.commentEvents.length,1);assert.equal(c.commentEvents[0].closed,undefined);
+ assert.deepEqual(c.orderPlanning.source,purchaseSource(c));assert.equal(settlementSummary(c).ready,true);
 });
 test('undo restores only changed business fields, keeps new unrelated data and rejects a conflicting comment',()=>{
  const db=fixture(),history=createOperationHistory(),before=businessState(db);db.campaigns[0].products[0].name='新名字';db.campaigns[0].revision++;const entry=history.record('client','保存商品',businessDiff(before,businessState(db)));db.groupMembers.other={};const revision=db.campaigns[0].revision;history.undo(db,'client',entry.id);history.accept('client',entry.id);assert.equal(db.campaigns[0].products[0].name,'测试徽章');assert.ok(db.campaigns[0].revision>revision);assert.deepEqual(db.groupMembers.other,{});
@@ -67,11 +92,6 @@ test('restore previews refuse stale data and restoration keeps account configura
  const before=await state(),backup=(await post('backup-create')).data.backup,preview=(await post('backup-preview',{id:backup.id})).data;const added=await post('enroll-batch',{revision:0,requestId:'after-backup',source:'测试徽章1',member:'模拟乙',items:[{skuId:'p',quantity:1}]});assert.equal(added.status,200);assert.equal((await post('backup-restore',preview)).status,400);const fresh=(await post('backup-preview',{id:backup.id})).data;assert.equal((await post('backup-restore',fresh)).status,200);const after=await state();assert.equal(after.campaigns[0].records.length,1);assert.ok(after.campaigns[0].revision>before.campaigns[0].revision);assert.deepEqual(after.settings,before.settings);assert.equal((await post('undo-state')).data.entry,null);assert.ok((await post('backups')).data.backups.some(b=>b.reason==='恢复前备份'));
 }));
 
-test('closure reminder failures back off, do not leak transport errors and cannot target another group',async()=>{
- const db=fixture(),c=db.campaigns[0];finish(c);let clock=1900000000000,calls=0;const binding={groupId:'11111',campaignId:'c',closedNotices:[{id:'x',qq:'123456',attempts:0}]};const options={now:()=>clock,persist:async()=>{},send:async()=>{calls++;throw Error('synthetic-secret-in-transport');}};
- for(let i=0;i<5;i++){await remindCompletedComments(db,binding,options);clock+=500000;}
- assert.equal(calls,3);assert.ok(!JSON.stringify(binding).includes('synthetic-secret'));binding.groupId='22222';binding.closedNotices[0].attempts=0;await remindCompletedComments(db,binding,options);assert.equal(calls,3);
-});
 test('undo cannot remove a newly referenced SKU or close a supplement over newer comments',()=>{
  const db=fixture(),history=createOperationHistory(),before=businessState(db);db.campaigns[0].products.push({...db.campaigns[0].products[0],id:'p2'});const created=history.record('client','新增商品',businessDiff(before,businessState(db)));db.campaigns[0].records.push({...db.campaigns[0].records[0],id:'new',skuId:'p2'});assert.throws(()=>history.undo(db,'client',created.id),/新的排谷/);
  const d=fixture(),c=d.campaigns[0];finish(c);const closed=businessState(d);openSupplement(c,{version:1});const opened=history.record('other','开启补单',businessDiff(closed,businessState(d)));c.records.push({...c.records[0],id:'new-comment'});assert.throws(()=>history.undo(d,'other',opened.id),/新的修改或相册评论/);assert.equal(c.orderLifecycle.status,'supplement');
@@ -85,5 +105,5 @@ test('automatic backups are hourly and restore pauses album synchronization unti
  await service(async({post,state})=>{const b=(await post('backup-create')).data.backup,p=(await post('backup-preview',{id:b.id})).data;assert.equal((await post('backup-restore',p)).status,200);assert.equal((await state()).albumSyncPaused,true);assert.equal((await post('qq-album-comments')).status,400);await post('album-sync-resume');assert.equal((await state()).albumSyncPaused,false);});
 });
 test('purchased box contents are frozen and supplemental automatic pair prices use exact original order costs',()=>{
- const db=fixture(),c=db.campaigns[0];c.categories=[{id:'g',name:'通行证',kind:'group',setsByBox:{box:1},boxPrices:{box:350}}];c.products=Array.from({length:7},(_,i)=>({id:'r'+i,name:'通行证-角色'+i,type:'通行证',categoryId:'g',boxId:'box',averagePrice:null,price:null,adjustment:0,unit:'对'}));c.records=[{id:'a',member:'模拟甲',skuId:'r0',quantity:1,createdAt:'2026-01-01T00:00:00Z'}];let pool=purchasePool(c);c.orderPlanning={version:1,pool,source:purchaseSource(c),plan:planOrders(pool,settings)};c.orderPlanning.plan.orders.forEach(o=>o.actualPaid=o.subtotal/100);c.settlement.groupPricing={'g|box':'auto'};finish(c);openSupplement(c,{version:1});c.categories[0].setsByBox.box=2;c.categories[0].boxPrices.box=420;c.records[0].quantity=2;pool=supplementaryPool(c);appendSupplement(c,planOrders(pool,settings),pool);c.orderPlanning.plan.orders.filter(o=>o.supplement).forEach(o=>o.actualPaid=o.subtotal/100);assert.equal(c.orderPlanning.plan.totalCents,77000);const result=settlementSummary(c);assert.equal(result.ready,true);assert.equal(result.items[0].originalCents,5500);assert.equal(result.items[0].averageCents,5323);assert.throws(()=>validatePurchasedCatalog(c,{...c,products:c.products.slice(1)}),/款式不能更换/);
+ const db=fixture(),c=db.campaigns[0];c.categories=[{id:'g',name:'通行证',kind:'group',setsByBox:{box:1},boxPrices:{box:350}}];c.products=Array.from({length:7},(_,i)=>({id:'r'+i,name:'通行证-角色'+i,type:'通行证',categoryId:'g',boxId:'box',averagePrice:null,price:null,adjustment:0,unit:'对'}));c.records=[{id:'a',member:'模拟甲',skuId:'r0',quantity:1,createdAt:'2026-01-01T00:00:00Z'}];let pool=purchasePool(c);c.orderPlanning={version:1,pool,source:purchaseSource(c),plan:planOrders(pool,settings)};c.orderPlanning.plan.orders.forEach(o=>o.actualPaid=o.subtotal/100);c.settlement.groupPricing={'g|box':'auto'};finish(c);openSupplement(c,{version:1});c.categories[0].setsByBox.box=2;c.categories[0].boxPrices.box=420;c.records[0].quantity=2;pool=supplementaryPool(c);mergeOrderPlan(c,planOrders(pool,settings));c.orderPlanning.plan.orders.filter(o=>o.supplement).forEach(o=>o.actualPaid=o.subtotal/100);assert.equal(c.orderPlanning.plan.totalCents,77000);const result=settlementSummary(c);assert.equal(result.ready,true);assert.equal(result.items[0].originalCents,5500);assert.equal(result.items[0].averageCents,5323);assert.throws(()=>validatePurchasedCatalog(c,{...c,products:c.products.slice(1)}),/款式不能更换/);
 });

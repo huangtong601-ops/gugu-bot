@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-25",
+  "checkedAt": "2026-11-06",
   "scope": "社区称呼的本地辅助匹配表；来源不代表官方命名或唯一含义。目标为多个角色时保留多义，不收录组合代称为一个角色。",
   "sources": {
     "legacy": {
@@ -30,7 +30,7 @@
     },
     "session": {
       "title": "本项目用户确认的既有称呼",
-      "note": "德狗、阿能、异德、洁哥为既有排谷规则"
+      "note": "用户确认的称呼：德狗、阿能、异德、洁哥；m3对应Mon3tr，数字3属于名称；2026-11-03：塔对应塔露拉，内卫对应国度，皇帝、小皇帝对应冻河；2026-11-06：vvan对应薇薇安娜"
     }
   },
   "excludedGeneric": [
@@ -2270,6 +2270,38 @@
       "sources": [
         "nick2023"
       ]
-    }
+    },
+    {
+      "targets": [
+        "Mon3tr"
+      ],
+      "alias": "m3",
+      "sources": [
+        "session"
+      ]
+    },
+    {
+      "targets": [
+        "遥"
+      ],
+      "alias": "瑶",
+      "sources": [
+        "session"
+      ]
+    },
+    {
+      "targets": [
+        "凯尔希"
+      ],
+      "alias": "凯",
+      "sources": [
+        "session"
+      ]
+    },
+    {"alias":"塔","targets":["塔露拉"],"sources":["session"]},
+    {"alias":"内卫","targets":["国度"],"sources":["session"]},
+    {"alias":"皇帝","targets":["冻河"],"sources":["session"]},
+    {"alias":"小皇帝","targets":["冻河"],"sources":["session"]},
+    {"alias":"vvan","targets":["薇薇安娜"],"sources":["session"]}
   ]
 }

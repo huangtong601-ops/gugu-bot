@@ -2,13 +2,15 @@ import {blindBoxRecognition} from './public/recognition-categories.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {readAdjustment} from './pass-adjustment.mjs';
+import {endfieldCharacters} from './operator-aliases.mjs';
 export async function loadReferences(root){
   const dir=path.join(root,'skills/arknights-pingu/references');
   const boxes=JSON.parse(await fs.readFile(path.join(dir,'pass-boxes.json'),'utf8'));
   const roster=JSON.parse(await fs.readFile(path.join(dir,'characters.json'),'utf8'));
   const labels=JSON.parse(await fs.readFile(path.join(dir,'character-labels.json'),'utf8'));
   for(const c of roster.characters){const label=labels.characters.find(x=>x.name===c.name)?.appellation;if(label)c.aliases=[...new Set([...c.aliases,label])];}
-  return {boxes:boxes.boxes,characters:roster.characters,meta:{checkedAt:boxes.checkedAt,source:boxes.source,license:boxes.license,scope:boxes.scope}};
+  const endfield=endfieldCharacters.characters.map(c=>({...c,aliases:[c.appellation,...(c.aliases||[])],referenceUrl:endfieldCharacters.sources.endfieldOfficial.url,game:'endfield'}));
+  return {boxes:boxes.boxes,characters:[...roster.characters,...endfield],meta:{checkedAt:boxes.checkedAt,source:boxes.source,license:boxes.license,scope:boxes.scope}};
 }
 export function findBox(ref,text){
   let id=String(text||'').trim().replace(/^盲盒/,'').replace(/^通行(?:证|认证)[-－\s]*/,'');
@@ -20,7 +22,7 @@ export function characterReference(ref,name){
   const exact=ref.characters.filter(c=>c.name.toLocaleLowerCase()===key);
   const matches=exact.length?exact:ref.characters.filter(c=>c.aliases.some(a=>a.toLocaleLowerCase()===key));
   if(matches.length!==1)return {name,portraitUrl:'',status:matches.length?'别名有歧义，待人工核对':'待人工核对',candidates:matches.map(m=>m.name),url:'https://prts.wiki/w/'+encodeURIComponent(name)};
-  const c=matches[0];return {...c,status:'本地名称对照，未在线验证',url:'https://prts.wiki/w/'+encodeURIComponent(c.name)};
+  const c=matches[0];return {...c,status:'本地名称对照，未在线验证',url:c.referenceUrl||'https://prts.wiki/w/'+encodeURIComponent(c.name)};
 }
 export function expandBox(ref,text){
   const box=findBox(ref,text);if(!box)throw new Error('未收录该分盒，请识别图片中的角色');

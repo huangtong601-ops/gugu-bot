@@ -26,21 +26,34 @@ function fields(buffer){
 const one=(a,f)=>a.find(x=>x.field===f)?.value;
 const message=(a,f)=>{const b=one(a,f);return Buffer.isBuffer(b)?fields(b):[];};
 const string=(a,f)=>{const b=one(a,f);return b==null?'':Buffer.isBuffer(b)?b.toString('utf8'):String(b);};
-export function parseFeedResponse(hex,{groupId,albumId,photoIds=[],batchId=''}){
+const feedReaderCommand='QunAlbum.trpc.qzone.webapp_qun_feeds.FeedsReader.';
+function responseData(hex){
  if(typeof hex!=='string'||!hex.length||hex.length%2||!/^[a-f0-9]+$/i.test(hex))throw Error('相册详情未返回有效数据');
  const root=fields(Buffer.from(hex,'hex'));if(string(root,2)&&string(root,2)!=='0')throw Error('相册详情读取失败：'+string(root,3));
- const data=message(root,4),feed=message(message(data,2),1);if(!feed.length)throw Error('相册响应缺少动态详情');
- const feedId=string(message(feed,1),4),wrapper=message(feed,7),comments=[];
+ return message(root,4);
+}
+function parseCommentPage(data,wrapper,{groupId,albumId,photoIds=[],batchId='',feedId}){
+ const comments=[];
  for(const entry of wrapper.filter(x=>x.field===2)){
   const row=fields(entry.value),user=message(row,2),id=string(row,1),qq=string(user,13)||string(user,14),seconds=Number(string(row,4));
   const text=row.filter(x=>x.field===3).map(x=>{const part=fields(x.value);if(Number(string(part,1)||0)!==0)throw Error('评论含非文字内容，需人工核对');return string(part,2);}).join('');
   if(!id||!/^\d{5,12}$/.test(qq)||!Number.isSafeInteger(seconds)||seconds<=0)throw Error('相册评论缺少编号、QQ号或原始时间');
   comments.push({id:`${groupId}/${albumId}/${id}/${qq}/${seconds}`,commentId:id,qq,at:new Date(seconds*1000).toISOString(),text,groupId,albumId,feedId,batchId,photoIds});
  }
- const caption=message(feed,4).filter(x=>x.field===1).map(x=>{const p=fields(x.value);return Number(string(p,1)||0)===0?string(p,2):'';}).join('');
- return {comments,caption,total:Number(string(wrapper,1)||0),hasMore:string(data,3)==='1',attachInfo:string(data,4),feedId};
+ return {comments,total:Number(string(wrapper,1)||0),hasMore:string(data,3)==='1',attachInfo:string(data,4),feedId};
 }
-export async function readAlbumFeeds(call,group,album,{onPhotos}={}){
+export function parseFeedResponse(hex,target){
+ const data=responseData(hex),feed=message(message(data,2),1);if(!feed.length)throw Error('相册响应缺少动态详情');
+ const feedId=string(message(feed,1),4);
+ const caption=message(feed,4).filter(x=>x.field===1).map(x=>{const p=fields(x.value);return Number(string(p,1)||0)===0?string(p,2):'';}).join('');
+ return {...parseCommentPage(data,message(feed,7),{...target,feedId}),caption};
+}
+function parseCommentResponse(hex,target){
+ const data=responseData(hex),wrapper=message(data,2);
+ if(!wrapper.length)throw Error('相册响应缺少评论列表');
+ return parseCommentPage(data,wrapper,target);
+}
+export async function readAlbumFeeds(call,group,album,{onPhotos,recoverCommentIds}={}){
  const media=[],batches=new Set();let attach='',pages=0;const seen=new Set();do{
   const data=await call('get_group_album_media_list',{group_id:group,album_id:album,attach_info:attach});if(!data||data.result&&String(data.result)!=='0')throw Error('相册读取失败：'+(data?.errMs||'返回数据异常'));if(!Array.isArray(data.media_list))throw Error('QQ未返回完整的相册图片清单');
   media.push(...(data.media_list||[]));for(const b of data.batch_list||[])if(b.link_id)batches.add(String(b.link_id));
@@ -51,14 +64,24 @@ export async function readAlbumFeeds(call,group,album,{onPhotos}={}){
  for(const p of photos)if(p.batchId)batches.add(p.batchId);
  const targets=[...batches].map(batchId=>({batchId,lloc:'',photoIds:photos.filter(p=>p.batchId===batchId).map(p=>p.id)})).filter(target=>target.photoIds.length);
  targets.push(...photos.map(p=>({batchId:p.batchId,lloc:p.id,photoIds:[p.id]})));
- const unique=new Map(),captions=new Map();for(const target of targets){let cursor='',feedId='',count=0;const cursors=new Set();for(let page=0;page<100;page++){
-  const response=await call('send_packet',{cmd:'QunAlbum.trpc.qzone.webapp_qun_feeds.FeedsReader.GetQunFeedDetail',data:feedRequest(group,album,{}, {...target,feedId,attachInfo:cursor}).toString('hex'),rsp:true});
-  const parsed=parseFeedResponse(response,{groupId:group,albumId:album,...target});count+=parsed.comments.length;
-  if(parsed.caption.trim())captions.set(parsed.feedId,{text:parsed.caption,feedId:parsed.feedId,photoIds:target.photoIds});
-  for(const comment of parsed.comments){const prior=unique.get(comment.id);if(prior&&prior.text!==comment.text)throw Error('同一评论返回不同内容，请稍后重试');if(!prior||comment.photoIds.length<prior.photoIds.length)unique.set(comment.id,comment);}
-  if(!parsed.hasMore&&count>=parsed.total)break;
-  if(!parsed.comments.length||!parsed.attachInfo||cursors.has(parsed.attachInfo)||page===99)throw Error('相册评论分页未完整读取');
+ const unique=new Map(),captions=new Map();let commentReadError='';
+ for(const target of targets){let cursor='',feedId='';const cursors=new Set(),targetIds=new Set();for(let page=0;page<100;page++){
+  // Feed detail repeats its preview comments when passed a comment cursor.
+  const method=page===0?'GetQunFeedDetail':'GetQunComment';
+  const response=await call('send_packet',{cmd:feedReaderCommand+method,data:feedRequest(group,album,{}, {...target,feedId,attachInfo:cursor}).toString('hex'),rsp:true});
+  const scope={groupId:group,albumId:album,...target,feedId};
+  const parsed=page===0?parseFeedResponse(response,scope):parseCommentResponse(response,scope),previousCount=targetIds.size;
+  if(parsed.caption?.trim())captions.set(parsed.feedId,{text:parsed.caption,feedId:parsed.feedId,photoIds:target.photoIds});
+  for(const comment of parsed.comments){targetIds.add(comment.id);const prior=unique.get(comment.id);if(prior&&prior.text!==comment.text)throw Error('同一评论返回不同内容，请稍后重试');if(!prior||comment.photoIds.length<prior.photoIds.length)unique.set(comment.id,comment);}
+  if(!parsed.hasMore&&targetIds.size>=parsed.total)break;
+  if(targetIds.size===previousCount||!parsed.attachInfo||cursors.has(parsed.attachInfo)||page===99){
+   if(!recoverCommentIds?.size)throw Error('相册评论分页未完整读取');
+   commentReadError='相册评论分页未完整读取；本轮仅重查原先因截单被拒绝的评论';
+   break;
+  }
   cursors.add(parsed.attachInfo);cursor=parsed.attachInfo;feedId=parsed.feedId;
  }}
- return {photos,captions:[...captions.values()],comments:[...unique.values()].sort((a,b)=>a.at.localeCompare(b.at)||a.commentId.localeCompare(b.commentId,undefined,{numeric:true}))};
+ const comments=[...unique.values()].filter(event=>!commentReadError||recoverCommentIds.has(event.id));
+ comments.sort((a,b)=>a.at.localeCompare(b.at)||a.commentId.localeCompare(b.commentId,undefined,{numeric:true}));
+ return {photos,captions:[...captions.values()],comments,...(commentReadError?{commentReadError}:{})};
 }
